@@ -1,9 +1,9 @@
 @font-face {
-    font-family: 'NeueHaasGroteskDisp Pro';
+    font-family: 'frontend/src/Fonts/NHaasGroteskDSPro-55Rg.otf';
 }
 
 
-.HomePage {
+.App {
   text-align: center;
 }
 
@@ -40,4 +40,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.h1 {
+    font-family: 'frontend/src/Fonts/NHaasGroteskDSPro-55Rg.otf', serif;
+    font-size: 48px;
+    font-style: normal;
 }
