@@ -1,4 +1,9 @@
-.App {
+@font-face {
+    font-family: 'NeueHaasGroteskDisp Pro';
+}
+
+
+.HomePage {
   text-align: center;
 }
 
