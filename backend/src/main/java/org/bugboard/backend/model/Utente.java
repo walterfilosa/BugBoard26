@@ -1,12 +1,13 @@
 package org.bugboard.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -14,11 +15,25 @@ import java.sql.Date;
 @Data
 public class Utente {
     @Id
-    private String email;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idutente")
+    private int idUtente;
     private String nome;
     private String cognome;
-    private Date datadinascita;
-    private String numeroditelefono;
+    @Column(name = "datadinascita")
+    private Date dataNascita;
+    private String email;
+    @Column(name = "numeroditelefono")
+    private String numeroTelefono;
     private String password;
-    private Boolean isadmin;
+    @Column(name = "isadmin")
+    private Boolean isAdmin;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="Lavora",
+            joinColumns = @JoinColumn(name="idutente"),
+            inverseJoinColumns = @JoinColumn(name="idprogetto")
+    )
+    private Set<Progetto> progettiAssegnati=new HashSet<>();
+
 }
