@@ -28,15 +28,15 @@
 
 .navbar-center {
     margin-left: auto;
-    padding-right: 20px;
+    padding-left: 170px;
     display: flex;
-    gap: 20px;
+    gap: 80px;
     align-items: center;
     position: relative;
 }
 
 .logo {
-    width: 120px;
+    width: 150px;
     height: 70px;
 }
 
@@ -54,7 +54,6 @@
     position: absolute;
     left: 0;
     bottom: -2px;
-    width: 0%;
     height: 2px;
     background-color: #002060;
     transition: width 0.3s ease;
@@ -64,39 +63,80 @@
     width: 100%;
 }
 
-.profileMenu {
+.profileMenu-container {
     position: relative;
+}
+
+.profile-button {
     display: flex;
     align-items: center;
+    background-color: #002060;
+    border-radius: 8px;
+    padding: 5px 10px;
     cursor: pointer;
+    gap: 5px;
+    position: fixed;
+    right: 20px;
+    top: 16px;
 }
 
-.profileIcon {
-    font-size: 35px;
-    color: #002060;
+.profile-icon {
+    font-size: 20pt;
+    color: white;
 }
 
-.dropdown {
+.chevron-icon {
+    color: white;
+    font-size: 16pt;
+}
+
+.dropdown-menu{
     position: absolute;
-    right: 0;
-    top: 45px;
+    top: 100%;
+    right: 50px;
     background-color: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    color: #002060;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
     min-width: 150px;
-    z-index: 1001;
+    margin-top: 5px;
+    z-index: 1000;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 14pt;
 }
 
-.dropdown a {
-    padding: 10px;
+.dropdown-menu a {
+    padding: 10px 15px;
     color: #002060;
     text-decoration: none;
-    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    transition: background-color 0.2s;
 }
 
-.dropdown a:hover {
+.dropdown-menu a:hover {
     background-color: #f0f0f0;
+}
+
+.info-utente {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-left: 130px;
+    margin-left: 280px;
+}
+
+.testo-utente {
+    font-family: "NeueHaasGroteskDisp Pro", sans-serif;
+    font-size: 12pt;
+    text-align: right;
+    margin-top: 24px;
+}
+
+.nome-utente {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 20px;
+    text-align: right;
+    margin-top: -20px;
 }
 

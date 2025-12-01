@@ -1,0 +1,129 @@
+@font-face {
+    font-family: "NeueHaasGroteskDisp Pro";
+    src: url("./Fonts/NHaasGroteskDSPro-55Rg.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "NeueHaasGroteskDisp Pro Blk";
+    src: url("./Fonts/NHaasGroteskDSPro-95Blk.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "NeueHaasGroteskDisp Pro Md";
+    src: url("./Fonts/NHaasGroteskDSPro-65Md.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.app-footer {
+    width: 100%;
+    background-color: #002060;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-family: 'NeueHaasGroteskDisp Pro', sans-serif;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    font-size: 10pt;
+}
+
+.footer-logo {
+    width: 100px;
+    height: auto;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+    font-size: 10pt;
+    text-align: right;
+    margin-top: 30px;
+}
+
+.footer-left p {
+    margin: 5px;
+}
+.footer-right p {
+    margin: 2px;
+}
+
+.nomeSocietà {
+    text-align: left;
+    font-family: 'NeueHaasGroteskDisp Pro Md', sans-serif;
+    font-size: 20pt;
+
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 22px;
+    transition: transform 0.3s;
+}
+
+.social-icons a:hover {
+    color: #c2c2c2; /* colore hover per evidenziare */
+}
+
+/* Responsive: su schermi piccoli, le colonne si sovrappongono */
+@media (max-width: 768px) {
+    .app-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .footer-right {
+        align-items: flex-start;
+    }
+}
+
+.contatti-footer {
+    font-family: 'NeueHaasGroteskDisp Pro Md', sans-serif;
+    font-size: 10pt;
+}
+
+.seguici {
+    font-family: 'NeueHaasGroteskDisp Pro', sans-serif;
+    font-size: 8pt;
+}
+
+.social {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.note-copyright {
+    margin-top: 14px;
+}
