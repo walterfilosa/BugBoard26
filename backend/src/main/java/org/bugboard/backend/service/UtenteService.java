@@ -5,6 +5,7 @@ import org.bugboard.backend.model.Utente;
 import org.bugboard.backend.repository.ProgettoRepo;
 import org.bugboard.backend.repository.UtenteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +17,13 @@ public class UtenteService {
 
     private final UtenteRepo utenteRepo;
     private final ProgettoRepo progettoRepo;
+    private final ApplicationContext applicationContext;
 
     @Autowired
-    public UtenteService(UtenteRepo repo, ProgettoRepo progettoRepo) {
+    public UtenteService(UtenteRepo repo, ProgettoRepo progettoRepo, ApplicationContext applicationContext) {
         this.utenteRepo = repo;
         this.progettoRepo = progettoRepo;
+        this.applicationContext = applicationContext;
     }
 
     public List<Utente> getAllUsers() {
@@ -32,8 +35,8 @@ public class UtenteService {
     }
 
     public Utente assignProjectToUser(int userId, int projectId) {
-        Utente user=new Utente();
-        Progetto project=new Progetto();
+        Utente user=applicationContext.getBean(Utente.class);
+        Progetto project=applicationContext.getBean(Progetto.class);
         Set<Progetto> projectSet;
 
         Optional<Utente> optUser = utenteRepo.findById(userId);
