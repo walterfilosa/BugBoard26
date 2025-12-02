@@ -18,21 +18,29 @@
     padding: 0 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    box-sizing: border-box;
+    justify-content: space-between;
 }
 
 .navbar-left {
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .navbar-center {
-    margin-left: auto;
-    padding-left: 170px;
     display: flex;
-    gap: 80px;
+    gap: 60px;
     align-items: center;
-    position: relative;
+    justify-content: center;
+}
+
+.navbar-right {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .logo {
@@ -47,6 +55,7 @@
     font-size: 18px;
     position: relative;
     padding-bottom: 2px;
+    white-space: nowrap;
 }
 
 .nav-link::after {
@@ -60,15 +69,25 @@
     transition: width 0.3s ease;
 }
 
-.nav-link:hover::after, .nav-link.active:hover::after {
+.nav-link:hover::after, .nav-link.active::after {
     width: 100%;
 }
 
 .profileMenu-container {
     position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .profile-button {
+    width: 50px;
+    height: 30px;
     display: flex;
     align-items: center;
     background-color: #002060;
@@ -76,9 +95,9 @@
     padding: 5px 10px;
     cursor: pointer;
     gap: 5px;
-    position: fixed;
-    right: 20px;
-    top: 16px;
+    position: relative;
+    right: auto;
+    top: auto;
 }
 
 .profile-icon {
@@ -93,8 +112,8 @@
 
 .dropdown-menu{
     position: absolute;
-    top: 100%;
-    right: 50px;
+    top: 50px;
+    right: 0px;
     background-color: white;
     color: #002060;
     border-radius: 8px;
@@ -108,36 +127,53 @@
     font-size: 14pt;
 }
 
-.dropdown-menu a {
-    padding: 10px 15px;
+.dropdown-menu a.menu-item {
+    padding: 12px 16px;
     color: #002060;
     text-decoration: none;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.dropdown-menu a:hover {
+
+.dropdown-menu a.menu-item:hover {
     background-color: #f0f0f0;
+}
+
+.dropdown-menu a.link-logout {
+    color: rgb(255, 0, 0);
+    font-weight: 500;
+    border-top: 1px solid #eee;
+}
+
+.dropdown-menu a.link-logout:hover {
+    background-color: rgba(255, 0, 0, 0.08);
+    color: rgb(200, 0, 0);
 }
 
 .info-utente {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    padding-left: 130px;
-    margin-left: 280px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .testo-utente {
     font-family: "NeueHaasGroteskDisp Pro", sans-serif;
     font-size: 12pt;
     text-align: right;
-    margin-top: 24px;
+    margin: 0px;
+    line-height: 1.2;
 }
 
 .nome-utente {
     font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
-    font-size: 20px;
+    font-size: 22px;
     text-align: right;
-    margin-top: -20px;
+    margin: 0px;
+    line-height: 1.2;
 }
 

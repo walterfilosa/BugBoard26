@@ -1,0 +1,375 @@
+@font-face {
+    font-family: "NeueHaasGroteskDisp Pro";
+    src: url("./Fonts/NHaasGroteskDSPro-55Rg.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "NeueHaasGroteskDisp Pro Blk";
+    src: url("./Fonts/NHaasGroteskDSPro-95Blk.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "NeueHaasGroteskDisp Pro Md";
+    src: url("./Fonts/NHaasGroteskDSPro-65Md.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.HomePageUtente {
+    font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif;
+    font-size: 24px;
+    text-align: left;
+    color: #002060;
+    font-style: normal;
+}
+
+.HomePageUtente-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.HomePageUtente-link {
+    color: #61dafb;
+}
+
+.homepage-container {
+    margin-top: 50px;
+    padding-left: 20px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.header-row {
+    display: flex;
+    margin-left: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 0px;
+}
+
+.header-row h1 {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    color: #002060;
+    font-size: 24px;
+    margin: 0;
+}
+
+.search-filter-container {
+    display: flex;
+    gap: 15px;
+}
+
+.search-box {
+    position: relative;
+    width: 300px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border-radius: 50px;
+    border: 2px solid #E0E0E0;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-box input:focus {
+    border-color: #002060;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #B0B0B0;
+}
+
+.filter-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 2px solid #E0E0E0;
+    padding: 0 15px;
+    border-radius: 50px;
+    color: #002060;
+}
+
+.filter-box select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    color: #002060;
+    cursor: pointer;
+}
+
+.issues-table-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 32, 96, 0.08);
+    border: 1px solid #E0E0E0;
+    overflow: hidden;
+    margin-bottom: 100px;
+}
+
+.issues-header, .issue-row {
+    display: grid;
+    grid-template-columns: 3fr 1.2fr 0.8fr;
+    align-items: center;
+    padding: 15px 25px;
+    gap: 20px;
+}
+
+.issues-header {
+    background-color: #F8F9FB;
+    border-bottom: 2px solid #002060;
+    padding-right: 35px;
+}
+
+.issues-header .col {
+    font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif;
+    color: #002060;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.issues-list {
+    height: 280px;
+    overflow-y: auto;
+    background-color: white;
+}
+
+.issue-row {
+    border-bottom: 1px solid #F0F0F0;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.issue-row:hover {
+    background-color: #F0F4FF;
+}
+
+.col {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: "NeueHaasGroteskDisp Pro", sans-serif;
+    color: #333;
+}
+
+.col-id {
+    font-weight: bold;
+    color: #B0B0B0;
+}
+
+.col-title {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.issue-title-text {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 18px;
+    color: #002060;
+}
+
+.issue-type-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #777;
+}
+
+.col-priority {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.priority-bar-track {
+    width: 100px;
+    height: 8px;
+    background-color: #E0E0E0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.priority-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease-out;
+
+    background: linear-gradient(to right,
+    #8F00FF 0%,
+    #0000FF 25%,
+    #00FF00 50%,
+    #FFFF00 75%,
+    #FF0000 100%
+    );
+
+    background-size: 100px 100%;
+}
+
+.priority-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.priority-text {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 18px;
+    color: #002060;
+    width: 30px;
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .priority-bar-track {
+        width: 100%;
+        background-size: 100% 100%;
+    }
+
+    .priority-bar-fill {
+        background-size: cover;
+    }
+}
+
+@media (max-width: 768px) {
+    .issues-header { display: none; }
+
+    .issue-row {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .col-type, .col-priority {
+        width: 100%;
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 8px;
+    }
+}
+
+.type-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 13px;
+    background-color: #F5F7FA;
+    color: #555;
+    white-space: nowrap;
+}
+
+.type-bug { color: #d32f2f; background-color: #ffebee; }
+.type-feature { color: #388e3c; background-color: #e8f5e9; }
+.type-question { color: #1976d2; background-color: #e3f2fd; }
+
+.col-type {
+    display: flex;
+    align-items: center;
+}
+
+.priority-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.priority-high { background-color: #ff0000; box-shadow: 0 0 5px rgba(255,0,0,0.5); }
+.priority-medium { background-color: #ffa500; }
+.priority-low { background-color: #B0B0B0; }
+
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+    min-width: 80px;
+}
+
+.status-open { background-color: #e3f2fd; color: #1e88e5; }
+.status-progress { background-color: #fff3e0; color: #fb8c00; }
+.status-closed { background-color: #e8f5e9; color: #43a047; }
+
+
+/* Azione (Freccia) */
+.btn-details {
+    background: transparent;
+    border: none;
+    color: #B0B0B0;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    transition: color 0.2s;
+}
+
+.issue-row:hover .btn-details {
+    color: #002060;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px;
+    color: #B0B0B0;
+    font-size: 16px;
+}
+
+@media (max-width: 900px) {
+    .issues-header { display: none; }
+
+    .issue-row {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .col { width: 100%; }
+    .btn-details { display: none; }
+}
+
+.issues-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.issues-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.issues-list::-webkit-scrollbar-thumb {
+    background: #002060;
+    border-radius: 10px;
+}
+
+.issues-list::-webkit-scrollbar-thumb:hover {
+    background: #003399;
+}

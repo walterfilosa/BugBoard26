@@ -1,16 +1,28 @@
-import {NavLink} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import './NavbarUtente.css';
 import {useState} from "react";
-import { FaUserCircle, FaChevronDown } from 'react-icons/fa';
+import {FaUserCircle, FaChevronDown, FaSignOutAlt, FaUser} from 'react-icons/fa';
 
 function ProfileMenu() {
     const [isOpen, setIsOpen] = useState(false);
 
+    const navigate = useNavigate();
+
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
+        console.log("Utente disconnesso");
+
+        navigate('/');
+    }
     return (
-        <div>
+        <div className="profile-wrapper">
             <div className="info-utente">
                 <p className="testo-utente">Benvenuto,</p>
                 <p className="nome-utente">Gennaro</p>
@@ -23,8 +35,8 @@ function ProfileMenu() {
 
                 {isOpen && (
                     <div className="dropdown-menu">
-                        <a href="/profilo">Profilo</a>
-                        <a href="/logout">Logout</a>
+                        <a href="/profilo" className="menu-item"><FaUser/>Profilo</a>
+                        <a href="/" className="menu-item link-logout"><FaSignOutAlt/>Esci</a>
                     </div>
                 )}
             </div>
@@ -39,11 +51,12 @@ export default function NavbarUtente() {
         <nav className = "navbar">
             <div className="navbar-left">
                 <img src="/Logo/LogoBugBoard26.svg" alt="logo" className="logo"/>
-                <div className="navbar-center">
-                    <NavLink to={"/VisualizzaIssue"} className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'}>Visualizza issue</NavLink>
-                    <NavLink to={"/SegnalaIssue"} className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'}>Segnala issue</NavLink>
-                </div>
-
+            </div>
+            <div className="navbar-center">
+                <NavLink to={"/VisualizzaIssue"} className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'}>Visualizza issue</NavLink>
+                <NavLink to={"/SegnalaIssue"} className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'}>Segnala issue</NavLink>
+            </div>
+            <div className="navbar-right">
                 <ProfileMenu/>
             </div>
         </nav>

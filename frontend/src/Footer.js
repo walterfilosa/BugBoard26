@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.css';
-import { FaFacebook, FaTwitter, FaLinkedin} from 'react-icons/fa';
+import {FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaTelegram} from 'react-icons/fa';
 
 export default function Footer() {
     return (
@@ -27,9 +27,11 @@ export default function Footer() {
                         Seguici su:
                     </p>
                     <div className="social-icons">
+                        <a href="https://www.instagram.com/uninait" target="_blank" rel="noopener noreferrer"><FaInstagram/></a>
                         <a href="https://www.facebook.com/unina.it" target="_blank" rel="noopener noreferrer"><FaFacebook/></a>
                         <a href="https://twitter.com/uninait" target="_blank" rel="noopener noreferrer"><FaTwitter/></a>
                         <a href="https://www.linkedin.com/school/unina/" target="_blank" rel="noopener noreferrer"><FaLinkedin/></a>
+                        <a href="https://t.me/informatica_unina" target="_blank" rel="noopener noreferrer"><FaTelegram/></a>
                     </div>
                 </div>
             </div>

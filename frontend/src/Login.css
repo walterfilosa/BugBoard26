@@ -18,3 +18,153 @@
     font-weight: normal;
     font-style: normal;
 }
+
+.login-page {
+    height: 100vh;
+    width: 100%;
+    background-color: #F8F9FB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'NeueHaasGroteskDisp Pro Md', sans-serif;
+}
+
+.login-card {
+    background-color: white;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px 50px;
+    border-radius: 2px;
+    box-shadow: 0 10px 40px rgba(0, 32, 96, 0.08);
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-logo {
+    width: 250px;
+    margin-bottom: 20px;
+}
+
+.login-title {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    color: #002060;
+    font-size: 36px;
+    margin-bottom: 0px;
+}
+
+.login-subtitle {
+    color: #B0B0B0;
+    font-size: 14pt;
+    margin-bottom: 30px;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    margin-top: 10px;
+}
+
+.login-input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.floating-label-group {
+    position: relative;
+    width: 100%;
+    height: 64px;
+    border: 2px solid #002060;
+    border-radius: 15px;
+    background-color: white;
+    margin-top: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.floating-label-group:focus-within {
+    border-color: #002060;
+}
+
+
+
+.campo {
+    font-family: "NeueHaasGroteskDisp Pro", sans-serif;
+    font-size: 14pt;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    padding-top: 24px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+    color: #000000;
+}
+
+.campo:focus {
+    outline: none;
+    border-color: #002060;
+}
+
+.floating-label {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 18px;
+    color: #002060;
+    pointer-events: none;
+    transition: all 0.2s ease-out;
+}
+
+.password-field {
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #002060;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.toggle-password:hover {
+    color: #002060;
+}
+
+.btnAccedi {
+    width: 100%;
+    justify-content: center;
+    background-color: #002060;
+    color: #ffffff;
+    border: 2px solid #002060;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 16px;
+    padding: 14px 32px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(0, 32, 96, 0.2);
+}
+
+.btnAccedi:hover {
+    background-color: #002060;
+    border-color: #002060;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 32, 96, 0.4);
+}
