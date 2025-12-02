@@ -11,6 +11,12 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: "NeueHaasGroteskDisp Pro Md";
+    src: url("./Fonts/NHaasGroteskDSPro-65Md.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 .segnalaissue {
@@ -24,4 +30,355 @@
 .homepage-container {
     margin-top: 80px;
     padding: 20px;
+}
+
+.label-tipo-issue {
+    display: block;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 20px;
+    color: #002060;
+    margin-bottom: 10px;
+}
+
+.tipo-issue {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.issue-type-box {
+    border: 2px solid #B0B0B0;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    background: #ffffff;
+    width: 250px;
+    height: 80px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.issue-type-box:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 4px 14px #B0B0B0;
+}
+
+.issue-type-box.active {
+    opacity: 1;
+    background: white;
+    box-shadow: 0px 6px 18px #002060;
+    border-color: #002060;
+}
+
+.titolo-tipo {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 16pt;
+    color: #002060;
+    text-align: center;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    margin-top: 0px;
+}
+
+.descrizione-tipo {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 11pt;
+    color: #B0B0B0;
+    text-align: center;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.floating-label-group {
+    position: relative;
+    width: 100%;
+    height: 64px;
+    border: 2px solid #002060;
+    border-radius: 15px;
+    background-color: white;
+    margin-top: 20px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.floating-label-group:focus-within {
+    border-color: #002060;
+}
+
+
+
+.campo {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 14pt;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    padding-top: 24px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+    color: #000000;
+}
+
+.campo:focus {
+    outline: none;
+    border-color: #002060;
+}
+
+.floating-label {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 18px;
+    color: #002060;
+    pointer-events: none;
+    transition: all 0.2s ease-out;
+}
+
+.campo:focus ~ .floating-label,
+.campo:not(:placeholder-shown) ~ .floating-label {
+    top: 18px;       /* Sposta in alto */
+    font-size: 12px; /* Rimpicciolisci */
+    color: #002060;  /* Puoi cambiarlo in #002060 se vuoi la label blu quando attiva */
+}
+
+.floating-label-group.textarea-group {
+    height: auto;
+    min-height: 150px;
+    padding: 0;
+}
+
+.textarea-label {
+    transform: none;
+    top: 16px;
+    left: 16px;
+}
+
+.campo-textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.5;
+    font-family: "NeueHaasGroteskDisp Pro", sans-serif;
+    text-align: justify;
+}
+
+.campo-textarea:focus ~ .textarea-label,
+.campo-textarea:not(:placeholder-shown) ~ .textarea-label {
+    top: 10px;
+}
+
+.priority-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.label-priorita {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 16pt;
+    color: #002060;
+    margin-bottom: 15px;
+}
+
+.priority-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    outline: none;
+    margin: 0;
+    cursor: pointer;
+
+    background: linear-gradient(to right,
+    #8F00FF 0%,
+    #4B0082 16%,
+    #0000FF 32%,
+    #00FF00 48%,
+    #FFFF00 65%,
+    #FF7F00 82%,
+    #FF0000 100%
+    );
+}
+
+.priority-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+
+    width: 40px;
+    height: 40px;
+
+    background-image: url('logoslider.png');
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: grab;
+    margin-top: 0px;
+}
+
+.priority-slider:active::-webkit-slider-thumb {
+    cursor: grabbing;
+}
+
+.priority-slider::-moz-range-thumb {
+    border: none;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+
+    width: 40px;
+    height: 40px;
+
+
+    background-image: url('logoslider.png');
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    cursor: grab;
+}
+
+.priority-slider:active::-moz-range-thumb {
+    cursor: grabbing;
+}
+
+
+.label-numeri {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    color: #B0B0B0;
+    font-size: 12pt;
+    box-sizing: border-box;
+    padding-left: 17px;
+    padding-right: 17px;
+    margin-bottom: 24px;
+}
+
+.inserisci-immagine {
+    width: 100%;
+    height: 160px;
+    border: 2px dashed #002060;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 30px;
+    background-color: #F8F9FB;
+    position: relative;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.inserisci-immagine:hover {
+    background-color: #EEF2FF;
+    border-color: #002060;
+}
+
+.nome-file-caricato {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 14px;
+    color: #002060;
+    margin-top: 10px;
+}
+
+.nome-file-caricato span {
+    color: #B0B0B0;
+}
+
+.pulsante-rimuovi-img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #002060;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.pulsante-rimuovi-img:hover {
+    transform: scale(1.1);
+}
+
+.pulsanti {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.buttonAnnulla {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 20px;
+    color: #002060;
+    border: 2px solid #002060;
+    border-radius: 15px;
+    width: 200px;
+    height: 50px;
+    background-color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 32, 96, 0.2);
+    transition: background-color 0.2s ease;
+}
+
+.buttonAnnulla:hover {
+    background-color: #002060;
+    color: white;
+}
+
+.buttonInvia {
+    background-color: #002060;
+    color: white;
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 32, 96, 0.2);
+    transition: background-color 0.2s ease;
+}
+
+.buttonInvia:disabled {
+    background-color: #B0B0B0;
+    color: white;
 }
