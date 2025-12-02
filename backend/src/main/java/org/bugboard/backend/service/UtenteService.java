@@ -28,7 +28,7 @@ public class UtenteService {
     }
 
     public List<Progetto> getAssignedActiveProjectsFromUserId(int userId) {
-        return utenteRepo.getAssignedActiveProjectsFromUserId(userId);
+        return progettoRepo.findBySetUtenti_idUtenteAndStato(userId,"Attivo");
     }
 
     @Transactional
