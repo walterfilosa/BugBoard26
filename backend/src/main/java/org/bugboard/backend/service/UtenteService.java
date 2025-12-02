@@ -9,7 +9,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,10 +24,6 @@ public class UtenteService {
         this.utenteRepo = repo;
         this.progettoRepo = progettoRepo;
         this.applicationContext = applicationContext;
-    }
-
-    public List<Progetto> getAssignedActiveProjectsFromUserId(int userId) {
-        return progettoRepo.findBySetUtenti_idUtenteAndStato(userId,"Attivo");
     }
 
     @Transactional

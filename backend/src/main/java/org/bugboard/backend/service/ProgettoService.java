@@ -17,6 +17,10 @@ public class ProgettoService {
         this.progettoRepo = repo;
     }
 
+    public List<Progetto> getAssignedActiveProjectsFromUserId(int userId) {
+        return progettoRepo.findBySetUtenti_idUtenteAndStato(userId,"Attivo");
+    }
+
     public List<Progetto> getAllProjects() {
         return progettoRepo.findAll();
     }
