@@ -5,9 +5,7 @@ import org.bugboard.backend.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -18,6 +16,11 @@ public class UtenteController {
     @Autowired
     public UtenteController(UtenteService service) {
         this.service = service;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Utente> registerUser(@RequestBody Utente utente) {
+        return new ResponseEntity<>(service.registerUser(utente), HttpStatus.CREATED);
     }
 
     @PutMapping("/{userId}/project/{projectId}")
