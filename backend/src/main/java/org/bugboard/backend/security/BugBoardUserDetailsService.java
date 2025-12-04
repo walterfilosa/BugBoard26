@@ -27,4 +27,5 @@ public class BugBoardUserDetailsService implements UserDetailsService {
         }
         return new UserPrincipal(user);
     }
+
 }
