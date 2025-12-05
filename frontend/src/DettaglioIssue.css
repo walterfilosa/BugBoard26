@@ -1,20 +1,107 @@
-.btn-indietro {
-    background: none;
-    border: none;
-    color: #B0B0B0;
-    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
-    font-size: 16px;
-    cursor: pointer;
+.page-init {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+.pulsanti-azioni {
+    position: relative;
+    margin-top: 0;
+    margin-bottom: 30px;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+}
+
+.btn-indietro,
+.btn-edit-mode,
+.btn-delete-issue,
+.btn-save,
+.btn-cancel {
+    width: 220px;
+    height: 45px;
+
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    margin-bottom: 20px;
-    padding: 0;
-    transition: color 0.2s;
+
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.fixed-part {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 120px;
+    background-color: #fff;
+    z-index:900;
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.btn-indietro {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 220px;
+    height: 45px;
+    background-color: white;
+    color: #B0B0B0;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 8px;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    z-index: 10;
 }
 
 .btn-indietro:hover {
     color: #002060;
+}
+
+.central-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.status-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .detail-header {
@@ -23,8 +110,8 @@
     align-items: flex-start;
     margin-bottom: 20px;
     flex-wrap: wrap;
-    gap: 0px;
-    margin-top: 20px;
+    gap: 10px;
+    margin-top: 22px;
 }
 
 .detail-type-badge {
@@ -160,16 +247,21 @@
 
 
 .detail-status-badge {
+    width: 100%;
+    justify-content: left;
+    box-sizing: border-box;
+
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
+    padding: 10px 16px;
     border-radius: 50px;
+
     font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif;
     font-size: 14px;
     font-weight: 600;
-
     white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .detail-description {
@@ -180,7 +272,7 @@
 .id-testo {
     font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
     font-size: 20px;
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
 .detail-section {
@@ -228,4 +320,221 @@
     from {
         width: 0;
     }
+}
+
+.btn-mark-solved {
+    width: 18%;
+    justify-content: center;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #e8f5e9;
+    color: #0F9A22;
+    border: 2px solid #0F9A22;
+    padding: 10px 16px;
+    border-radius: 50px;
+
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.btn-mark-solved:hover {
+    background-color: #0F9A22;
+    color: white;
+}
+
+.admin-actions-box {
+    margin-top: 20px;
+    width: 100%;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-label {
+    font-size: 12px;
+    color: #d32f2f;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+}
+
+.btn-delete-issue {
+    background-color: #ffebee;
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+}
+
+.btn-delete-issue:hover {
+    background-color: #d32f2f;
+    color: white;
+}
+
+.edit-actions-container {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.btn-edit-mode {
+    background-color: white;
+    border: 2px solid #002060;
+    color: #002060;
+}
+
+.btn-edit-mode:hover {
+    background-color: #002060;
+    color: white;
+}
+
+.edit-buttons-group {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-save {
+    background-color: #002060;
+    color: white;
+    border: 2px solid #002060;
+}
+
+.btn-save:hover {
+    background-color: #002060;
+}
+
+.btn-cancel {
+    background-color: transparent;
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+}
+
+.btn-cancel:hover {
+    background-color: #d32f2f;
+    color: white;
+}
+
+
+.edit-input-title {
+    width: 100%;
+    font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif;
+    color: #002060;
+    font-size: 30pt;
+    margin: 2px 0 0 0;
+    border: 0;
+    border-bottom: 2px solid #002060;
+    border-radius: 0;
+    outline: none;
+    padding: 0;
+    background-color: white;
+    transition: border-color 0.3s ease;
+}
+
+.edit-input-title:focus {
+    border-bottom: 2px solid #002060;
+}
+
+.edit-textarea {
+    width: 100%;
+    font-family: "NeueHaasGroteskDisp Pro", sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #002060;
+
+    border: none;
+    border-bottom: 2px solid #002060;
+    border-radius: 0;
+    background-color: transparent;
+    padding: 10px 0;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    min-height: 52px;
+    max-height: 200px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    overflow-y: auto;
+}
+
+.edit-textarea:focus {
+    border-bottom: 2px solid #002060;
+}
+
+.edit-priority-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.edit-range-priority {
+    flex: 1;
+    cursor: pointer;
+    accent-color: #002060;
+}
+
+.edit-type-select {
+    padding: 6px 12px;
+    border-radius: 50px;
+    border: 2px solid #002060;
+    background-color: white;
+    color: #002060;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-align: center;
+    min-width: 120px;
+}
+
+.edit-type-select:hover {
+    background-color: #F0F4FF;
+}
+
+
+.no-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background-color: #FAFAFA;
+}
+
+.no-image-placeholder span {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 18px;
+    color: #B0B0B0;
+    font-weight: 500;
+}
+
+.detail-image-container {
+    margin-top: 15px;
+    margin-bottom: 100px;
+    width: 100%;
+    height: 400px;
+    background-color: #F8F9FB;
+    border-radius: 15px;
+    border: 2px solid #E0E0E0;
+    overflow: hidden;
+    position: relative;
+}
+
+.detail-image-container:hover {
+    border-color: #B0B0B0;
 }

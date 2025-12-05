@@ -33,7 +33,7 @@
     font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
     color: #002060;
     font-size: 36px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .login-subtitle {
@@ -145,4 +145,40 @@
     border-color: #002060;
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 8px 20px rgba(0, 32, 96, 0.4);
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background-color: #FFF2F2;
+    border: 1px solid #FFCDD2;
+    border-left: 4px solid #D32F2F;
+
+    color: #D32F2F;
+    padding: 12px 16px;
+    border-radius: 8px;
+
+    margin-bottom: 25px;
+    width: 100%;
+    box-sizing: border-box;
+
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.error-icon {
+    flex-shrink: 0;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
 }

@@ -38,7 +38,7 @@ export default function SegnalaIssue() {
         if (showSuccess) {
             const timer = setTimeout(() => {
                 setShowSuccess(false);
-                navigate('/VisualizzaIssue');
+                navigate('/visualizza-issue');
             }, 5000);
 
             return () => clearTimeout(timer);
@@ -62,7 +62,7 @@ export default function SegnalaIssue() {
         setFileName("");
 
         setShowWarning(false);
-        navigate('/VisualizzaIssue');
+        navigate('/visualizza-issue');
     };
 
     const handleImageUpload = (e) => {
@@ -105,7 +105,7 @@ export default function SegnalaIssue() {
                             className="btn-close-success"
                             onClick={() => {
                                 setShowSuccess(false);
-                                navigate('/VisualizzaIssue');
+                                navigate('/visualizza-issue');
                             }}
                         >
                             Chiudi e vai alle Issue
@@ -160,7 +160,7 @@ export default function SegnalaIssue() {
                     <label className="floating-label">Titolo *</label>
                 </div>
                 <div className="floating-label-group textarea-group">
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder={" "} rows={"4"} className={"campo campo-textarea"}/>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder={" "} rows={4} className={"campo campo-textarea"}/>
                     <label className="floating-label textarea-label">Descrizione *</label>
                 </div>
                 <div className="priority-container">
@@ -173,6 +173,13 @@ export default function SegnalaIssue() {
                         value={priority}
                         onChange={(e) => setPriority(parseInt(e.target.value))}
                         className="priority-slider"
+
+                        style={{
+                            backgroundImage: `
+                linear-gradient(to right, transparent ${((priority - 1) / 4) * 100}%, #E0E0E0 ${((priority - 1) / 4) * 100}%),
+                linear-gradient(to right, #8F00FF 0%, #0000FF 25%, #00FF00 50%, #FFFF00 75%, #FF0000 100%)
+            `
+                        }}
                     />
                     <div className={"label-numeri"}>
                         <span>1</span>
