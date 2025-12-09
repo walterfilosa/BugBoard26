@@ -15,6 +15,7 @@ import DettaglioUtente from "./DettaglioUtente";
 import {Progetti} from "./Progetti";
 import SplashScreen from "./SplashScreen";
 import {useEffect, useState} from "react";
+import { AuthProvider } from './context/AuthContext';
 
 const LayoutUtente = () => {
     return (
@@ -38,21 +39,31 @@ const LayoutAdmin = () => {
 
     function App() {
 
-        const [showSplash, setShowSplash] = useState(true);
+        const [showSplash, setShowSplash] = useState(() => {
+
+            const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
+            return !hasSeenSplash;
+        });
 
         useEffect(() => {
-            const timer = setTimeout(() => {
-                setShowSplash(false);
-            }, 3000);
+            if (showSplash) {
+                const timer = setTimeout(() => {
+                    setShowSplash(false);
 
-            return () => clearTimeout(timer);
-        }, []);
+                    sessionStorage.setItem('hasSeenSplash', 'true');
+
+                }, 3000);
+
+                return () => clearTimeout(timer);
+            }
+        }, [showSplash]);
 
         if (showSplash) {
             return <SplashScreen />;
         }
 
         return (
+            <AuthProvider>
             <div className="App">
                 <Router>
 
@@ -84,6 +95,7 @@ const LayoutAdmin = () => {
                     </Routes>
                 </Router>
             </div>
+            </AuthProvider>
         );
     }
 

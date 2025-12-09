@@ -14,7 +14,7 @@ export function DettaglioIssue() {
     const [isEditing, setIsEditing] = useState(false);
     const [editedData, setEditedData] = useState(null);
 
-    const currentUser = "Me";
+    const currentUserId = 100; //parseInt(localStorage.getItem("userId") || "0");
 
     const location = useLocation();
 
@@ -82,7 +82,6 @@ export function DettaglioIssue() {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Creiamo un URL temporaneo per l'anteprima
             const previewUrl = URL.createObjectURL(file);
 
             setEditedData(prev => ({
@@ -100,6 +99,10 @@ export function DettaglioIssue() {
     }
 
     if (!issue) return <div>Caricamento...</div>;
+
+    const isAssignedToCurrentUser = issue.assigneeId === currentUserId;
+
+    const canResolve = isAssignedToCurrentUser || isAdmin;
 
     return (
         <div className="page-init">
@@ -145,6 +148,8 @@ export function DettaglioIssue() {
                 onMarkAsSolved={handleMarkAsSolved}
                 isEditing={isEditing}
                 onStatusChange={handleStatusChange}
+
+                canResolve={canResolve}
             />
 
 
@@ -262,7 +267,7 @@ export function DettaglioIssue() {
                 <div className="detail-section">
                     <h3>Immagine</h3>
                     <div className="overlay-filename-badge">
-                        <span>File: {currentData.fileName || "immagine.jpg"}</span>
+                        <span>File: {currentData.fileName || "Nessuna immagine caricata"}</span>
                     </div>
                     <div className={`detail-image-container ${isEditing ? "editable" : ""}`} onClick={triggerFileUpload}>
                         <input
@@ -297,7 +302,7 @@ export function DettaglioIssue() {
                                 ) : (
                                     <div className="no-image-placeholder">
                                         <ImageIcon size={48} color="#B0B0B0" strokeWidth={1.5} />
-                                        <span>Nessuna immagine</span>
+                                        <span>Nessuna immagine caricata</span>
                                     </div>
                                 )}
                             </>

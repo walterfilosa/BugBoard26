@@ -211,8 +211,8 @@ export default function HomePage() {
                         projectFinalList.map(issue =>
                             <div
                                 key={issue.id}
-                                className="issue-row grid-4-cols" /* NOTA LA CLASSE AGGIUNTA */
-                                onClick={() => navigate(`/dettaglio-issue/${issue.id}`)}
+                                className="issue-row grid-4-cols"
+                                onClick={() => navigate(isAdmin ? `/admin/dettaglio-issue/${issue.id}` : `/dettaglio-issue/${issue.id}`)}
                             >
                                 <div className="col col-title">
                                     <span className="issue-title-text">{issue.title}</span>

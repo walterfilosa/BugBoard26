@@ -11,16 +11,17 @@ import {
 
 export const mockIssues = [
     {
-        id: 101, title: "Errore nel login con Google", type: "Bug", priority: 5, status: "To-do", assignee: "Me",
+        id: 101, title: "Errore nel login con Google", type: "Bug", priority: 5, status: "Assegnata", assignee: "Me",
         description: "Quando provo a cliccare sul tasto 'Accedi con Google'...",
         image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&q=80&w=1000",
-        fileName: "screenshot_errore_login.jpg" // Nome del file
+        fileName: "screenshot_errore_login.jpg",
+        assigneeId: 100
     },
     {
         id: 102, title: "Richiesta documentazione API", type: "Documentation", priority: 2, status: "Risolta", assignee: "Luigi",
         description: "Avrei bisogno della documentazione aggiornata...",
         image: null,
-        fileName: null
+        fileName: null, assigneeId: 200
     },{ id: 103, title: "Aggiungere Dark Mode", type: "Feature", priority: 3, status: "Assegnata", assignee: "Anna" },
     { id: 104, title: "Disallineamento Navbar su Mobile", type: "Bug", priority: 4, status: "To-do", assignee: "Me" },
     { id: 105, title: "Come resettare la password?", type: "Question", priority: 1, status: "Risolta", assignee: "Sofia" },
