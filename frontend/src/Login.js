@@ -4,7 +4,7 @@ import './Login.css'
 import {Eye, EyeOff, AlertCircle, Loader2} from 'lucide-react';
 import { loginUser } from './services/api';
 import { jwtDecode } from "jwt-decode";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from './context/AuthContext';
 
 export default function Login() {
 

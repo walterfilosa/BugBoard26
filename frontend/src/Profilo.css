@@ -59,7 +59,7 @@
 .section-title {
     margin: 0;
     font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
-    font-size: 20px;
+    font-size: 20pt;
     color: #002060;
     display: flex;
     align-items: center;
@@ -88,7 +88,6 @@
     border: 0;
     height: 1px;
     background: #B0B0B0;
-    margin: 30px 0;
     margin: 30px 0;
 }
 
@@ -133,13 +132,6 @@
 
 .disabled-group:focus-within {
     border-color: #E0E0E0;
-}
-
-.floating-label-group {
-    position: relative;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 20px;
 }
 
 .input-icon {
@@ -307,5 +299,32 @@
 input[type="password"].campo,
 input[type="text"].campo {
     padding-right: 45px;
+}
+
+.phone-row-container {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.prefix-group {
+    width: 114px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.number-group {
+    flex-grow: 1;
+}
+
+.prefix-search-input::placeholder {
+    color: #ccc;
+}
+.prefix-list-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+.prefix-list-scroll::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 10px;
 }
 

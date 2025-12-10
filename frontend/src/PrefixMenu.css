@@ -1,0 +1,90 @@
+.prefix-wrapper {
+    width: 120px;
+    flex-shrink: 0;
+    position: relative;
+    margin-bottom: 0 !important;
+}
+
+.custom-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+.flag-icon {
+    width: 24px;
+    height: auto;
+    border-radius: 2px;
+    object-fit: cover;
+    border: 1px solid #eee;
+    display: block;
+}
+
+.dropdown-arrow {
+    color: #B0B0B0;
+    margin-left: auto;
+}
+
+.custom-dropdown-options {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 250px;
+    min-width: 160px;
+    background: white;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 1000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.prefix-search-container {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.prefix-search-icon { color: #B0B0B0; }
+
+.prefix-search-input {
+    border: none;
+    outline: none;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 14px;
+    width: 100%;
+    color: #002060;
+}
+
+.prefix-list-scroll {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.custom-option {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 14px;
+    color: #333;
+    transition: background 0.2s;
+}
+
+.custom-option:hover {
+    background-color: #F0F4FF;
+    color: #002060;
+}

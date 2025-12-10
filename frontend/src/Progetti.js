@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Progetti.css';
-import { Search, Plus, Folder, Clock, CheckCircle, XCircle, ChevronRight, LogOut } from 'lucide-react';
+import { Search, Folder, Clock, CheckCircle, XCircle, ChevronRight, LogOut } from 'lucide-react';
 import { mockProjects } from './utils';
 import  Footer from "./Footer";
 
@@ -38,7 +38,11 @@ export function Progetti() {
         // Qui navighi alla lista issue di QUEL progetto specifico
         // Es: navigate(`/progetti/${projectId}/issues`);
         // Per ora rimandiamo alla home utente generica o dove preferisci
-        navigate('/home');
+        if (isAdmin) {
+            navigate('/admin/home');
+        } else {
+            navigate('/home');
+        }
     };
 
     return (

@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
+
         if (storedToken) {
             try {
                 const decoded = jwtDecode(storedToken);
@@ -19,9 +20,9 @@ export const AuthProvider = ({ children }) => {
                     logout();
                 } else {
                     setUser({
-                        id: decoded.sub,
-                        role: decoded.role,
-                        email: decoded.email,
+                        id: decoded.id,
+                        role: decoded.admin,
+                        email: decoded.sub,
                         token: storedToken
                     });
                 }
@@ -33,21 +34,25 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
-    // Funzione di Login
     const login = (token) => {
         localStorage.setItem("token", token);
         const decoded = jwtDecode(token);
+        const role = decoded.role;
+
+        localStorage.setItem("userRole", role);
 
         setUser({
-            id: decoded.userId || decoded.sub,
-            role: decoded.role,
-            email: decoded.email,
+            id:  decoded.id,
+            role: decoded.admin,
+            email: decoded.sub,
             token: token
         });
     };
 
     const logout = () => {
         localStorage.removeItem("token");
+
+        localStorage.removeItem("userRole");
         setUser(null);
     };
 

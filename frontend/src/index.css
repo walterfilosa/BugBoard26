@@ -39,7 +39,7 @@
 
 body {
     margin: 0;
-    font-family: var(--font-main);
+    font-family: var(--font-main), sans-serif;
     background-color: white;
 }
 
@@ -190,7 +190,7 @@ body {
 
     width: 220px;
     height: 45px;
-    background-color: white;
+    background-color: transparent;
     color: #B0B0B0;
     border: none;
     display: flex;

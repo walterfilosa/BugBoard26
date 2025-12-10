@@ -4,6 +4,7 @@ import './DettaglioIssue.css';
 import {ArrowLeft, Edit2, Trash2, Save, X, Image as ImageIcon, Upload, UploadCloud} from 'lucide-react';
 import {getTypeIcon, getStatusIcon, getStatusColor, mockIssues} from './utils';
 import StatusTracker from "./Statustracker";
+import { useAuth } from './context/AuthContext';
 
 export function DettaglioIssue() {
     const {id} = useParams();

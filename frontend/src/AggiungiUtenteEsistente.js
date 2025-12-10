@@ -44,6 +44,7 @@ export default function AggiungiUtenteEsistente({ users, onSelect, onClose }) {
                             <div className="u-col u-col-surname">COGNOME</div>
                             <div className="u-col u-col-email">EMAIL</div>
                             <div className="u-col u-col-role">RUOLO</div>
+                            <div className="u-col u-col-actions"></div>
                         </div>
 
                         <div className="users-list modal-list">

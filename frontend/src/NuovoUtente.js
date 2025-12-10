@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './NuovoUtente.css'
 import { useNavigate } from 'react-router-dom';
-import { User, ShieldCheck, Mail, Eye, EyeOff, Save, Phone, X, CheckCircle, AlertTriangle } from "lucide-react";
+import {
+    User,
+    ShieldCheck,
+    Mail,
+    Eye,
+    EyeOff,
+    Save,
+    Phone,
+    X,
+    CheckCircle,
+    AlertTriangle,
+    ArrowLeft
+} from "lucide-react";
+import PrefixMenu from "./PrefixMenu";
 
 export default function NuovoUtente() {
     const navigate = useNavigate();
@@ -15,6 +28,10 @@ export default function NuovoUtente() {
         password: '',
         role: 'user'
     });
+
+    const handlePrefixChange = (newPrefix) => {
+        setFormData({ ...formData, prefisso: newPrefix });
+    };
 
     const [showPassword, setShowPassword] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
@@ -131,6 +148,11 @@ export default function NuovoUtente() {
 
             <div className="profile-header">
 
+                <button className="btn-indietro-nuovo-utente"
+                        onClick={handleCancelRequest}>
+                    <ArrowLeft size={20}/> Torna alla lista
+                </button>
+
                         <h1>Aggiungi Utente</h1>
                         <p>Inserisci i dati per registrare un nuovo membro nel sistema.</p>
 
@@ -182,13 +204,23 @@ export default function NuovoUtente() {
                             <label className="floating-label">Data di Nascita *</label>
                         </div>
 
-                        <div className="floating-label-group">
-                            <input
-                                type="tel" name="telefono" value={formData.telefono} onChange={handleChange}
-                                className="campo" placeholder=" "
+                        <div className="phone-row-container">
+                            <PrefixMenu
+                                selectedPrefix={formData.prefisso}
+                                onSelect={handlePrefixChange}
+                                disabled={false}
                             />
-                            <label className="floating-label">Telefono *</label>
-                            <Phone className="input-icon-right" size={20} />                    </div>
+
+                            <div className="floating-label-group">
+                                <input
+                                    type="tel" name="telefono" value={formData.telefono} onChange={handleChange}
+                                    className="campo" placeholder=" "
+                                />
+                                <label className="floating-label">Telefono *</label>
+                                <Phone className="input-icon-right" size={20} />
+                            </div>
+                        </div>
+
 
                         <div className="floating-label-group">
                             <input

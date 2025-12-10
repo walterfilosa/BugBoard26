@@ -213,3 +213,32 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
         grid-template-columns: 1fr;
     }
 }
+
+.btn-indietro-nuovo-utente {
+    position: relative;
+    left: 0;
+    top: 40px;
+    transform: translateY(-50%);
+
+    width: 220px;
+    height: 45px;
+    background: transparent;
+    color: #B0B0B0;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 8px;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.btn-indietro-nuovo-utente:hover {
+    color: #002060;
+}

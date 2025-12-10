@@ -6,7 +6,7 @@ import SegnalaIssue from "./SegnalaIssue";
 import HomePage from "./HomePage";
 import Login from "./Login";
 import Footer from "./Footer";
-import Profilo from "./Profilo";
+import {Profilo} from "./Profilo";
 import {DettaglioIssue} from "./DettaglioIssue";
 import ProtectedRoute from './ProtectedRoute';
 import GestisciUtenti from "./GestisciUtenti";
@@ -67,11 +67,12 @@ const LayoutAdmin = () => {
             <div className="App">
                 <Router>
 
-                    <Routes path>
+                    <Routes>
                         <Route path="/" element={<Login/>}/>
 
+                        <Route path="/progetti" element={<Progetti/>} />
+
                         {/*<Route element={<ProtectedRoute allowedRole="user" />}>*/}
-                        <Route path="/progetti" element={<Progetti />} />
                             <Route element={<LayoutUtente/>}>
                                 <Route path="/home" element={<HomePage/>}/>
                                 <Route path="/dettaglio-issue/:id" element={<DettaglioIssue/>}/>
@@ -81,7 +82,6 @@ const LayoutAdmin = () => {
                         {/*}</Route>*/}
 
                         {/*<Route element={<ProtectedRoute allowedRole="admin" />}>*/}
-                        <Route path="/progetti" element={<Progetti />} />
                             <Route element={<LayoutAdmin/>}>
                                 <Route path="/admin/segnala-issue" element={<SegnalaIssue/>}/>
                                 <Route path="/admin/home" element={<HomePage/>}/>
@@ -91,7 +91,7 @@ const LayoutAdmin = () => {
                                 <Route path="/admin/nuovo-utente" element={<NuovoUtente />} />
                                 <Route path="/admin/dettaglio-utente/:id" element={<DettaglioUtente/>} />
                             </Route>
-                        {/*</Route>*/}
+                        {/*}</Route>*/}
                     </Routes>
                 </Router>
             </div>

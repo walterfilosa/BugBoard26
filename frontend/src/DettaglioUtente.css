@@ -145,10 +145,3 @@
     transform: translateY(-50%);
     color: #B0B0B0;
 }
-
-
-
-@media (max-width: 768px) {
-    .form-grid { grid-template-columns: 1fr; }
-    .user-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-}
