@@ -4,7 +4,7 @@ import { CheckCircle, Clock, Construction } from 'lucide-react';
 
 const steps = ["To-do", "Assegnata", "Risolta"];
 
-export default function StatusTracker({ status, onMarkAsSolved, isEditing, onStatusChange, canResolve }) {
+export default function StatusTracker({ status, onMarkAsSolved, onMarkAsAssigned, isEditing, onStatusChange, canResolve }) {
 
 
     const getStepIndex = (currentStatus) => {
@@ -80,6 +80,11 @@ export default function StatusTracker({ status, onMarkAsSolved, isEditing, onSta
             {currentStepIndex === 1 && !isEditing && canResolve && (
                 <button className="btn-quick-resolve" onClick={onMarkAsSolved}>
                     <CheckCircle size={16} /> Segna come Risolta
+                </button>
+            )}
+            {currentStepIndex === 0 && !isEditing && canResolve && (
+                <button className="btn-quick-assign" onClick={onMarkAsAssigned}>
+                    <Construction size={16} /> Assegna Issue
                 </button>
             )}
         </div>

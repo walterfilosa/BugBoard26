@@ -80,6 +80,14 @@ export function DettaglioIssue() {
         }));
     };
 
+    const handleMarkAsAssigned = () => {
+        setIssue(prev => ({
+            ...prev,
+            status: "Assegnata",
+            assigneeId: currentData.id
+        }));
+    };
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -147,6 +155,7 @@ export function DettaglioIssue() {
             <StatusTracker
                 status={isEditing ? editedData.status : issue.status}
                 onMarkAsSolved={handleMarkAsSolved}
+                onMarkAsAssigned={handleMarkAsAssigned}
                 isEditing={isEditing}
                 onStatusChange={handleStatusChange}
 
