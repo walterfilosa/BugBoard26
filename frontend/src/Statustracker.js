@@ -4,7 +4,7 @@ import { CheckCircle, Clock, Construction } from 'lucide-react';
 
 const steps = ["To-do", "Assegnata", "Risolta"];
 
-export default function StatusTracker({ status, onMarkAsSolved, onMarkAsAssigned, isEditing, onStatusChange, canResolve }) {
+export default function StatusTracker({ status, assigneeName, assigneeCognome, onMarkAsSolved, onMarkAsAssigned, isEditing, onStatusChange, canResolve }) {
 
 
     const getStepIndex = (currentStatus) => {
@@ -56,6 +56,12 @@ export default function StatusTracker({ status, onMarkAsSolved, onMarkAsAssigned
 
                     const { icon, className } = getStepConfig(index);
 
+                    const showAssignee =
+                        stepName === "Assegnata" &&
+                        assigneeName &&
+                        !isEditing &&
+                        currentStepIndex === 1;
+
                     return (
                         <React.Fragment key={index}>
                             <div className={`step-item ${className} ${isCompleted ? 'completed' : ''} ${isActive ? 'active' : ''} ${isEditing ? 'editable-step' : ''}`} onClick={() => {
@@ -63,7 +69,15 @@ export default function StatusTracker({ status, onMarkAsSolved, onMarkAsAssigned
                                     onStatusChange(stepName);
                                 }
                             }}>
-                                <span className="step-text">{stepName}</span>
+                                <span className="step-text">{stepName}
+
+                                    {showAssignee && (
+                                        <span className="assignee-text-badge">
+                                            a: {assigneeName} {assigneeCognome}
+                                        </span>
+                                    )}
+
+                                </span>
                                 <div className="step-circle">
                                     {icon}
                                 </div>
@@ -78,9 +92,9 @@ export default function StatusTracker({ status, onMarkAsSolved, onMarkAsAssigned
             </div>
 
             {currentStepIndex === 1 && !isEditing && canResolve && (
-                <button className="btn-quick-resolve" onClick={onMarkAsSolved}>
-                    <CheckCircle size={16} /> Segna come Risolta
-                </button>
+                    <button className="btn-quick-resolve" onClick={onMarkAsSolved}>
+                        <CheckCircle size={16} /> Segna come Risolta
+                    </button>
             )}
             {currentStepIndex === 0 && !isEditing && canResolve && (
                 <button className="btn-quick-assign" onClick={onMarkAsAssigned}>

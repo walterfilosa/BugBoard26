@@ -34,6 +34,13 @@ export const mockIssues = [
     { id: 112, title: "Login lento da Safari", type: "Bug", priority: 4, status: "To-do", assignee: "Marco" },
 ];
 
+export const mockTeamUsers = [
+    { id: 100, nome: "Gennaro", cognome: "Esposito", email: "gennaro@email.com", role: "user" },
+    { id: 200, nome: "Mario", cognome: "Rossi", email: "mario@email.com", role: "user" },
+    { id: 300, nome: "Luigi", cognome: "Verdi", email: "luigi@email.com", role: "user" },
+    { id: 400, nome: "Anna", cognome: "Bianchi", email: "anna@email.com", role: "user" },
+];
+
 export const mockUsers = [
     { id: 1, nome: "Mario", cognome: "Rossi", email: "mario.rossi@email.com", role: "user", dataNascita: '2025-12-09', telefono: "0818991010" },
     { id: 2, nome: "Luigi", cognome: "Verdi", email: "luigi.admin@bugboard.it", role: "admin" },

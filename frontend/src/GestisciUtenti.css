@@ -363,7 +363,9 @@
 .users-header-panel {
     background-color: #F8F9FB;
     border-bottom: 2px solid #002060;
-    padding-right: 35px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
 }
 
 .modal-search-box input:focus {
@@ -395,20 +397,97 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.2s;
+    position: relative;
+    z-index: 2;
+    margin: 2px;
+
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .user-row-panel:hover .btn-icon-add {
     background-color: #0F9A22;
     color: white;
     transform: scale(1.2);
+    box-shadow: 0 4px 10px rgba(15, 154, 34, 0.3);
 }
 
 .user-row-panel {
     border-bottom: 1px solid #F0F0F0;
-    transition: background-color 0.2s;
+
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+    transition: background-color 0.2s, z-index 0s;
 }
 
 .user-row-panel:hover {
     background-color: #F0F4FF;
+    z-index: 100;
+}
+
+.btn-icon-assign {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    position: relative;
+    z-index: 2;
+
+    margin: 2px;
+}
+
+.modal-user-row:hover .btn-icon-assign {
+    background-color: #1565c0;
+    color: white;
+    transform: scale(1.1);
+
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.modal-user-row:hover {
+    z-index: 10;
+    background-color: #fafafa;
+}
+
+.modal-user-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 60px;
+    align-items: center;
+    padding: 8px 25px;
+    gap: 15px;
+
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+    transition: z-index 0s;
+}
+
+.users-header-panel-assigneed {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 60px;
+    align-items: center;
+    padding: 15px 25px;
+    gap: 15px;
+
+    background-color: #F8F9FB;
+    border-bottom: 2px solid #002060;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+}
+
+.user-row-panel .u-col-actions {
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }

@@ -299,3 +299,11 @@
 .stepper-wrapper > :nth-child(5) {
     animation-delay: 0.9s;
 }
+
+.assignee-text-badge {
+    font-weight: 600;
+    color: #fb8c00;
+    margin-left: 4px;
+    font-size: 0.95em;
+    opacity: 0.9;
+}

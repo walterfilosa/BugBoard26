@@ -2,9 +2,11 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useParams, useNavigate, useLocation} from 'react-router-dom';
 import './DettaglioIssue.css';
 import {ArrowLeft, Edit2, Trash2, Save, X, Image as ImageIcon, Upload, UploadCloud} from 'lucide-react';
-import {getTypeIcon, getStatusIcon, getStatusColor, mockIssues} from './utils';
+import {getTypeIcon, getStatusIcon, getStatusColor, mockIssues, mockTeamUsers} from './utils';
 import StatusTracker from "./Statustracker";
+import AssegnaIssue from "./AssegnaIssue";
 import { useAuth } from './context/AuthContext';
+
 
 export function DettaglioIssue() {
     const {id} = useParams();
@@ -16,6 +18,27 @@ export function DettaglioIssue() {
     const [editedData, setEditedData] = useState(null);
 
     const currentUserId = 100; //parseInt(localStorage.getItem("userId") || "0");
+
+    const [showAssignPanel, setShowAssignPanel] = useState(false);
+
+    const handleOpenAssignPanel = () => {
+        setShowAssignPanel(true);
+    };
+
+    const handleAssignUser = (selectedUser) => {
+        console.log("Assegnando a:", selectedUser.nome);
+
+        // Aggiorna lo stato della issue
+        setIssue(prev => ({
+            ...prev,
+            status: "Assegnata",      // Cambia stato
+            assignee: selectedUser.nome, // Imposta nome visibile
+            assigneeId: selectedUser.id  // Imposta ID per i permessi
+        }));
+
+        // Chiudi il pannello
+        setShowAssignPanel(false);
+    };
 
     const location = useLocation();
 
@@ -116,6 +139,14 @@ export function DettaglioIssue() {
     return (
         <div className="page-init">
 
+            {showAssignPanel && (
+                <AssegnaIssue
+                    users={mockTeamUsers}
+                    onSelect={handleAssignUser}
+                    onClose={() => setShowAssignPanel(false)}
+                />
+            )}
+
 
             <div className="pulsanti-azioni">
                 <button className="btn-indietro"
@@ -154,8 +185,9 @@ export function DettaglioIssue() {
 
             <StatusTracker
                 status={isEditing ? editedData.status : issue.status}
+                assigneeName={issue.assignee}
                 onMarkAsSolved={handleMarkAsSolved}
-                onMarkAsAssigned={handleMarkAsAssigned}
+                onMarkAsAssigned={handleOpenAssignPanel}
                 isEditing={isEditing}
                 onStatusChange={handleStatusChange}
 
