@@ -44,8 +44,12 @@ public class UtenteService {
     }
 
     public Utente registerUser(Utente utente){
-        utente.setPassword(passwordEncoder.encode(utente.getPassword()));
-        return utenteRepo.save(utente);
+        Utente user = utenteRepo.findByEmail(utente.getEmail());
+        if(user==null){
+            utente.setPassword(passwordEncoder.encode(utente.getPassword()));
+            return utenteRepo.save(utente);
+        }
+        return null;
     }
 
     @Transactional
@@ -62,7 +66,6 @@ public class UtenteService {
 
         return null;
     }
-
 
     public List<Utente> getAllUsersFromProject(int projectId) {
         return utenteRepo.findByProgettiAssegnati_idProgetto(projectId);

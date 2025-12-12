@@ -1,6 +1,5 @@
 package org.bugboard.backend.controller;
 
-import lombok.NonNull;
 import org.bugboard.backend.model.Utente;
 import org.bugboard.backend.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +18,6 @@ public class UtenteController {
     @Autowired
     public UtenteController(UtenteService service) {
         this.service = service;
-    }
-
-    @PutMapping("/admin/{projectId}/register")
-    public ResponseEntity<@NonNull Utente> registerUser(@PathVariable int projectId, @RequestBody Utente utente){
-        int userId=service.registerUser(utente).getIdUtente();
-        return new ResponseEntity<>(service.assignProjectToUser(projectId,userId), HttpStatus.CREATED);
     }
 
     @GetMapping("/admin/{projectId}/users/others")

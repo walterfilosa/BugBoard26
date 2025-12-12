@@ -2,6 +2,7 @@ package org.bugboard.backend.controller;
 
 import lombok.NonNull;
 import org.bugboard.backend.model.UserLogin;
+import org.bugboard.backend.model.Utente;
 import org.bugboard.backend.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,15 @@ public class AuthenticationController {
         else{
             return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
         }
+    }
+
+    @PutMapping("/admin/register")
+    public ResponseEntity<@NonNull Utente> registerUser(@RequestBody Utente utente){
+        Utente result=service.registerUser(utente);
+        if(result==null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
 }
