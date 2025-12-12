@@ -25,7 +25,15 @@ public class IssueController {
         return new ResponseEntity<>(service.getAllAssignedIssues(projectId,userId), HttpStatus.OK);
     }
 
-    @GetMapping("/{projectId}/issues")
+    @GetMapping("/{projectId}/{userId}/issues/others")
+    public ResponseEntity<List<Issue>> getAllOtherIssues(
+            @PathVariable int projectId,
+            @PathVariable int userId) {
+        return new ResponseEntity<>(service.getAllOtherIssues(projectId,userId), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/admin/{projectId}/issues")
     public ResponseEntity<List<Issue>> getAllIssuesFromProject(@PathVariable int projectId) {
         return new ResponseEntity<>(service.getAllIssuesFromProject(projectId), HttpStatus.OK);
     }

@@ -6,6 +6,7 @@ import org.bugboard.backend.model.Utente;
 import org.bugboard.backend.repository.IssueRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,11 @@ public class IssueService {
     }
 
     public List<Issue> getAllAssignedIssues(int projectId,int userId) {
-        return issueRepo.findIssuesByProgetto_IdProgettoAndUtenteAssegnato_IdUtente(projectId,userId);
+        return issueRepo.findIssuesByProgetto_IdProgettoAndUtenteAssegnato_IdUtenteOrderByStato(projectId,userId);
+    }
+
+    public List<Issue> getAllOtherIssues(int projectId,int userId) {
+        return issueRepo.findIssuesByProgetto_IdProgettoAndUtenteAssegnato_IdUtenteIsNotOrProgetto_IdProgettoAndStato(projectId,userId,projectId,"ToDo");
     }
 
     public List<Issue> getAllIssuesFromProject(int projectId) {
@@ -33,10 +38,14 @@ public class IssueService {
         return optionalService.checkIssue(issueId);
     }
 
+    @Transactional
     public Issue addIssue(int projectId,int userId,Issue issue) {
         Progetto project=optionalService.checkProgetto(projectId);
         Utente user=optionalService.checkUtente(userId);
         if(project!=null && user!=null) {
+            if(!project.getSetUtenti().contains(user)) {
+                return null;
+            }
             issue.setProgetto(project);
             issue.setUtenteCreatore(user);
             issue.setStato("ToDo");
