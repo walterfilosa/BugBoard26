@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './Login.css'
-import {Eye, EyeOff, AlertCircle, Loader2} from 'lucide-react';
+import {Eye, EyeOff, AlertCircle} from 'lucide-react';
 import { loginAPI } from './services/api';
 import LoadingSpinner from "./LoadingSpinner";
 import { useAuth } from './context/AuthContext';
@@ -30,15 +30,11 @@ export default function Login() {
         setIsLoading(true);
 
         try {
-            // 1. CHIAMIAMO L'API MOCK
             const response = await loginAPI(email, password);
 
             if (response.success) {
-                // 2. PASSIAMO IL TOKEN FINTO AL CONTEXT
-                // Il context lo decodificherà, vedrà "admin": true/false e imposterà il ruolo
                 login(response.accessToken);
 
-                // 3. REINDIRIZZIAMO
                 navigate('/progetti');
             } else {
                 setError("Credenziali non valide");
