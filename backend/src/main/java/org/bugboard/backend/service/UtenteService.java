@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -79,5 +80,17 @@ public class UtenteService {
 
     public Utente getUserFromId(int userId) {
         return optionalService.checkUtente(userId);
+    }
+
+    public Utente updateUser(Utente updatedUser) {
+        Utente oldUser;
+        Optional<Utente> optUtente = utenteRepo.findById(updatedUser.getIdUtente());
+        if(optUtente.isPresent()) {
+            oldUser = optUtente.get();
+            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            updatedUser.setProgettiAssegnati(oldUser.getProgettiAssegnati());
+            return utenteRepo.save(updatedUser);
+        }
+        return null;
     }
 }

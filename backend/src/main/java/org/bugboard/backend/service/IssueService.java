@@ -58,9 +58,9 @@ public class IssueService {
         return null;
     }
 
-    public Issue updateIssue(int issueId,Issue updatedIssue) {
+    public Issue updateIssue(Issue updatedIssue) {
         Issue oldIssue;
-        Optional<Issue> optIssue = issueRepo.findById(issueId);
+        Optional<Issue> optIssue = issueRepo.findById(updatedIssue.getIdIssue());
         if (optIssue.isPresent()) {
             oldIssue = optIssue.get();
             updatedIssue.setProgetto(oldIssue.getProgetto());

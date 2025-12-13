@@ -58,9 +58,9 @@ public class IssueController {
         }
     }
 
-    @PutMapping("/admin/issues/{issueId}/update")
-    public ResponseEntity<Issue> updateIssue(@PathVariable int issueId, @RequestBody Issue issue) {
-        Issue newIssue=service.updateIssue(issueId,issue);
+    @PutMapping("/admin/issues/update")
+    public ResponseEntity<Issue> updateIssue(@RequestBody Issue issue) {
+        Issue newIssue=service.updateIssue(issue);
         if(newIssue!=null) {
             return new ResponseEntity<>(newIssue,HttpStatus.CREATED);
         }

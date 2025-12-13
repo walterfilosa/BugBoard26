@@ -33,9 +33,9 @@ public class Utente {
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name="Lavora",
-            joinColumns = @JoinColumn(name="idutente"),
-            inverseJoinColumns = @JoinColumn(name="idprogetto")
+    @JoinTable(name= "Lavora",
+            joinColumns = @JoinColumn(name= "idutente"),
+            inverseJoinColumns = @JoinColumn(name= "idprogetto")
     )
     private Set<Progetto> progettiAssegnati=new HashSet<>();
 
