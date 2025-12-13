@@ -27,7 +27,7 @@ public class AuthenticationController {
             return new ResponseEntity<>(response,HttpStatus.UNAUTHORIZED);
         }
         else{
-            return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }
     }
 
