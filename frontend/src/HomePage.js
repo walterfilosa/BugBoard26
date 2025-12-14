@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './HomePage.css'
-import {useLocation, useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getTypeIcon, getStatusColor, getStatusIcon } from './utils';
 import { ChevronUp, ChevronDown, AlertCircle} from 'lucide-react';
 import {FiltersBar} from './FiltersBar';
@@ -17,7 +17,6 @@ export default function HomePage() {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
-    const location = useLocation();
     const { user, isAdmin } = useAuth();
 
     const currentProjectId = localStorage.getItem("currentProjectId") || 1;
@@ -36,7 +35,7 @@ export default function HomePage() {
              try {
                  setLoading(true);
                  const data = await getIssuesByProjectId(currentProjectId); // Chiamata vera al Back-End
-                 setIssues(data); // Salva i dati veri
+                 setIssues(data);
              } catch (err) {
                  console.error(err);
                  setError("Impossibile caricare le issue. Controlla la connessione.");
@@ -130,10 +129,10 @@ export default function HomePage() {
     }
     if (error) {
         return (
-            <div style={{padding: 40, textAlign: 'center', color: 'red', display:'flex', flexDirection:'column', alignItems:'center', gap:10}}>
+            <div style={{padding: 100, textAlign: 'center', color: 'red', display:'flex', flexDirection:'column', alignItems:'center'}}>
                 <AlertCircle size={48} />
                 <p>{error}</p>
-                <button style={{padding:'8px 16px', cursor:'pointer'}} onClick={() => window.location.reload()}>Riprova</button>
+                <button className="riprova-button" onClick={() => window.location.reload()}>Riprova</button>
             </div>
         );
     }

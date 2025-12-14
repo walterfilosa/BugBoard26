@@ -1,4 +1,6 @@
-/* src/components/LoadingSpinner.css */
+:root {
+    --size: 100px;
+}
 
 .loading-container {
     display: flex;
@@ -6,10 +8,9 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100%;       /* Si adatta al contenitore padre */
-    min-height: 50vh;   /* Altezza minima per centrare bene visivamente */
+    height: 100%;
+    min-height: 50vh;
     animation: fadeIn 0.5s ease-in;
-    margin-top: 0px;
 }
 
 .loading-text {
@@ -19,7 +20,6 @@
     font-size: 16pt;
 }
 
-/* --- KEYFRAMES --- */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -31,14 +31,7 @@
 }
 
 .loading-logo-spinning {
-    width: 100px; /* Un po' più piccolo sta meglio quando ruota */
-    height: auto;
     margin-bottom: 40px;
-    margin-top: 140px;
 
-    /* Applica l'animazione di rotazione continua */
-    /* 1.5s = durata di un giro completo. Aumenta per rallentare. */
-    /* linear = velocità costante (migliore per la rotazione) */
     animation: spin 1.5s linear infinite;
 }
-

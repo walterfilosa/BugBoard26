@@ -50,6 +50,7 @@ export default function Login() {
     return (
         <div className="login-page">
             <div className="login-card">
+
                 <img src="/Logo/LogoBugBoard26.svg" alt={"Logo di BugBoard"} className="login-logo"/>
                 <h2 className="login-title">Benvenuto</h2>
                 <p className="login-subtitle">Inserisci le tue credenziali per accedere</p>
@@ -60,6 +61,14 @@ export default function Login() {
                 </div>}
 
                 <form onSubmit={handleSubmit} className="login-form">
+                    <div className="login-inputs-wrapper">
+
+                        {isLoading && (
+                            <div className="loading-overlay">
+                                <LoadingSpinner logoWidth="100px" paddingTop="40px"/>
+                            </div>
+                        )}
+
                     <div className="floating-label-group login-input-group">
                         <input autoFocus
                             type="email"
@@ -69,6 +78,7 @@ export default function Login() {
                             className="campo"
                             placeholder=" "
                             required
+                               disabled={isLoading}
                         />
                         <label className="floating-label">Email</label>
                     </div>
@@ -81,6 +91,7 @@ export default function Login() {
                             className="campo password-field"
                             placeholder=" "
                             required
+                            disabled={isLoading}
                         />
                         <label className="floating-label">Password</label>
 
@@ -90,20 +101,16 @@ export default function Login() {
                                 className="toggle-password"
                                 onMouseDown={(e) => e.preventDefault()}
                                 onClick={() => setShowPassword(!showPassword)}
+                                disabled={isLoading}
                             >
                                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                             </button>
                         )}
                     </div>
+                    </div>
 
                     <button type="submit" className="btnAccedi" disabled={isLoading}>
-                        {isLoading ? (
-                            <span style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-                                <LoadingSpinner message="Accesso..."/>
-                            </span>
-                        ) : (
-                            "Entra"
-                        )}
+                        {isLoading ? "Accesso in corso..." : "Accedi"}
                     </button>
 
                 </form>
