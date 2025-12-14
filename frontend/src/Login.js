@@ -32,16 +32,16 @@ export default function Login() {
         try {
             const response = await loginAPI(email, password);
 
-            if (response.success) {
+            if (response && response.accessToken) {
                 login(response.accessToken);
 
                 navigate('/progetti');
             } else {
-                setError("Credenziali non valide");
+                setError("Risposta del server non valida.");
             }
 
         } catch (err) {
-            setError("Errore durante il login. Riprova.");
+            setError(err.message === "Credenziali errate" ? "Email o password non corretti" : "Errore durante il login.");
         } finally {
             setIsLoading(false);
         }
@@ -96,7 +96,7 @@ export default function Login() {
                         )}
                     </div>
 
-                    <button onClick={handleSubmit} className="btnAccedi" disabled={isLoading}>
+                    <button type="submit" className="btnAccedi" disabled={isLoading}>
                         {isLoading ? (
                             <span style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
                                 <LoadingSpinner message="Accesso..."/>
