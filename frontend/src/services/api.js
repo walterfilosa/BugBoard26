@@ -112,7 +112,9 @@ export const getProjectsByUserId = async (userId) => {
         method: 'GET',
         headers: getHeaders()
     });
-    return handleResponse(response);
+    const data = await handleResponse(response);
+
+    return data.map(mapBackendProjectToFrontend);
 };
 
 export const getAssignedActiveProjectsFromUserId = async (userId) => {
@@ -120,7 +122,9 @@ export const getAssignedActiveProjectsFromUserId = async (userId) => {
         method: 'GET',
         headers: getHeaders()
     });
-    return handleResponse(response);
+    const data = await handleResponse(response);
+
+    return data.map(mapBackendProjectToFrontend);
 };
 
 export const getIssuesByProjectId = async (projectId) => {
@@ -230,5 +234,15 @@ const mapBackendUserToFrontend = (backendUser) => {
         dataNascita: backendUser.dataNascita,
         role: backendUser.isAdmin ? 'admin' : 'user',
         isAdmin: backendUser.isAdmin
+    };
+};
+
+const mapBackendProjectToFrontend = (backendProject) => {
+    if (!backendProject) return null;
+    return {
+        id: backendProject.idProgetto,
+        title: backendProject.titolo,
+        description: backendProject.descrizione,
+        status: backendProject.stato
     };
 };
