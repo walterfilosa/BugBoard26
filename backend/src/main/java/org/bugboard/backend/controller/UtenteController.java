@@ -40,7 +40,7 @@ public class UtenteController {
     public ResponseEntity<Utente> updateUser(@RequestBody Utente user) {
         Utente updatedUser=service.updateUser(user);
         if(updatedUser!=null){
-            return new ResponseEntity<>(updatedUser,HttpStatus.OK);
+            return new ResponseEntity<>(updatedUser,HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
