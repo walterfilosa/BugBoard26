@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
             setUser({
                 token: storedToken,
                 role: storedRole,
-                idUtente: storedId,
+                id: storedId,
                 email: storedEmail
             });
         }

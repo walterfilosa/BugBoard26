@@ -144,7 +144,7 @@ export const assignProjectToUser = async (userId, projectId) => {
 };
 
 export const getAllUsersExceptProject = async (projectId) => {
-    const response = await fetch(`${BASE_URL}/users?excludeProjectId=${projectId}`, {
+    const response = await fetch(`${BASE_URL}/admin/${projectId}/users/others`, {
         method: 'GET',
         headers: getHeaders()
     });
