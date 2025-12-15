@@ -29,7 +29,8 @@ export default function NuovoUtente() {
         telefono: '',
         email: '',
         password: '',
-        role: 'user'
+        role: 'user',
+        prefisso: '+39'
     });
 
     const handlePrefixChange = (newPrefix) => {
@@ -116,8 +117,8 @@ export default function NuovoUtente() {
         try {
             const createdUser = await createUser(userPayload);
 
-            if (createdUser && createdUser.idUtente) {
-                await assignProjectToUser(createdUser.idUtente, currentProjectId);
+            if (createdUser && createdUser.id) {
+                await assignProjectToUser(createdUser.id, currentProjectId);
 
                 setShowSuccess(true);
             } else {

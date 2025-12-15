@@ -1,0 +1,48 @@
+.error-view-container {
+    padding: 40px;
+    text-align: center;
+    color: #d32f2f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    height: 100%;
+    justify-content: center;
+}
+
+.error-view-icon {
+    stroke-width: 1.5px;
+    animation: pulse 2s infinite;
+}
+
+.error-view-message {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 18px;
+    margin: 0;
+    max-width: 400px;
+    line-height: 1.4;
+}
+
+.btn-retry {
+    margin-top: 10px;
+    padding: 10px 24px;
+    background-color: #ffffff;
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+    border-radius: 8px;
+    font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-retry:hover {
+    background-color: #d32f2f;
+    color: white;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}

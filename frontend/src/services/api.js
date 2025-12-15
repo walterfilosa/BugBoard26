@@ -9,12 +9,34 @@ const getHeaders = () => {
 };
 
 const handleResponse = async (response) => {
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || `Errore HTTP: ${response.status}`);
+    if (response.status === 401) {
+        console.warn("Sessione scaduta o non valida.");
+        localStorage.removeItem("token");
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("userEmail");
+        window.location.href = '/';
+        throw new Error("Sessione scaduta. Effettua nuovamente il login.");
     }
-    if (response.status === 204) return null;
-    return response.json();
+    if (!response.ok) {
+        let errorMessage;
+        try {
+            const errorBody = await response.json();
+            errorMessage = errorBody.message || JSON.stringify(errorBody);
+        } catch {
+            errorMessage = await response.text();
+        }
+        throw new Error(errorMessage || `Errore HTTP: ${response.status}`);
+    }
+    if (response.status === 204) {
+        return null;
+    }
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+        return response.json();
+    } else {
+        return response.text();
+    }
 };
 
 export const loginAPI = async (email, password) => {
@@ -187,7 +209,7 @@ export const createUser = async (userData) => {
     };
 
     const response = await fetch(`${BASE_URL}/admin/register`, {
-        method: 'POST',
+        method: 'PUT',
         headers: getHeaders(),
         body: JSON.stringify(payload)
     });

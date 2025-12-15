@@ -6,6 +6,7 @@ import  Footer from "./Footer";
 import { useAuth } from './context/AuthContext';
 import { getProjectsByUserId, getAssignedActiveProjectsFromUserId } from './services/api';
 import LoadingSpinner from './LoadingSpinner';
+import ErrorMessage from "./ErrorMessage";
 
 export function Progetti() {
     const navigate = useNavigate();
@@ -78,11 +79,7 @@ export function Progetti() {
     if (loading) return <LoadingSpinner message="Recupero i tuoi progetti..." />;
 
     if (error) return (
-        <div style={{padding: 40, textAlign: 'center', color: 'red', display:'flex', flexDirection:'column', alignItems:'center', gap:10}}>
-            <AlertCircle size={48} />
-            <p>{error}</p>
-            <button className="btnEsci-project" onClick={() => window.location.reload()}>Riprova</button>
-        </div>
+        <ErrorMessage message="Impossibile caricare gli utenti"/>
     );
 
     if (!user) {

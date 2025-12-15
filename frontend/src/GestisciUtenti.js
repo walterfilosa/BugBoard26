@@ -120,20 +120,12 @@ export default function GestisciUtenti() {
         console.log(`ID inviato al backend: ${userToAdd.id}`);
 
         try {
-            // 1. Chiamata API al Backend
             await assignProjectToUser(userToAdd.id, currentProjectId);
-
-            // 2. Aggiornamento Ottimistico Frontend
-            // Aggiungiamo alla lista principale
             setUsersList(prev => [...prev, userToAdd]);
-            // Rimuoviamo dalla lista "disponibili"
             setAvailableUsers(prev => prev.filter(u => u.id !== userToAdd.id));
-
-            // 3. Feedback
             setShowAddPanel(false);
             setAddedUserName(`${userToAdd.nome} ${userToAdd.cognome}`);
             setShowSuccess(true);
-
         } catch (err) {
             alert("Errore durante l'aggiunta dell'utente.");
         }
@@ -148,7 +140,7 @@ export default function GestisciUtenti() {
 
     if (error) return (
         <div style={{padding: 40, textAlign: 'center', color: 'red'}}>
-            <AlertCircle size={48} style={{margin:'0 auto 10px'}}/>
+            <AlertCircle size={48} style={{margin:'80px auto 10px'}}/>
             <p>{error}</p>
             <button className="btn-action" onClick={() => window.location.reload()} style={{marginTop:20}}>Riprova</button>
         </div>
