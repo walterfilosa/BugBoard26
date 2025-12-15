@@ -53,9 +53,7 @@ public class IssueController {
         if(newIssue!=null) {
             return new ResponseEntity<>(newIssue,HttpStatus.CREATED);
         }
-        else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/admin/issue/update")
@@ -64,9 +62,7 @@ public class IssueController {
         if(newIssue!=null) {
             return new ResponseEntity<>(newIssue,HttpStatus.CREATED);
         }
-        else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/admin/issue/{issueId}")
@@ -75,9 +71,7 @@ public class IssueController {
         if(issue!=null) {
             return new ResponseEntity<>(issue,HttpStatus.OK);
         }
-        else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/admin/issues/{issueId}/assign/{userId}")
@@ -88,9 +82,7 @@ public class IssueController {
         if(newIssue!=null) {
             return new ResponseEntity<>(newIssue,HttpStatus.OK);
         }
-        else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/issues/{issueId}/solved")
@@ -99,9 +91,7 @@ public class IssueController {
         if(issue!=null) {
             return new ResponseEntity<>(issue,HttpStatus.OK);
         }
-        else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }
