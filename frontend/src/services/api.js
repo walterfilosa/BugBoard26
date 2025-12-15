@@ -209,7 +209,7 @@ export const createUser = async (userData) => {
     };
 
     const response = await fetch(`${BASE_URL}/admin/register`, {
-        method: 'PUT',
+        method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify(payload)
     });
