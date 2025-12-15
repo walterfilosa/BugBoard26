@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './About.css';
 import { LogIn } from 'lucide-react';
 import Footer from "./Footer";
@@ -9,7 +9,11 @@ export default function About() {
     const [showSplash, setShowSplash] = useState(true);
     const [activeSection, setActiveSection] = useState(null);
 
+    const [cursorTop, setCursorTop] = useState(0);
+
     const sectionRefs = useRef({});
+
+    const sidebarItemRefs = useRef({});
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -25,7 +29,7 @@ export default function About() {
 
         const observerOptions = {
             root: null,
-            rootMargin: '-20% 0px -60% 0px',
+            rootMargin: '-20% 0px -50% 0px',
             threshold: 0
         };
 
@@ -45,6 +49,21 @@ export default function About() {
 
         return () => observer.disconnect();
     }, [showSplash]);
+
+    useEffect(() => {
+        if (activeSection && sidebarItemRefs.current[activeSection]) {
+            const activeLi = sidebarItemRefs.current[activeSection];
+            let newTop = activeLi.offsetTop + (activeLi.offsetHeight / 2);
+
+            newTop = newTop - 15;
+
+            setCursorTop(newTop);
+        } else if (sections.length > 0 && sidebarItemRefs.current[sections[0].id]) {
+            const firstLi = sidebarItemRefs.current[sections[0].id];
+            let newTop = firstLi.offsetTop + (firstLi.offsetHeight / 2) - 15;
+            setCursorTop(newTop);
+        }
+    }, [activeSection]);
 
 
     const scrollToSection = (sectionId) => {
@@ -88,18 +107,32 @@ export default function About() {
 
                 <div className="about-content-wrapper">
                     <aside className="about-sidebar">
-                        <ul>
-                            {sections.map((section) => (
-                                <li key={section.id}>
+                        <div className="timeline-container">
+                            <div className="timeline-line"></div>
+                            <img
+                                src="/Logo/LogoSpin.png"
+                                alt="Timeline Cursor"
+                                className="timeline-cursor-logo"
+                                style={{ top: `${cursorTop}px` }}
+                            />
+
+                            <ul className="timeline-list">
+                                {sections.map((section) => (
+                                    <li
+                                        key={section.id}
+                                        ref={el => sidebarItemRefs.current[section.id] = el}
+                                        className={activeSection === section.id ? 'active' : ''}
+                                    >
                                     <span
-                                        className={`sidebar-link ${activeSection === section.id ? 'active' : ''}`}
+                                        className="sidebar-link"
                                         onClick={() => scrollToSection(section.id)}
                                     >
                                         {section.title}
                                     </span>
-                                </li>
-                            ))}
-                        </ul>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </aside>
 
                     <main className="about-main-text">
@@ -122,7 +155,7 @@ export default function About() {
                         <section id="mission" className="content-section" ref={el => sectionRefs.current['mission'] = el}>
                             <h2>La nostra Mission</h2>
                             <p>
-                                La nostra missione è rendere più facile la gestione dei bug da parte degli sviluppatori e degli amministratori all'interno di un team.
+                                La nostra missione è rendere più facile la gestione delle issue da parte degli sviluppatori e degli amministratori all'interno di un team.
                             </p>
                         </section>
                         <section id="features" className="content-section" ref={el => sectionRefs.current['features'] = el}>
@@ -139,17 +172,22 @@ export default function About() {
                         <section id="project" className="content-section" ref={el => sectionRefs.current['project'] = el}>
                             <h2>Il Progetto</h2>
                             <p>
-                                BugBoard26 è un progetto curriculare propedeutico all'insegnamento di Ingegneria del Software.
+                                BugBoard26 è un progetto universitario, propedeutico all'insegnamento di Ingegneria del Software.
+                                La sua realizzazione è stata possibile pertanto grazie all'Università degli Studi di Napoli Federico II,
+                                in particolare al DIETI (Dipartimento di Ingegneria Elettrica e Tecnologie dell'Informazione) e al
+                                Corso di Studi in Informatica, coordinato dal Prof. Sergio Di Martino.
                             </p>
                         </section>
                         <section id="team" className="content-section" ref={el => sectionRefs.current['team'] = el}>
                             <h2>Il Team</h2>
                             <p>
-                                Siamo un team formato da due sviluppatori giovani, studenti del Corso di Studi Triennale di Informatica presso l'<b><a href="https://www.unina.it"> Università degli Studi di Napoli "Federico II".</a></b>
+                                Siamo un team formato da due giovani sviluppatori studenti del Corso di Studi Triennale di Informatica presso l'<Link to={"https://www.unina.it"} className={"link-pulito"}> Università degli Studi di Napoli "Federico II"</Link>.<br/>
+                                Vincenzo Donadio<br/>
+                                Walter Filosa
                             </p>
+                            <hr/>
                             <p>
-                                Donadio Vincenzo <br/>
-                                Filosa Walter
+                                Gli Autori
                             </p>
                         </section>
 
