@@ -65,6 +65,7 @@
     top: 0;
     z-index: 100;
     border-bottom: 1px solid #eaeaea;
+
 }
 
 .about-header-logo {
@@ -153,6 +154,22 @@
     font-size: 32px;
     color: #002060;
     margin-bottom: 20px;
+}
+
+.project-images-container {
+    display: flex;
+    gap: 70px;
+    margin-bottom: 0;
+    flex-wrap: wrap;
+}
+
+.project-image {
+    flex: 1;
+    max-width: 100%;
+    height: 140px;
+    object-fit: contain;
+
+    min-width: 280px;
 }
 
 .content-section p {
@@ -253,4 +270,91 @@
     color: #002060;
     font-weight: 700;
     transform: translateX(5px);
+}
+
+.interactive-logo-container {
+    position: relative; /* Necessario per contenere gli elementi assoluti al suo interno */
+    display: inline-block; /* Fa sì che il contenitore si adatti alla larghezza del testo */
+}
+
+.hover-walking-logo {
+    position: absolute;
+    top: 50%;
+    left: 0; /* Parte da sinistra */
+    transform: translateY(-50%) scale(0); /* Inizialmente piccolo o invisibile */
+    height: 24px; /* Dimensione del logo */
+    width: auto;
+    z-index: 3;
+    pointer-events: none;
+    transition: transform 0.2s;
+}
+
+.wipe-container:hover .placeholder-text {
+    opacity: 0;
+}
+
+.interactive-logo-container:hover .original-text {
+    opacity: 0;
+}
+
+/* Quando passi il mouse sul contenitore, il logo appare e inizia l'animazione */
+.interactive-logo-container:hover .hover-walking-logo {
+    transform: translateY(-50%) scale(1);
+    /* Animazione movimento */
+    animation: moveBug 2.5s linear infinite;
+}
+
+.interactive-logo-container:hover .revealed-text {
+    /* Animazione svelamento */
+    animation: revealText 2.5s linear infinite;
+}
+
+
+@keyframes revealText {
+    0% { width: 0%; }
+    15% { width: 0%; } /* Piccola pausa iniziale per far apparire il logo */
+    85% { width: 100%; } /* Finisce di svelare prima della fine del ciclo */
+    100% { width: 100%; }
+}
+
+@keyframes moveBug {
+    0% {
+        left: 0%;
+        transform: translateY(-50%) rotate(-5deg);
+    }
+    15% {
+        left: 0%; /* Resta fermo un attimo mentre appare */
+    }
+    85% {
+        left: 100%; /* Arriva alla fine del testo */
+        transform: translateY(-50%) rotate(5deg);
+    }
+    90% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 0; /* Scompare alla fine */
+        left: 100%;
+    }
+    100% {
+        opacity: 0;
+        left: 0%; /* Reset invisibile */
+    }
+}
+
+.placeholder-text {
+    opacity: 1;
+    transition: opacity 0.1s;
+}
+
+.revealed-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #002060;
+    z-index: 2;
 }

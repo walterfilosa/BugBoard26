@@ -149,7 +149,16 @@ export default function About() {
                         <section id="intro" className="content-section" ref={el => sectionRefs.current['intro'] = el}>
                             <h2>Cos'è BugBoard</h2>
                             <p>
-                                <span className="testo-evidenza">BugBoard26®</span> è una piattaforma per la gestione collaborativa di issue in progetti software. Il sistema consente a team di sviluppo di segnalare problemi relativi a un progetto, monitorarne lo stato, assegnarli a membri del team e tenere traccia delle attività di risoluzione. Il sistema consiste in un’applicazione web-based, attraverso cui gli utenti possono fruire delle funzionalità in modo intuitivo e rapido.
+                                <span className="interactive-logo-container">
+
+                                    <span className="testo-evidenza placeholder-text">BugBoard26®</span>
+                                    <span className="testo-evidenza revealed-text">BugBoard26®</span>
+                                <img
+                                    src="/Logo/LogoSpin.png"
+                                    alt="walking bug"
+                                    className="hover-walking-logo"
+                                />
+                                </span> è una piattaforma per la gestione collaborativa di issue in progetti software. Il sistema consente a team di sviluppo di segnalare problemi relativi a un progetto, monitorarne lo stato, assegnarli a membri del team e tenere traccia delle attività di risoluzione. Il sistema consiste in un’applicazione web-based, attraverso cui gli utenti possono fruire delle funzionalità in modo intuitivo e rapido.
                             </p>
                         </section>
                         <section id="mission" className="content-section" ref={el => sectionRefs.current['mission'] = el}>
@@ -171,11 +180,23 @@ export default function About() {
                         </section>
                         <section id="project" className="content-section" ref={el => sectionRefs.current['project'] = el}>
                             <h2>Il Progetto</h2>
+                            <div className="project-images-container">
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/it/a/a5/Federico_II_University_Logo.svg"
+                                    alt="Descrizione immagine 1"
+                                    className="project-image"
+                                />
+                                <img
+                                    src="http://wpage.unina.it/stavallo/images/logo_dieti.png"
+                                    alt="Descrizione immagine 2"
+                                    className="project-image"
+                                />
+                            </div>
                             <p>
                                 BugBoard26 è un progetto universitario, propedeutico all'insegnamento di Ingegneria del Software.
-                                La sua realizzazione è stata possibile pertanto grazie all'Università degli Studi di Napoli Federico II,
-                                in particolare al DIETI (Dipartimento di Ingegneria Elettrica e Tecnologie dell'Informazione) e al
-                                Corso di Studi in Informatica, coordinato dal Prof. Sergio Di Martino.
+                                La sua realizzazione è stata possibile pertanto grazie all'<Link to={"https://www.unina.it"} className={"link-pulito"}>Università degli Studi di Napoli Federico II</Link>,
+                                in particolare al <Link to={"https://www.dieti.unina.it"} className={"link-pulito"}>DIETI</Link> (Dipartimento di Ingegneria Elettrica e Tecnologie dell'Informazione) e al
+                                <Link to={"https://www.informatica.dieti.unina.it"} className={"link-pulito"}> Corso di Studi in Informatica</Link>, coordinato dal <Link to={"https://www.docenti.unina.it/sergio.dimartino"} className={"link-pulito"}>Prof. Sergio Di Martino</Link>.
                             </p>
                         </section>
                         <section id="team" className="content-section" ref={el => sectionRefs.current['team'] = el}>
