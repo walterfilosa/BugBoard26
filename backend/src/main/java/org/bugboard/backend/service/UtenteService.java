@@ -87,8 +87,16 @@ public class UtenteService {
         Optional<Utente> optUtente = utenteRepo.findById(updatedUser.getIdUtente());
         if(optUtente.isPresent()) {
             oldUser = optUtente.get();
-            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            if(updatedUser.getPassword()!=null) {
+                updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            }
+            else {
+                updatedUser.setPassword(oldUser.getPassword());
+
+            }
+            updatedUser.setIsAdmin(oldUser.getIsAdmin());
             updatedUser.setProgettiAssegnati(oldUser.getProgettiAssegnati());
+
             return utenteRepo.save(updatedUser);
         }
         return null;
