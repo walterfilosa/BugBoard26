@@ -4,8 +4,7 @@ import { CheckCircle, Clock, Construction } from 'lucide-react';
 
 const steps = ["To-do", "Assegnata", "Risolta"];
 
-export default function StatusTracker({ status, assigneeName, assigneeCognome, onMarkAsSolved, onMarkAsAssigned, isEditing, onStatusChange, canResolve }) {
-
+export default function StatusTracker({ status, assigneeName, onMarkAsSolved, onMarkAsAssigned, isEditing, onStatusChange, canResolve }) {
 
     const getStepIndex = (currentStatus) => {
         if (!currentStatus) return 0;
@@ -55,6 +54,7 @@ export default function StatusTracker({ status, assigneeName, assigneeCognome, o
                     const showAssignee =
                         stepName === "Assegnata" &&
                         assigneeName &&
+                        assigneeName !== "Non assegnato" &&
                         !isEditing &&
                         currentStepIndex === 1;
 
@@ -62,13 +62,11 @@ export default function StatusTracker({ status, assigneeName, assigneeCognome, o
                         <React.Fragment key={index}>
                             <div className={`step-item ${className} ${isCompleted ? 'completed' : ''} ${isActive ? 'active' : ''}`}>
                                 <span className="step-text">{stepName}
-
                                     {showAssignee && (
                                         <span className="assignee-text-badge">
-                                            a: {assigneeName} {assigneeCognome}
+                                            a: {assigneeName}
                                         </span>
                                     )}
-
                                 </span>
                                 <div className="step-circle">
                                     {icon}
@@ -84,9 +82,9 @@ export default function StatusTracker({ status, assigneeName, assigneeCognome, o
             </div>
 
             {currentStepIndex === 1 && !isEditing && canResolve && (
-                    <button className="btn-quick-resolve" onClick={onMarkAsSolved}>
-                        <CheckCircle size={16} /> Segna come Risolta
-                    </button>
+                <button className="btn-quick-resolve" onClick={onMarkAsSolved}>
+                    <CheckCircle size={16} /> Segna come Risolta
+                </button>
             )}
             {currentStepIndex === 0 && !isEditing && canResolve && (
                 <button className="btn-quick-assign" onClick={onMarkAsAssigned}>

@@ -85,7 +85,7 @@ export const createIssue = async (projectId, userId, issueData) => {
         descrizione: issueData.descrizione,
         tipo: issueData.tipo,
         priorita: parseInt(issueData.priorita),
-        stato: "To-do",
+        stato: "ToDo",
         linkImmagine: issueData.linkImmagine,
         idProgetto: parseInt(projectId),
         EmailCr: issueData.EmailCr || null
@@ -102,14 +102,14 @@ export const createIssue = async (projectId, userId, issueData) => {
 
 export const updateIssue = async (updatedData) => {
     const payload = {
-        idIssue: updatedData.idIssue,
+        idIssue: updatedData.id || updatedData.idIssue,
         titolo: updatedData.title,
         descrizione: updatedData.description,
         tipo: updatedData.type,
         priorita: parseInt(updatedData.priority),
         stato: updatedData.status,
         linkImmagine: updatedData.image,
-        EmailAss: updatedData.assigneeEmail
+        idAssegnatario: updatedData.assigneeId || null
     };
 
     const response = await fetch(`${BASE_URL}/admin/issue/update`, {
@@ -229,6 +229,7 @@ export const updateUser = async (userData) => {
 
 const mapBackendIssueToFrontend = (backendIssue) => {
     if (!backendIssue) return null;
+
     return {
         id: backendIssue.idIssue,
         title: backendIssue.titolo,
@@ -238,10 +239,11 @@ const mapBackendIssueToFrontend = (backendIssue) => {
         status: backendIssue.stato,
         image: backendIssue.linkImmagine,
         author: backendIssue.EmailCr,
-        assigneeEmail: backendIssue.EmailAss || null,
-        assigneeName: (backendIssue.EmailAss) ?
-            (backendIssue.EmailAss).split('@')[0] : "Non assegnato",
-        projectId: backendIssue.idProgetto || backendIssue.IdProgetto
+        assigneeId: backendIssue.utenteAssegnato.idUtente,
+        assigneeEmail: backendIssue.utenteAssegnato.email,
+        assigneeName: (backendIssue.EmailAss || backendIssue.emailAss) ?
+            (backendIssue.EmailAss || backendIssue.emailAss).split('@')[0] : "Non assegnato",
+        projectId: backendIssue.idProgetto
     };
 };
 

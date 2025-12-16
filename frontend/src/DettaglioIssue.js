@@ -7,7 +7,7 @@ import StatusTracker from "./Statustracker";
 import AssegnaIssue from "./AssegnaIssue";
 import { useAuth } from './context/AuthContext';
 import LoadingSpinner from './LoadingSpinner';
-import { getIssueById, updateIssue, deleteIssue } from './services/api';
+import {getIssueById, updateIssue, deleteIssue, getUserById} from './services/api';
 
 export function DettaglioIssue() {
     const {id} = useParams();
@@ -34,6 +34,7 @@ export function DettaglioIssue() {
             try {
                 setLoading(true);
                 const data = await getIssueById(id);
+                console.log("Dati Issue ricevuti:", data);
                 setIssue(data);
                 setEditedData(data);
             } catch (err) {
@@ -47,6 +48,22 @@ export function DettaglioIssue() {
         fetchIssueDetail();
     }, [id]);
 
+    useEffect(() => {
+        const fetchAssigneeName = async () => {
+            if (issue && issue.assigneeId) {
+                try {
+                    const userData = await getUserById(issue.assigneeId);
+                    const fullName = `${userData.nome} ${userData.cognome}`;
+                    setIssue(prev => ({ ...prev, assigneeName: fullName }));
+                    setEditedData(prev => ({ ...prev, assigneeName: fullName }));
+                } catch (err) {
+                    console.error("Impossibile recuperare nome assegnatario", err);
+                }
+            }
+        };
+        fetchAssigneeName();
+    }, [issue?.assigneeId]);
+
     const handleInputChange = (e) => {
         const {name, value} = e.target;
         setEditedData(prev => ({...prev, [name]: value}));
@@ -57,16 +74,20 @@ export function DettaglioIssue() {
     };
 
     const handleAssignUser = async (selectedUser) => {
-        console.log("Assegnando a:", selectedUser.email);
+        const newAssigneeName = selectedUser.nome
+            ? `${selectedUser.nome} ${selectedUser.cognome || ''}`.trim()
+            : selectedUser.email.split('@')[0];
 
         const newData = {
             ...issue,
             status: "Assegnata",
-            assigneeEmail: selectedUser.email
+            assigneeId: selectedUser.id,
+            assigneeEmail: selectedUser.email,
+            assigneeName: newAssigneeName
         };
 
         try {
-            await updateIssue(id, newData);
+            await updateIssue(newData);
             setIssue(newData);
             setEditedData(newData);
             setShowAssignPanel(false);
@@ -87,11 +108,10 @@ export function DettaglioIssue() {
         try {
             setIsDeleting(true);
             await deleteIssue(id);
-            // Naviga via dopo successo
             navigate(isAdmin ? '/admin/home' : '/home');
         } catch (err) {
             alert("Errore durante l'eliminazione");
-            setIsDeleting(false); // Riabilita se fallisce
+            setIsDeleting(false);
             setShowDeleteConfirm(false);
         }
     };
@@ -119,7 +139,7 @@ export function DettaglioIssue() {
             reader.onload = () => {
                 setEditedData(prev => ({
                     ...prev,
-                    image: reader.result, // Base64
+                    image: reader.result,
                     fileName: file.name
                 }));
             };
@@ -136,7 +156,7 @@ export function DettaglioIssue() {
     const handleSave = async () => {
         try {
             setIsSaving(true);
-            await updateIssue(id, editedData);
+            await updateIssue(editedData);
 
             setIssue(editedData);
             setIsEditing(false);
@@ -152,7 +172,7 @@ export function DettaglioIssue() {
         setIsEditing(false);
     };
 
-    const assigneeNameDisplay = issue.assigneeName || mockTeamUsers.find(u => u.email === issue.assigneeEmail)?.nome || issue.assigneeEmail;
+    const assigneeNameDisplay = issue.assigneeName || (issue.assigneeEmail ? issue.assigneeEmail.split('@')[0] : null);
 
     const currentData = isEditing ? editedData : issue;
 
@@ -160,7 +180,7 @@ export function DettaglioIssue() {
         const newData = { ...issue, status: "Risolta" };
 
         try {
-            await updateIssue(id, newData);
+            await updateIssue(newData);
             setIssue(newData);
             setEditedData(newData);
         } catch (err) {

@@ -35,7 +35,7 @@ export default function HomePage() {
              if(!currentProjectId) return;
              try {
                  setLoading(true);
-                 const data = await getIssuesByProjectId(currentProjectId); // Chiamata vera al Back-End
+                 const data = await getIssuesByProjectId(currentProjectId);
                  setIssues(data);
              } catch (err) {
                  console.error(err);
@@ -205,7 +205,7 @@ export default function HomePage() {
 
                 <div className="issues-list">
                     {projectFinalList.length > 0 ? (
-                        projectFinalList.map(issue =>
+                        projectFinalList.map(issue => (
                             <div
                                 key={issue.id}
                                 className="issue-row grid-4-cols"
@@ -234,7 +234,7 @@ export default function HomePage() {
                                 </span>
                                 </div>
                             </div>
-                                )
+                                ))
                     ) : (
                         <div className="no-results">
                             <p>Nessuna issue nel progetto.</p>
