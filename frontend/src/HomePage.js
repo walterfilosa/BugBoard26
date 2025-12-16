@@ -38,8 +38,7 @@ export default function HomePage() {
                  const data = await getIssuesByProjectId(currentProjectId);
                  setIssues(data);
              } catch (err) {
-                 console.error(err);
-                 setError("Impossibile caricare le issue. Controlla la connessione.");
+                 <ErrorMessage message="Impossibile caricare le issue" marginTop="100px"/>
              } finally {
                  setLoading(false);
              }

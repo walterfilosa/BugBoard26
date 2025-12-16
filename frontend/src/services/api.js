@@ -230,6 +230,8 @@ export const updateUser = async (userData) => {
 const mapBackendIssueToFrontend = (backendIssue) => {
     if (!backendIssue) return null;
 
+    const assignedUser = backendIssue.utenteAssegnato;
+
     return {
         id: backendIssue.idIssue,
         title: backendIssue.titolo,
@@ -238,9 +240,9 @@ const mapBackendIssueToFrontend = (backendIssue) => {
         priority: backendIssue.priorita,
         status: backendIssue.stato,
         image: backendIssue.linkImmagine,
-        author: backendIssue.EmailCr,
-        assigneeId: backendIssue.utenteAssegnato.idUtente,
-        assigneeEmail: backendIssue.utenteAssegnato.email,
+        author: backendIssue.EmailCr || null,
+        assigneeId: assignedUser ? assignedUser.idUtente : null,
+        assigneeEmail: assignedUser ? assignedUser.email : null,
         assigneeName: (backendIssue.EmailAss || backendIssue.emailAss) ?
             (backendIssue.EmailAss || backendIssue.emailAss).split('@')[0] : "Non assegnato",
         projectId: backendIssue.idProgetto
