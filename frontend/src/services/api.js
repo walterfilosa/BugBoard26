@@ -18,24 +18,31 @@ const handleResponse = async (response) => {
         window.location.href = '/';
         throw new Error("Sessione scaduta. Effettua nuovamente il login.");
     }
+
+    const textData = await response.text();
+
     if (!response.ok) {
-        let errorMessage;
+        let errorMessage = textData;
+
         try {
-            const errorBody = await response.json();
-            errorMessage = errorBody.message || JSON.stringify(errorBody);
-        } catch {
-            errorMessage = await response.text();
+            const jsonBody = JSON.parse(textData);
+            errorMessage = jsonBody.message || JSON.stringify(jsonBody);
+        } catch (e) {
         }
+
         throw new Error(errorMessage || `Errore HTTP: ${response.status}`);
     }
+
     if (response.status === 204) {
         return null;
     }
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-        return response.json();
-    } else {
-        return response.text();
+
+    if (!textData) return null;
+
+    try {
+        return JSON.parse(textData);
+    } catch {
+        return textData;
     }
 };
 
@@ -122,11 +129,32 @@ export const updateIssue = async (updatedData) => {
 };
 
 export const deleteIssue = async (id) => {
-    const response = await fetch(`${BASE_URL}/admin/issue/${id}`, {
+    console.log("--- DEBUG DELETE ---");
+    console.log("ID ricevuto:", id);
+    console.log("Tipo ID:", typeof id);
+
+    const url = `${BASE_URL}/admin/issue/${id}`;
+    console.log("URL chiamato:", url);
+
+    if (!id || id === "undefined" || id === "null") {
+        alert("ERRORE FATALE: Stai cercando di cancellare un ID non valido!");
+        throw new Error("ID non valido");
+    }
+
+    const response = await fetch(url, {
         method: 'DELETE',
         headers: getHeaders()
     });
-    return handleResponse(response);
+
+
+    if (response.ok) {
+        return true;
+    }
+
+    const errorText = await response.text();
+    console.error("ERRORE DAL SERVER (Body):", errorText);
+
+    throw new Error(errorText || `Errore HTTP: ${response.status}`);
 };
 
 export const getProjectsByUserId = async (userId) => {

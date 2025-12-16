@@ -110,7 +110,8 @@ export function DettaglioIssue() {
             await deleteIssue(id);
             navigate(isAdmin ? '/admin/home' : '/home');
         } catch (err) {
-            alert("Errore durante l'eliminazione");
+            console.error("Errore dettagliato:", err);
+            alert(`Errore: ${err.message}`);
             setIsDeleting(false);
             setShowDeleteConfirm(false);
         }
