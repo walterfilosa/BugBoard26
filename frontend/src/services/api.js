@@ -270,15 +270,12 @@ const mapBackendProjectToFrontend = (backendProject) => {
 };
 
 export const verifyUserPassword = async (userId, passwordToCheck) => {
-    const payload = {
-        userId: userId,
-        password: passwordToCheck
-    };
+    const safePassword = encodeURIComponent(passwordToCheck);
+    const url = `${BASE_URL}/verify/${userId}/password/${safePassword}/`;
 
-    const response = await fetch(`${BASE_URL}/verify/${userId}/password/${passwordToCheck}`, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify(payload)
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: getHeaders()
     });
 
     return handleResponse(response);

@@ -328,3 +328,76 @@ input[type="text"].campo {
     border-radius: 10px;
 }
 
+.error-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 3000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.error-card {
+    background: white;
+    width: 400px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 2px solid #ffebee;
+}
+
+.error-icon-modal {
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+
+.error-card h2 {
+    font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif;
+    color: #d32f2f;
+    margin: 0;
+    font-size: 24px;
+}
+
+.error-card p {
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    color: #333;
+    font-size: 16px;
+    margin: 0;
+}
+
+.sub-error-text {
+    font-size: 14px !important;
+    color: #666 !important;
+}
+
+.btn-close-error {
+    margin-top: 15px;
+    padding: 10px 24px;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+}
+
+.btn-close-error:hover {
+    background-color: #b71c1c;
+    transform: scale(1.05);
+}
+

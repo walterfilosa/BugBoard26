@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './Profilo.css';
-import {CircleCheck, Edit2, Save, ShieldCheck, X, EyeOff, Eye} from 'lucide-react';
+import {CircleCheck, Edit2, Save, ShieldCheck, X, EyeOff, Eye, CircleAlert} from 'lucide-react';
 import PrefixMenu from './PrefixMenu';
 import { useAuth } from './context/AuthContext';
 import { getUserById, updateUser, verifyUserPassword } from './services/api';
@@ -15,6 +15,7 @@ export function Profilo() {
     const [isSaving, setIsSaving] = useState(false);
 
     const [showSuccess, setShowSuccess] = useState(false);
+    const [showPasswordError, setShowPasswordError] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -54,6 +55,18 @@ export function Profilo() {
             try {
                 setLoading(true);
                 const data = await getUserById(user.id);
+
+                if (data.dataNascita) {
+                    const d = new Date(data.dataNascita);
+
+                    if (!isNaN(d.getTime())) {
+                        const year = d.getFullYear();
+                        const month = String(d.getMonth() + 1).padStart(2, '0');
+                        const day = String(d.getDate()).padStart(2, '0');
+
+                        data.dataNascita = `${year}-${month}-${day}`;
+                    }
+                }
 
                 setUserData(prev => ({
                     ...prev,
@@ -152,6 +165,7 @@ export function Profilo() {
         setOriginalData(null);
         setIsEditing(false);
         setShowPassword(false);
+        setShowPasswordError(false);
     };
 
     const handleChange = (e) => {
@@ -176,6 +190,7 @@ export function Profilo() {
 
     const handleSave = async () => {
         setIsSaving(true);
+        setShowPasswordError(false);
         const numeroCompleto = `${userData.prefisso}${userData.telefono}`;
 
         const payload = {
@@ -191,7 +206,7 @@ export function Profilo() {
             if (userData.nuovaPassword && userData.nuovaPassword.trim() !== "") {
 
                 if (!userData.vecchiaPassword || userData.vecchiaPassword.trim() === "") {
-                    alert("Per cambiare password devi inserire la Vecchia Password.");
+                    setShowPasswordError(true);
                     setIsSaving(false);
                     return;
                 }
@@ -199,7 +214,7 @@ export function Profilo() {
                 const isOldPasswordCorrect = await verifyUserPassword(user.id, userData.vecchiaPassword);
 
                 if (!isOldPasswordCorrect) {
-                    alert("La Vecchia Password inserita non è corretta.");
+                    setShowPasswordError(true);
                     setIsSaving(false);
                     return;
                 }
@@ -221,7 +236,7 @@ export function Profilo() {
 
         } catch (err) {
             console.error(err);
-            alert("Errore durante il salvataggio: " + err.message);
+            alert("Errore generico durante il salvataggio: " + err.message);
         } finally {
             setIsSaving(false);
         }
@@ -248,6 +263,20 @@ export function Profilo() {
                             }}
                         >
                             Chiudi
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {showPasswordError && (
+                <div className="error-overlay">
+                    <div className="error-card">
+                        <CircleAlert size={64} className="error-icon-modal"/>
+                        <h2>Attenzione</h2>
+                        <p>La <strong>Vecchia Password</strong> inserita non è corretta.</p>
+                        <p className="sub-error-text">Verifica e riprova per confermare le modifiche.</p>
+                        <button className="btn-close-error" onClick={() => setShowPasswordError(false)}>
+                            Riprova
                         </button>
                     </div>
                 </div>
