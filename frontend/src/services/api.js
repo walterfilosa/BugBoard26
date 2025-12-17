@@ -86,6 +86,24 @@ export const getIssueById = async (id) => {
     return mapBackendIssueToFrontend(data);
 };
 
+export const getAssignedIssues = async (projectId, userId) => {
+    const response = await fetch(`${BASE_URL}/${projectId}/${userId}/issues`, {
+        method: 'GET',
+        headers: getHeaders()
+    });
+    const data = await handleResponse(response);
+    return data.map(mapBackendIssueToFrontend);
+};
+
+export const getOtherIssues = async (projectId, userId) => {
+    const response = await fetch(`${BASE_URL}/${projectId}/${userId}/issues/others`, {
+        method: 'GET',
+        headers: getHeaders()
+    });
+    const data = await handleResponse(response);
+    return data.map(mapBackendIssueToFrontend);
+};
+
 export const createIssue = async (projectId, userId, issueData) => {
     const payload = {
         titolo: issueData.titolo,

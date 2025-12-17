@@ -12,6 +12,8 @@ import ErrorMessage from "./ErrorMessage";
 
 export default function HomePage() {
 
+    const [adminAllIssues, setAdminAllIssues] = useState([]);
+
 
     const [issues, setIssues] = useState([]);
     const [loading, setLoading] = useState(true);
