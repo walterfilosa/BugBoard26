@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import './Profilo.css';
-import {CircleCheck, Edit2, Save, ShieldCheck, X, EyeOff, Eye, CircleAlert} from 'lucide-react';
+import {CircleCheck, Edit2, Save, ShieldCheck, X, EyeOff, Eye, CircleAlert, Lock} from 'lucide-react';
 import PrefixMenu from './PrefixMenu';
 import { useAuth } from './context/AuthContext';
-import { getUserById, updateUser, verifyUserPassword } from './services/api';
+import { getUserById, updateUser, verifyUserPassword, loginAPI } from './services/api';
 import LoadingSpinner from './LoadingSpinner';
 
 const splitPhoneNumber = (fullNumber, list) => {
@@ -31,6 +31,10 @@ export function Profilo() {
     const [showPasswordError, setShowPasswordError] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
+    const [modalError, setModalError] = useState(null);
 
     const [userData, setUserData] = useState({
         id: "",
@@ -176,49 +180,81 @@ export function Profilo() {
         }
     };
 
-    const handleSave = async () => {
+    const handleSaveClick = () => {
+        const emailChanged = originalData && userData.email !== originalData.email;
+        const passwordChanged = userData.nuovaPassword && userData.nuovaPassword.trim() !== "";
+        if (emailChanged || passwordChanged) {
+            if (!userData.vecchiaPassword || userData.vecchiaPassword.trim() === "") {
+                setConfirmPasswordInput("");
+                setModalError(null);
+                setShowConfirmModal(true);
+                return;
+            }
+            performUpdate(userData.vecchiaPassword);
+        } else {
+            performUpdate(null);
+        }
+    };
+
+    const handleModalConfirm = () => {
+        if (!confirmPasswordInput) {
+            setModalError("Inserisci la password per continuare.");
+            return;
+        }
+        performUpdate(confirmPasswordInput);
+    };
+
+    const performUpdate = async (passwordForVerification) => {
         setIsSaving(true);
-        setShowPasswordError(false);
+        setModalError(null);
+
+        const emailChanged = originalData && userData.email !== originalData.email;
+        const passwordChanged = userData.nuovaPassword && userData.nuovaPassword.trim() !== "";
         const numeroCompleto = `${userData.prefisso}${userData.telefono}`;
 
-        const payload = {
-            idUtente: user.id,
-            nome: userData.nome,
-            cognome: userData.cognome,
-            dataNascita: userData.dataNascita,
-            email: userData.email,
-            numeroTelefono: numeroCompleto
-        };
-
         try {
-            if (userData.nuovaPassword && userData.nuovaPassword.trim() !== "") {
-
-                if (!userData.vecchiaPassword || userData.vecchiaPassword.trim() === "") {
-                    setShowPasswordError(true);
+            if (emailChanged || passwordChanged) {
+                const isCorrect = await verifyUserPassword(user.id, passwordForVerification);
+                if (!isCorrect) {
+                    const msg = "La password inserita non è corretta.";
+                    if (showConfirmModal) setModalError(msg);
+                    else {
+                        setModalError(msg);
+                        setShowConfirmModal(true);
+                    }
                     setIsSaving(false);
                     return;
                 }
+            }
 
-                const isOldPasswordCorrect = await verifyUserPassword(user.id, userData.vecchiaPassword);
+            const payload = {
+                idUtente: user.id,
+                nome: userData.nome,
+                cognome: userData.cognome,
+                dataNascita: userData.dataNascita,
+                email: userData.email,
+                numeroTelefono: numeroCompleto
+            };
 
-                if (!isOldPasswordCorrect) {
-                    setShowPasswordError(true);
-                    setIsSaving(false);
-                    return;
-                }
-
+            if (passwordChanged) {
                 payload.password = userData.nuovaPassword;
             }
 
-            const response = await updateUser(payload);
-            localStorage.setItem("userEmail", userData.email);
-            if (response && response.accessToken) {
-                console.log("Token aggiornato ricevuto dal backend.");
-                localStorage.setItem("token", response.accessToken);
-            } else if (response && response.token) {
-                localStorage.setItem("token", response.token);
+            await updateUser(payload);
+
+            if (emailChanged || passwordChanged) {
+                console.log("Credenziali cambiate: Eseguo ri-login automatico...");
+                const loginPwd = passwordChanged ? userData.nuovaPassword : passwordForVerification;
+
+                const loginResponse = await loginAPI(userData.email, loginPwd);
+
+                if (loginResponse && loginResponse.accessToken) {
+                    localStorage.setItem("token", loginResponse.accessToken);
+                    console.log("Sessione rigenerata con successo.");
+                }
             }
 
+            localStorage.setItem("userEmail", userData.email);
             if (userData.nuovaPassword) {
                 setUserData(prev => ({...prev, password: prev.nuovaPassword}));
             }
@@ -227,11 +263,13 @@ export function Profilo() {
             setIsEditing(false);
             setOriginalData(null);
             setShowPassword(false);
+            setShowConfirmModal(false);
             setUserData(prev => ({...prev, vecchiaPassword: "", nuovaPassword: ""}));
 
         } catch (err) {
             console.error(err);
-            alert("Errore generico durante il salvataggio: " + err.message);
+            if (showConfirmModal) setModalError("Errore: " + err.message);
+            else alert("Errore durante il salvataggio: " + err.message);
         } finally {
             setIsSaving(false);
         }
@@ -243,6 +281,87 @@ export function Profilo() {
 
     return (
         <div className="homepage-container">
+
+            {showConfirmModal && (
+                <div className="overlay-password-confirm" style={{
+                    position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                    backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1000,
+                    display: 'flex', justifyContent: 'center', alignItems: 'center'
+                }}>
+                    <div className="password-card" style={{
+                        backgroundColor: 'white', padding: '30px', borderRadius: '12px',
+                        width: '400px', boxShadow: '0 4px 20px rgba(0,0,0,0.2)', textAlign: 'center'
+                    }}>
+                        <div style={{ marginBottom: 20 }}>
+                            <div style={{
+                                width: 60, height: 60, borderRadius: '50%', backgroundColor: '#e3f2fd',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px'
+                            }}>
+                                <Lock size={32} color="#1976d2" />
+                            </div>
+                            <h2>Conferma Modifiche</h2>
+                            <p style={{ color: '#666', fontSize: '0.95rem' }}>
+                                Per motivi di sicurezza, inserisci la tua <strong>password attuale</strong> per confermare il cambio di email o password.
+                            </p>
+                        </div>
+
+                        <div className="floating-label-group" style={{ marginBottom: 20, textAlign: 'left' }}>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                className="campo"
+                                autoFocus
+                                value={confirmPasswordInput}
+                                onChange={(e) => {
+                                    setConfirmPasswordInput(e.target.value);
+                                    setModalError(null);
+                                }}
+                                onKeyDown={(e) => e.key === 'Enter' && handleModalConfirm()}
+                                placeholder=" "
+                            />
+                            <label className="floating-label">Password Attuale</label>
+                            <button
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                                style={{right: 10}}
+                            >
+                                {showPassword ? <EyeOff size={20}/> : <Eye size={20}/>}
+                            </button>
+                        </div>
+
+                        {modalError && (
+                            <div style={{
+                                color: '#d32f2f', backgroundColor: '#ffebee',
+                                padding: '10px', borderRadius: '6px', fontSize: '0.9rem',
+                                marginBottom: '20px', display: 'flex', alignItems: 'center', gap: 8
+                            }}>
+                                <CircleAlert size={16}/> {modalError}
+                            </div>
+                        )}
+
+                        <div className="overlay-buttons" style={{ display: 'flex', gap: 10 }}>
+                            <button
+                                className="btn-cancel-create"
+                                style={{flex: 1, justifyContent:'center'}}
+                                onClick={() => {
+                                    setShowConfirmModal(false);
+                                    setModalError(null);
+                                    setIsSaving(false);
+                                }}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                className="btn-save-create"
+                                style={{flex: 1, justifyContent:'center'}}
+                                onClick={handleModalConfirm}
+                                disabled={isSaving}
+                            >
+                                {isSaving ? "Verifica..." : "Conferma"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {showSuccess && (
                 <div className="success-overlay">
@@ -341,7 +460,7 @@ export function Profilo() {
                     </button>
                 ) : (
                     <div className="buttons-group">
-                        <button className="btn-save-contact" onClick={handleSave}>
+                        <button className="btn-save-contact" onClick={handleSaveClick}>
                             <Save size={16}/> Salva
                         </button>
                         <button className="btn-cancel-contact" onClick={handleCancel}>
