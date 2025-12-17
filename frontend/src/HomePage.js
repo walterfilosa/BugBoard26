@@ -26,6 +26,8 @@ export default function HomePage() {
 
     const [myFilters, setMyFilters] = useState(initialFilters);
     const [projectFilters, setProjectFilters] = useState(initialFilters);
+    const [adminAssignedFilters, setAdminAssignedFilters] = useState(initialFilters);
+    const [adminAssignedSort, setAdminAssignedSort] = useState({ key: null, direction: 'asc' });
 
     const [mySort, setMySort] = useState({ key: null, direction: 'asc' });
     const [projectSort, setProjectSort] = useState({ key: null, direction: 'asc' });
@@ -87,6 +89,14 @@ export default function HomePage() {
     const rawProjectIssues = issues;
 
     const myFinalList = sortIssuesLogic(filterIssuesLogic(rawTable1Issues, myFilters), mySort);
+    const rawAdminAssignedIssues = issues.filter(i =>
+        i.assigneeEmail === user?.email && i.status === "Assegnata"
+    );
+    const adminAssignedFinalList = sortIssuesLogic(
+        filterIssuesLogic(rawAdminAssignedIssues, adminAssignedFilters),
+        adminAssignedSort
+    );
+
     const projectFinalList = sortIssuesLogic(filterIssuesLogic(rawProjectIssues, projectFilters), projectSort);
 
     const handleSortClick = (key, currentSort, setSort) => {
@@ -175,6 +185,44 @@ export default function HomePage() {
                     )}
                 </div>
             </div>
+
+            {isAdmin && (
+                <>
+                    <div className="header-row" style={{ marginTop: '40px' }}>
+                        <h1>Le tue issue assegnate</h1>
+                    </div>
+
+                    <FiltersBarSenzaStato
+                        filters={adminAssignedFilters}
+                        setFilters={setAdminAssignedFilters}
+                        onReset={() => setAdminAssignedFilters(initialFilters)}
+                    />
+
+                    <div className="issues-table-container">
+                        <div className="issues-header">
+                            <div className="col col-title sortable-header" onClick={() => handleSortClick('title', adminAssignedSort, setAdminAssignedSort)}>
+                                Titolo {renderSortIcon('title', adminAssignedSort)}
+                            </div>
+                            <div className="col col-priority sortable-header" onClick={() => handleSortClick('priority', adminAssignedSort, setAdminAssignedSort)}>
+                                Priorità {renderSortIcon('priority', adminAssignedSort)}
+                            </div>
+                            <div className="col col-type sortable-header" onClick={() => handleSortClick('type', adminAssignedSort, setAdminAssignedSort)}>
+                                Tipo {renderSortIcon('type', adminAssignedSort)}
+                            </div>
+                        </div>
+
+                        <div className="issues-list">
+                            {adminAssignedFinalList.length > 0 ? (
+                                adminAssignedFinalList.map(issue => renderRow(issue))
+                            ) : (
+                                <div className="no-results">
+                                    <p>Non hai issue assegnate al momento.</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </>
+            )}
 
             <div className="header-row" style={{ marginTop: '40px' }}>
                 <h1>Tutte le issue del progetto</h1>
