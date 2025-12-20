@@ -58,7 +58,6 @@ public class IssueService {
             issue.setProgetto(project);
             issue.setUtenteCreatore(user);
             issue.setStato(ISSUE_TODO);
-            issue.setLinkImmagine("https://i1.rgstatic.net/ii/profile.image/272449132560396-1441968344623_Q512/Sergio-Di-Martino.jpg");
             return issueRepo.save(issue);
         }
         return null;
