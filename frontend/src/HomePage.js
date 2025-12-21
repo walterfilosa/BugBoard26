@@ -132,7 +132,14 @@ export default function HomePage() {
             : <ChevronDown size={16} className="sort-icon active" />;
     };
 
-    const renderRow = (issue) => (
+    const renderRow = (issue) => {
+
+        const isUrlAdmin = window.location.pathname.includes("/admin");
+        const effectiveAdmin = isAdmin || isUrlAdmin;
+
+        return (
+
+
         <div key={issue.id} className="issue-row" onClick={() => navigate(isAdmin ? `/admin/dettaglio-issue/${issue.id}` : `/dettaglio-issue/${issue.id}`)}>
             <div className="col col-title">
                 <span className="issue-title-text">{issue.title}</span>
@@ -150,7 +157,7 @@ export default function HomePage() {
                 </div>
             </div>
         </div>
-    );
+    )};
 
     if (loading) {
         return <LoadingSpinner message="Caricamento issues..." />;

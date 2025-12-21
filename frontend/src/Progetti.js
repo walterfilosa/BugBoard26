@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Progetti.css';
-import { Search, Folder, Clock, CheckCircle, XCircle, ChevronRight, LogOut, AlertCircle } from 'lucide-react';
+import { Search, Folder, Clock, CheckCircle, XCircle, ChevronRight, LogOut } from 'lucide-react';
 import  Footer from "./Footer";
 import { useAuth } from './context/AuthContext';
 import { getProjectsByUserId, getAssignedActiveProjectsFromUserId } from './services/api';
@@ -64,7 +64,9 @@ export function Progetti() {
     const handleProjectClick = (projectId) => {
         localStorage.setItem("currentProjectId", projectId);
 
-        if (isAdmin) {
+        const isUserAdmin = isAdmin || localStorage.getItem("userRole") === 'admin';
+
+        if (isUserAdmin) {
             navigate('/admin/home');
         } else {
             navigate('/home');

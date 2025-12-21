@@ -76,18 +76,20 @@ const LayoutAdmin = () => {
                         <Route path="/" element={<Login/>}/>
                         <Route path="/about" element={<About/>}/>
 
-                        <Route path="/progetti" element={<Progetti/>} />
+                        <Route element={<ProtectedRoute/>}>
+                            <Route path="/progetti" element={<Progetti/>} />
+                        </Route>
 
-                        {/*<Route element={<ProtectedRoute allowedRole="user" />}>*/}
+                        <Route element={<ProtectedRoute allowedRole="user" />}>
                             <Route element={<LayoutUtente/>}>
                                 <Route path="/home" element={<HomePage/>}/>
                                 <Route path="/dettaglio-issue/:id" element={<DettaglioIssue/>}/>
                                 <Route path="/segnala-issue" element={<SegnalaIssue/>}/>
                                 <Route path="/profilo" element={<Profilo/>}/>
                             </Route>
-                        {/*}</Route>*/}
+                        </Route>
 
-                        {/*<Route element={<ProtectedRoute allowedRole="admin" />}>*/}
+                        <Route element={<ProtectedRoute allowedRole="admin" />}>
                             <Route element={<LayoutAdmin/>}>
                                 <Route path="/admin/segnala-issue" element={<SegnalaIssue/>}/>
                                 <Route path="/admin/home" element={<HomePage/>}/>
@@ -97,7 +99,7 @@ const LayoutAdmin = () => {
                                 <Route path="/admin/nuovo-utente" element={<NuovoUtente />} />
                                 <Route path="/admin/dettaglio-utente/:id" element={<DettaglioUtente/>} />
                             </Route>
-                        {/*}</Route>*/}
+                        </Route>
                     </Routes>
                 </Router>
             </div>
