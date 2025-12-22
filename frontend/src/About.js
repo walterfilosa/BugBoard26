@@ -78,6 +78,7 @@ export default function About() {
         { id: 'mission', title: 'La nostra Mission' },
         { id: 'features', title: 'Funzionalità Chiave' },
         { id: 'project', title: 'Il Progetto' },
+        { id: 'brand-identity', title: 'Brand Identity' },
         { id: 'team', title: 'Il Team' },
         { id: 'contatti', title: 'Contatti'}
     ];
@@ -202,6 +203,21 @@ export default function About() {
                                     className="project-image"
                                 />
                             </div>
+                        </section>
+                        <section id="brand-identity" className="content-section" ref={el => sectionRefs.current['brand-identity'] = el}>
+                            <h2>
+                                Brand Identity
+                            </h2>
+
+                            <p>
+                                Al fine di garantire un immediato riconoscimento del marchio BugBoard26® da parte di tutti, si è deciso di adottare una vera e propria strategia di Visual Identity.
+
+                                Volevamo comunicare l’essenza del marchio tramite una combinazione di elementi grafici, in modo da creare un’immediata connessione tra il marchio e l’utente.
+                            </p>
+                            <p>
+                                Scopri di più sulla nostra brand identity alla <Link to="/brand-identity" className="link-pulito">pagina dedicata</Link>.
+                            </p>
+                            <img src="/Logo/LogoBugBoard26.svg" style={{width: "50%"}}/>
                         </section>
                         <section id="team" className="content-section" ref={el => sectionRefs.current['team'] = el}>
                             <h2>Il Team</h2>

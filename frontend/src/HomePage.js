@@ -239,7 +239,7 @@ export default function HomePage() {
                             {adminAssignedFinalList.length > 0 ? (
                                 adminAssignedFinalList.map(issue => renderRow(issue))
                             ) : (
-                                    <NoResultMessage message={"Non hai issue assegnate al momento."}/>
+                                    <NoResultMessage message={"Non hai issue assegnate al momento"}/>
                             )}
                         </div>
                     </div>
@@ -305,7 +305,7 @@ export default function HomePage() {
                             </div>
                                 ))
                     ) : (
-                            <NoResultMessage message={"Nessuna issue nel progetto."}/>
+                            <NoResultMessage message={"Nessuna issue nel progetto"}/>
                     )}
                 </div>
             </div>

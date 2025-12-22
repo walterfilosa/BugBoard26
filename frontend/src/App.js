@@ -17,6 +17,7 @@ import SplashScreen from "./SplashScreen";
 import {useEffect, useState} from "react";
 import { AuthProvider } from './context/AuthContext';
 import About from "./About";
+import BrandIdentity from "./BrandIdentity";
 
 const LayoutUtente = () => {
     return (
@@ -75,6 +76,7 @@ const LayoutAdmin = () => {
                     <Routes>
                         <Route path="/" element={<Login/>}/>
                         <Route path="/about" element={<About/>}/>
+                        <Route path="/brand-identity" element={<BrandIdentity/>}/>
 
                         <Route element={<ProtectedRoute/>}>
                             <Route path="/progetti" element={<Progetti/>} />

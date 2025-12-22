@@ -1,0 +1,475 @@
+.brand-page {
+    background-color: #ffffff;
+    min-height: 100vh;
+    font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
+    color: #333;
+}
+
+/* Header Modificato */
+.brand-header {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.95); /* Leggermente trasparente */
+    backdrop-filter: blur(10px); /* Effetto sfocato dietro */
+    border-bottom: 1px solid #eee;
+
+    position: fixed; /* Fisso in alto */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+    /* Stato iniziale: Nascosto */
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.brand-header.visible {
+    transform: translateY(0);
+}
+
+.brand-logo-small {
+    height: 40px;
+}
+
+.btn-login-header-brand {
+    background-color: transparent;
+    color: #002060;
+    border: 2px solid #002060;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif;
+    font-size: 12pt;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-login-header-brand:hover {
+    background-color: #002060;
+    color: white;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 40px; /* Padding spostato qui */
+    box-sizing: border-box;
+}
+
+.scroll-progress-container {
+    width: 100%;
+    height: 4px; /* Altezza della barra */
+    background-color: transparent; /* O #f0f0f0 se vuoi vedere la traccia */
+    display: flex;
+    justify-content: flex-start;
+}
+
+.scroll-progress-bar {
+    height: 100%;
+    background-color: #002060; /* Blu BugBoard */
+    transition: width 0.1s linear; /* Transizione fluida */
+    background: linear-gradient(90deg, #002060 0%, #0040C0 100%);
+}
+
+/* Hero Section con Immagine e Animazione Testo */
+.brand-hero {
+    height: 100vh; /* Aumentata l'altezza */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 0 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+}
+
+/* Overlay scuro per migliorare la leggibilità */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: background-color 0.1s linear;
+    will-change: background-color;
+    z-index: 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    margin-top: 200px;
+}
+
+.animated-title {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif;
+    font-size: 4rem;
+
+    transition: transform 0.1s ease-out;
+    transform-origin: center center;
+    will-change: transform;
+    z-index: 10;
+}
+
+.title-word {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUpWord 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    color: white;
+}
+
+.title-word:nth-child(2) {
+    animation-delay: 0.2s;
+    color: white;
+    text-decoration-line: underline;
+    text-decoration-color: #002060;
+}
+
+@keyframes fadeInUpWord {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-subtitle {
+    font-size: 2rem;
+    color: white;
+    margin-top: 20px;
+    letter-spacing: 1px;
+    will-change: opacity;
+    animation: fadeInUp 0.8s ease-out 0.6s backwards;
+    position: relative;
+    z-index: 9;
+    background-color: rgba(0, 32, 96, 1);
+}
+
+
+/* Container principale */
+.brand-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 20px; /* Aumentato il padding superiore */
+}
+
+/* Sezioni Generali */
+.brand-section {
+    margin-bottom: 120px; /* Aumentato il margine */
+}
+
+.brand-section h2 {
+    font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif;
+    font-size: 2.8rem; /* Leggermente più grande */
+    color: #002060;
+    margin-bottom: 40px;
+    position: relative;
+    display: inline-block;
+}
+
+.brand-section h2::after {
+    content: '';
+    display: block;
+    width: 80px; /* Più largo */
+    height: 5px;
+    background-color: #002060;
+    margin-top: 15px;
+}
+
+.brand-section p {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: #555;
+    margin-bottom: 25px;
+    text-align: justify;
+    font-family: "NeueHaasGroteskDisp Pro", sans-serif;
+}
+
+/* Reveal Animation (Scroll) */
+.reveal-section {
+    opacity: 0;
+    transform: translateY(60px); /* Movimento più ampio */
+    transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.reveal-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Split Layout (Testo + Immagine) */
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px; /* Gap aumentato */
+    align-items: center;
+}
+
+.split-layout.reverse {
+    direction: rtl;
+}
+
+.split-layout.reverse .text-content {
+    direction: ltr;
+}
+
+.visual-content.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-showcase {
+    width: 300px;
+    max-width: 550px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.image-showcase:hover {
+    transform: scale(1.05);
+}
+
+.brand-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+@keyframes floatImage {
+    0% { transform: translateY(0px); box-shadow: 0 20px 40px rgba(0, 32, 96, 0.2); }
+    50% { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0, 32, 96, 0.15); }
+    100% { transform: translateY(0px); box-shadow: 0 20px 40px rgba(0, 32, 96, 0.2); }
+}
+
+
+.caption {
+    font-size: 1rem;
+    color: #777;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Anatomy Grid */
+.anatomy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin: 50px 0;
+}
+
+.anatomy-item {
+    background-color: #f8f9fc; /* Grigio molto chiaro */
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #eee;
+}
+
+.anatomy-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    border-color: transparent;
+}
+
+.circle-blue {
+    width: 100px;
+    height: 100px;
+    background-color: #002060;
+    border-radius: 50%;
+    margin: 0 auto 25px;
+    box-shadow: 0 10px 20px rgba(0, 32, 96, 0.3);
+}
+
+.big-letter {
+    width: 140px;
+}
+
+/* Sezione Colori a Griglia */
+.color-visual-content {
+    align-items: stretch; /* Per allineare le card in altezza */
+}
+
+.colors-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+}
+
+/* Color Card Interattiva */
+.color-card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    border: 2px solid transparent; /* Per l'hover */
+}
+
+.color-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 32, 96, 0.15);
+}
+
+.color-card.primary:hover {
+    border-color: #002060;
+}
+
+.color-card.secondary:hover {
+    border-color: #B0B0B0;
+}
+
+.color-swatch {
+    width: 100%;
+    height: 140px; /* Più alto */
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.color-info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex-grow: 1; /* Per allineare il contenuto in basso */
+    justify-content: flex-end;
+}
+
+.color-name {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.color-hex {
+    font-family: 'Courier New', monospace; /* Font monospaziato per il codice */
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    background-color: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.copy-hint {
+    font-size: 0.9rem;
+    color: #002060;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-weight: 600;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.color-card:hover .copy-hint {
+    opacity: 1;
+}
+
+/* Typography Showcase */
+.typography-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.font-demo {
+    border-left: 6px solid #002060;
+    padding: 30px;
+    background-color: #fafafa;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.font-weight-label {
+    display: block;
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.font-sample {
+    display: block;
+    font-size: 3rem; /* Più grande */
+    color: #002060;
+    margin-bottom: 15px;
+}
+
+.medium .font-sample { font-family: "NeueHaasGroteskDisp Pro Md", sans-serif; }
+.bold .font-sample { font-family: "NeueHaasGroteskDisp Pro Blk", sans-serif; }
+
+.font-alphabet {
+    display: block;
+    font-size: 1.3rem;
+    color: #555;
+    word-spacing: 8px;
+    line-height: 1.6;
+}
+
+/* Animazioni Base */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .brand-hero { height: 60vh; }
+    .animated-title { font-size: 4rem; }
+    .split-layout { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .split-layout.reverse { direction: ltr; }
+    .brand-section h2::after { margin: 15px auto; }
+    .colors-grid { grid-template-columns: 1fr; max-width: 300px; margin: 0 auto; }
+}
+
+@media (max-width: 768px) {
+    .brand-header { padding: 15px 20px; }
+    .animated-title { font-size: 3rem; flex-direction: column; gap: 5px; }
+    .title-word:nth-child(2) { color: white; } /* Su mobile meglio bianco */
+    .animated-subtitle { font-size: 1.4rem; }
+    .brand-section { margin-bottom: 80px; }
+    .brand-section h2 { font-size: 2.2rem; }
+    .anatomy-grid { grid-template-columns: 1fr; gap: 30px; }
+    .font-sample { font-size: 2.2rem; }
+    .font-alphabet { font-size: 1.1rem; word-spacing: 5px; }
+}
+
+.immagine-hover {
+    width: 100%;
+    height: auto;
+    position: fixed;
+}
