@@ -57,9 +57,9 @@ jobs:
       - name: Lowercase the repo name and username
         run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-      - name: Docker Compose Action
-        uses: hoverkraft-tech/compose-action@v2.4.2
-
+      - name: Docker Setup Compose
+        uses: docker/setup-compose-action@v1.2.0
+        
   deploy:
     permissions:
       contents: none
