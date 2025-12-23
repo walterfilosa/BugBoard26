@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link} from 'react-router-dom';
 import './About.css';
-import { LogIn, Mail } from 'lucide-react';
+import { LogIn} from 'lucide-react';
 import Footer from "./Footer";
 
 export default function About() {
