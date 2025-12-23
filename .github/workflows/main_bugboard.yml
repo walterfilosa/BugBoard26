@@ -25,15 +25,15 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: index.docker.io/
-          username: ${{ secrets.AZUREAPPSERVICE_CONTAINERUSERNAME_CDEFD9C3F0E540AE9AE34DB205AE96C4 }}
-          password: ${{ secrets.AZUREAPPSERVICE_CONTAINERPASSWORD_BBCF1C37D5D6499E8D53F4759C917205 }}
+          username: ${{ secrets.AZUREAPPSERVICE_CONTAINERUSERNAME_62DF089805E04E259469F45C6CC9E5B3 }}
+          password: ${{ secrets.AZUREAPPSERVICE_CONTAINERPASSWORD_A44A13FC1D5B434D8009AAC44628C248 }}
 
       - name: Build and push container image to registry
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: index.docker.io/${{ secrets.AZUREAPPSERVICE_CONTAINERUSERNAME_CDEFD9C3F0E540AE9AE34DB205AE96C4 }}/bugboard:${{ github.sha }}
+          tags: index.docker.io/${{ secrets.AZUREAPPSERVICE_CONTAINERUSERNAME_62DF089805E04E259469F45C6CC9E5B3 }}/bugboard:${{ github.sha }}
           file: ./Dockerfile
 
   deploy:
@@ -49,9 +49,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A3DE2541B38743ED8CD7F360ACE5F1D4 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_ED1BCBF944984AF29B8872FFFF776EC1 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B9709FD162E94EA4A632982D0507E174 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B8854DD50E504EEFA18996296128A229 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_36610D2416544DE38FC64EEBCA275266 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0464F6EE31EB46D19D13C5BDF526B80E }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -59,5 +59,5 @@ jobs:
         with:
           app-name: 'BugBoard'
           slot-name: 'Production'
-          images: 'index.docker.io/${{ secrets.AZUREAPPSERVICE_CONTAINERUSERNAME_CDEFD9C3F0E540AE9AE34DB205AE96C4 }}/bugboard:${{ github.sha }}'
+          images: 'index.docker.io/${{ secrets.AZUREAPPSERVICE_CONTAINERUSERNAME_62DF089805E04E259469F45C6CC9E5B3 }}/bugboard:${{ github.sha }}'
           
