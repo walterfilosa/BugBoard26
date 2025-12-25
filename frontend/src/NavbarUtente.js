@@ -1,6 +1,7 @@
 import {NavLink, useNavigate} from 'react-router-dom'
 import './NavbarUtente.css';
 import {useState} from "react";
+import { FaUserCircle } from 'react-icons/fa';
 import {User2, ChevronDown, LogOut} from "lucide-react";
 import { useAuth } from './context/AuthContext';
 
@@ -25,7 +26,6 @@ function ProfileMenu() {
         navigate('/');
     }
 
-    // --- CORREZIONE 1: Se l'utente non è ancora caricato, non mostrare nulla ---
     if (!user) return null;
 
     const userInitial = user?.nome ? user.nome.charAt(0).toUpperCase() : 'U';
@@ -38,9 +38,7 @@ function ProfileMenu() {
             </div>
             <div className="profile-menu-container">
                 <div className="profile-button" onClick={toggleMenu}>
-                    <div className="profile-initial-circle">
-                        {userInitial}
-                    </div>
+                    <FaUserCircle className="profile-icon" />
                     <ChevronDown className="chevron-icon" />
                 </div>
 
