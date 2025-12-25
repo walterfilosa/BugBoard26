@@ -80,6 +80,7 @@ const LayoutAdmin = () => {
 
                         <Route element={<ProtectedRoute/>}>
                             <Route path="/progetti" element={<Progetti/>} />
+                            <Route path="/profilo-progetti" element={<Profilo isStandalone={true} />} />
                         </Route>
 
                         <Route element={<ProtectedRoute allowedRole="user" />}>

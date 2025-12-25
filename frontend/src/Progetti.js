@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Progetti.css';
-import { Search, Folder, Clock, CheckCircle, XCircle, ChevronRight, LogOut } from 'lucide-react';
+import { Search, Folder, Clock, CheckCircle, XCircle, ChevronRight, LogOut, User } from 'lucide-react';
 import  Footer from "./Footer";
 import { useAuth } from './context/AuthContext';
 import { getProjectsByUserId, getAssignedActiveProjectsFromUserId } from './services/api';
@@ -78,6 +78,10 @@ export function Progetti() {
         navigate('/');
     };
 
+    const handleGoToProfile = () => {
+        navigate('/profilo-progetti');
+    };
+
     if (loading) return <LoadingSpinner message="Recupero i tuoi progetti..." />;
 
     if (error) return (
@@ -95,9 +99,14 @@ export function Progetti() {
 
                 <div className="logo-header">
                     <img src="/Logo/LogoBugBoard26.svg" alt="Logo" className="logo-projects"/>
-                    <button className="btnEsci-project" onClick={handleLogout}>
+                    <div style={{display: 'flex', gap: '15px'}}>
+                        <button className="btnEsci-project" onClick={handleGoToProfile} style={{color: '#002060'}}>
+                            <User size={30}/> Profilo
+                        </button>
+                        <button className="btnEsci-project" onClick={handleLogout}>
                         <LogOut size={30}/> Esci
                     </button>
+                    </div>
                 </div>
 
                 <h1>Benvenuto, {user.nome || user.email?.split('@')[0] || "Utente"}</h1>

@@ -2,7 +2,7 @@ import {NavLink, useNavigate} from 'react-router-dom'
 import './NavbarUtente.css';
 import {useState} from "react";
 import { FaUserCircle } from 'react-icons/fa';
-import { User2, ChevronDown, LogOut} from "lucide-react";
+import { User2, ChevronDown, LogOut, FolderX} from "lucide-react";
 import { useAuth } from "./context/AuthContext";
 
 function ProfileMenu() {
@@ -20,10 +20,17 @@ function ProfileMenu() {
         e.preventDefault();
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        localStorage.removeItem('currentProjectId');
 
         console.log("Utente disconnesso");
 
         navigate('/');
+    }
+
+    const handleCloseProject = (e) => {
+        e.preventDefault();
+        localStorage.removeItem('currentProjectId');
+        navigate('/progetti');
     }
 
     if (!user) return null;
@@ -44,8 +51,11 @@ function ProfileMenu() {
 
                 {isOpen && (
                     <div className="dropdown-menu">
-                        <a href="/admin/profilo" className="menu-item"><User2/>Profilo</a>
-                        <a href="/" className="menu-item link-logout" onClick={handleLogout}><LogOut/>Esci</a>
+                        <NavLink to="/admin/profilo" className="menu-item"><User2/>Profilo</NavLink>
+                        <NavLink to="/progetti" className="menu-item" onClick={handleCloseProject}>
+                            <FolderX size={20}/> Chiudi Progetto
+                        </NavLink>
+                        <NavLink to="/" className="menu-item link-logout" onClick={handleLogout}><LogOut/>Esci</NavLink>
                     </div>
                 )}
             </div>

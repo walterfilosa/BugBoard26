@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import './Profilo.css';
-import {CircleCheck, Edit2, Save, ShieldCheck, X, EyeOff, Eye, CircleAlert, Lock} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import {CircleCheck, Edit2, Save, ShieldCheck, X, EyeOff, Eye, CircleAlert, Lock, ArrowLeft} from 'lucide-react';
 import PrefixMenu from './PrefixMenu';
 import { useAuth } from './context/AuthContext';
 import { getUserById, updateUser, verifyUserPassword, loginAPI } from './services/api';
 import LoadingSpinner from './LoadingSpinner';
+import './BrandIdentity.css';
+import Footer from './Footer';
 
 const splitPhoneNumber = (fullNumber, list) => {
     if (!fullNumber) return {prefisso: "+39", telefono: ""};
@@ -19,9 +22,14 @@ const splitPhoneNumber = (fullNumber, list) => {
     return {prefisso: "+39", telefono: fullNumber};
 };
 
-export function Profilo() {
-    
+export function Profilo({ isStandalone = false }) {
+
+    const navigate = useNavigate();
+
     const { user, isAdmin } = useAuth();
+
+    const [showNavbar, setShowNavbar] = useState(true);
+    const [scrollProgress, setScrollProgress] = useState(0);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -51,6 +59,21 @@ export function Profilo() {
 
     const [prefissiList, setPrefissiList] = useState([]);
     const [loadingPrefixes, setLoadingPrefixes] = useState(true);
+
+    useEffect(() => {
+        if (!isStandalone) return;
+
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+
+            const winHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollY / winHeight) * 100;
+            setScrollProgress(scrolled);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [isStandalone]);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -279,7 +302,7 @@ export function Profilo() {
 
     if (error) return <div style={{padding:40, textAlign:'center', color:'red'}}>{error}</div>;
 
-    return (
+    const ProfileContent = () => (
         <div className="homepage-container">
 
             {showConfirmModal && (
@@ -551,4 +574,28 @@ export function Profilo() {
             </div>
         </div>
     );
+
+    if (isStandalone) {
+        return (
+            <div style={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
+
+                <header className={`brand-header ${showNavbar ? 'visible' : ''}`}>
+                    <div className="header-content">
+                        <img src="/Logo/LogoBugBoard26.svg" alt="BugBoard Logo" className="brand-logo-small"/>
+                        <button className="btn-login-header" onClick={() => navigate('/progetti')}>
+                            <ArrowLeft size={20}/> Torna ai Progetti
+                        </button>
+                    </div>
+                </header>
+
+                <div style={{flex: 1}}>
+                    <ProfileContent />
+                </div>
+
+                <Footer />
+            </div>
+        );
+    }
+
+    return <ProfileContent/>;
 }
