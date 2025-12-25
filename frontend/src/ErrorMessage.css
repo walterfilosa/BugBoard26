@@ -11,14 +11,14 @@
 }
 
 .error-view-icon {
-    width: 80px;
+    width: 100px;
     stroke-width: 1.5px;
     animation: pulse 2s infinite;
 }
 
 .error-view-message {
     font-family: "NeueHaasGroteskDisp Pro Md", sans-serif;
-    font-size: 18px;
+    font-size: 14pt;
     margin: 0;
     max-width: 400px;
     line-height: 1.4;

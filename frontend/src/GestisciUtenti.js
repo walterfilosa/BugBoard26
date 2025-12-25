@@ -141,7 +141,7 @@ export default function GestisciUtenti() {
     if (loading) return <LoadingSpinner message="Caricamento utenti..." />;
 
     if (error) return (
-        <ErrorMessage message={error} />
+        <ErrorMessage message={error} marginTop={"65px"}/>
     );
 
     return (

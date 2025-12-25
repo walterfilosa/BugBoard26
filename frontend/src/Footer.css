@@ -110,16 +110,36 @@
 
 .link-about {
     font-family: 'NeueHaasGroteskDisp Pro Md', sans-serif;
-    font-size: 10pt;
+    font-size: 12pt;
     text-decoration: none;
     text-align: left;
     color: white;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+    position: relative;
+    transition: color 0.3s ease;
     display: inline-block;
     margin-left: 4px;
     margin-top: 20px;
 }
 
+.link-about::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 2px;
+    right: 0;
+    background: white;
+    transition: width 0.3s ease;
+    -webkit-transition: width 0.3s ease;
+}
+
+.link-about:hover::after {
+    width: 100%;
+    left: 0;
+    background: white;
+}
+
 .link-about:hover {
-    transform: scale(1.1);
+    color: #FFFFFF;
 }

@@ -2,8 +2,9 @@ import './SegnalaIssue.css';
 import React, {useEffect, useState} from "react";
 import {AlertTriangle, CircleCheck, Image as ImageIcon, X} from "lucide-react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {createIssue} from "./services/api";
+import {createIssue, uploadFile} from "./services/api";
 import { useAuth } from './context/AuthContext';
+import ErrorMessage from "./ErrorMessage";
 
 const issueTypes = [
     { id: 1, title: "Question", desc: "Per richieste di chiarimenti" },
@@ -26,7 +27,10 @@ export default function SegnalaIssue() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState(3);
+
+    // image serve per l'anteprima (Base64), rawFile serve per l'upload (File Object)
     const [image, setImage] = useState(null);
+    const [rawFile, setRawFile] = useState(null);
     const [fileName, setFileName] = useState("");
 
     const [showSuccess, setShowSuccess] = useState(false);
@@ -69,6 +73,7 @@ export default function SegnalaIssue() {
         setDescription("");
         setPriority(3);
         setImage(null);
+        setRawFile(null);
         setFileName("");
 
         setShowWarning(false);
@@ -79,11 +84,21 @@ export default function SegnalaIssue() {
         const file = e.target.files[0];
         if (file) {
             setFileName(file.name);
+            setRawFile(file);
 
             const reader = new FileReader();
             reader.onload = () => setImage(reader.result);
             reader.readAsDataURL(file);
         }
+    };
+
+    const handleRemoveImage = (e) => {
+        e.stopPropagation();
+        setImage(null);
+        setRawFile(null);
+        setFileName("");
+        const fileInput = document.getElementById("fileUpload");
+        if(fileInput) fileInput.value = "";
     };
 
     const handleSubmit = async () => {
@@ -102,21 +117,34 @@ export default function SegnalaIssue() {
         setIsSubmitting(true);
         setErrorMsg(null);
 
-        const selectedTypeObj = issueTypes.find(t => t.id === selectedType);
-        const typeString = selectedTypeObj ? selectedTypeObj.title : "Generic";
-
-        const newIssueData = {
-            tipo: typeString,
-            titolo: title,
-            descrizione: description,
-            priorita: priority,
-            linkImmagine: image,
-            stato: "ToDo",
-            assignee: null,
-            EmailCr: user.email
-        };
-
         try {
+            let uploadedImageUrl = null;
+
+            if (rawFile) {
+                try {
+                    uploadedImageUrl = await uploadFile(rawFile);
+                } catch (uploadError) {
+                    console.error("Errore upload immagine:", uploadError);
+                    setErrorMsg("Impossibile caricare l'immagine. Riprova o rimuovi l'allegato.");
+                    setIsSubmitting(false);
+                    return;
+                }
+            }
+
+            const selectedTypeObj = issueTypes.find(t => t.id === selectedType);
+            const typeString = selectedTypeObj ? selectedTypeObj.title : "Generic";
+
+            const newIssueData = {
+                tipo: typeString,
+                titolo: title,
+                descrizione: description,
+                priorita: priority,
+                linkImmagine: uploadedImageUrl,
+                stato: "ToDo",
+                assignee: null,
+                EmailCr: user.email
+            };
+
             await createIssue(currentProjectId, user.id, newIssueData);
 
             setIsSubmitting(false);
@@ -124,7 +152,7 @@ export default function SegnalaIssue() {
         } catch (error) {
             console.error(error);
             setIsSubmitting(false);
-            setErrorMsg("Si è verificato un errore durante l'invio. Riprova più tardi.");
+            setErrorMsg("Si è verificato un errore durante l'invio della segnalazione. Riprova più tardi.");
         }
     }
 
@@ -132,15 +160,13 @@ export default function SegnalaIssue() {
         <div className="segnalaissue">
 
             {errorMsg && (
-                <div className="error-banner" style={{
-                    backgroundColor: '#ffebee', color: '#c62828', padding: '15px',
-                    margin: '20px auto', maxWidth: '800px', borderRadius: '8px', border: '1px solid #ffcdd2',
-                    display: 'flex', justifyContent: 'space-between', alignItems: 'center'
-                }}>
-                    <span>{errorMsg}</span>
-                    <button onClick={() => setErrorMsg(null)} style={{background:'none', border:'none', cursor:'pointer'}}>
-                        <X size={18} color="#c62828"/>
-                    </button>
+                <div className="error-overlay">
+                    <div className="error-panel">
+                        <div className="error-content">
+                            <ErrorMessage message={errorMsg} buttonRefresh={false}/>
+                            <button className="btn-close-success" style={{width: "40%", backgroundColor: "#d32f2f"}} onClick={() => setErrorMsg(null)}>OK</button>
+                        </div>
+                    </div>
                 </div>
             )}
 
@@ -259,13 +285,7 @@ export default function SegnalaIssue() {
                     {image && (
                         <button
                             className="pulsante-rimuovi-img"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setImage(null);
-                                setFileName("");
-                                const fileInput = document.getElementById("fileUpload");
-                                if(fileInput) fileInput.value = "";
-                            }}
+                            onClick={handleRemoveImage}
                         >
                             <X size={20} color="#002060"/>
                         </button>
@@ -275,7 +295,9 @@ export default function SegnalaIssue() {
 
                 <div className="pulsanti">
                     <button onClick={handleCancelRequest} className={"buttonAnnulla"}>Annulla</button>
-                    <button disabled={!isFormValid} className={"buttonInvia"} onClick={handleSubmit}>Invia segnalazione</button>
+                    <button disabled={!isFormValid || isSubmitting} className={"buttonInvia"} onClick={handleSubmit}>
+                        {isSubmitting ? "Invio in corso..." : "Invia segnalazione"}
+                    </button>
                 </div>
             </div>
         </div>

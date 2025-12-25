@@ -165,7 +165,7 @@ export default function HomePage() {
     }
     if (error) {
         return (
-            <ErrorMessage message={error}/>
+            <ErrorMessage message={error} marginTop={"65px"}/>
         );
     }
 

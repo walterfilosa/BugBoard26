@@ -1,18 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './About.css';
-import { LogIn} from 'lucide-react';
+import './BrandIdentity.css';
+import { LogIn } from 'lucide-react';
 import Footer from "./Footer";
 
 export default function About() {
     const navigate = useNavigate();
+
     const [showSplash, setShowSplash] = useState(true);
     const [activeSection, setActiveSection] = useState(null);
-
     const [cursorTop, setCursorTop] = useState(0);
 
-    const sectionRefs = useRef({});
+    const [showNavbar, setShowNavbar] = useState(false);
+    const [scale, setScale] = useState(1.8);
+    const [opacity, setOpacity] = useState(1);
+    const [overlayOpacity, setOverlayOpacity] = useState(0);
+    const [scrollProgress, setScrollProgress] = useState(0);
+    const [containerOpacity, setContainerOpacity] = useState(0);
 
+    const sectionRefs = useRef({});
     const sidebarItemRefs = useRef({});
 
     useEffect(() => {
@@ -23,10 +30,53 @@ export default function About() {
         const timer = setTimeout(() => {
             setShowSplash(false);
         }, 3500);
-
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+
+            if (scrollY > 100) {
+                setShowNavbar(true);
+            } else {
+                setShowNavbar(false);
+            }
+
+            const maxScroll = 400;
+            const startScale = 1.8;
+            const endScale = 1.0;
+            let newScale = startScale - (scrollY / maxScroll) * (startScale - endScale);
+            if (newScale < endScale) newScale = endScale;
+            setScale(newScale);
+
+            const maxScrollFade = 200;
+            let newOpacity = 1 - (scrollY / maxScrollFade);
+            if (newOpacity < 0) newOpacity = 0;
+            if (newOpacity > 1) newOpacity = 1;
+            setOpacity(newOpacity);
+
+            const maxScrollOverlay = 500;
+            const maxOpacityValue = 0.6;
+            let newOverlayOp = (scrollY / maxScrollOverlay) * maxOpacityValue;
+            if (newOverlayOp > maxOpacityValue) newOverlayOp = maxOpacityValue;
+            setOverlayOpacity(newOverlayOp);
+
+            const fadeStart = 0;
+            const fadeEnd = 400;
+            let newContainerOp = (scrollY - fadeStart) / (fadeEnd - fadeStart);
+            if (newContainerOp < 0) newContainerOp = 0;
+            if (newContainerOp > 1) newContainerOp = 1;
+            setContainerOpacity(newContainerOp);
+
+            const winHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollY / winHeight) * 100;
+            setScrollProgress(scrolled);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         if (showSplash) return;
@@ -58,17 +108,16 @@ export default function About() {
         if (activeSection && sidebarItemRefs.current[activeSection]) {
             const activeLi = sidebarItemRefs.current[activeSection];
             let newTop = activeLi.offsetTop + (activeLi.offsetHeight / 2);
-
             newTop = newTop - 15;
-
             setCursorTop(newTop);
         } else if (sections.length > 0 && sidebarItemRefs.current[sections[0].id]) {
             const firstLi = sidebarItemRefs.current[sections[0].id];
-            let newTop = firstLi.offsetTop + (firstLi.offsetHeight / 2) - 15;
-            setCursorTop(newTop);
+            if (firstLi) {
+                let newTop = firstLi.offsetTop + (firstLi.offsetHeight / 2) - 15;
+                setCursorTop(newTop);
+            }
         }
     }, [activeSection]);
-
 
     const scrollToSection = (sectionId) => {
         const section = sectionRefs.current[sectionId];
@@ -87,7 +136,6 @@ export default function About() {
         { id: 'contatti', title: 'Contatti'}
     ];
 
-
     return (
         <>
             <div className="about-splash-container">
@@ -105,14 +153,59 @@ export default function About() {
             </div>
 
             <div className="about-page-container">
-                <header className="about-header">
-                    <img src="/Logo/LogoBugBoard26.svg" alt="BugBoard Logo" className="about-header-logo"/>
-                    <button className="btn-login-header" onClick={() => navigate('/')}>
-                        <LogIn size={20}/> Accedi
-                    </button>
+                <header className={`brand-header ${showNavbar ? 'visible' : ''}`}>
+                    <div className="header-content">
+                        <img src="/Logo/LogoBugBoard26.svg" alt="BugBoard Logo" className="brand-logo-small"/>
+                        <button className="btn-login-header" onClick={() => navigate('/')}>
+                            <LogIn size={20}/> Accedi
+                        </button>
+                    </div>
+                    <div className="scroll-progress-container">
+                        <div
+                            className="scroll-progress-bar"
+                            style={{ width: `${scrollProgress}%` }}
+                        ></div>
+                    </div>
                 </header>
 
-                <div className="about-content-wrapper">
+                <div className="brand-hero" style={{backgroundImage: "url('https://ateneapoli.it/wp-content/uploads/2021/12/triennioingegneriaester121.jpg')"}}>
+                    <div className="hero-overlay" style={{ backgroundColor: `rgba(0, 32, 96, ${overlayOpacity})` }}></div>
+                    <div className="hero-content">
+                        <h1
+                            className="brand-title animated-title"
+                            style={{
+                                transform: `scale(${scale})`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            <span className="title-word">Ab</span>
+                            <img
+                                src="/Logo/LogoSpin%20-%20Bianco.png"
+                                alt="o"
+                                style={{
+                                    height: "0.6em",
+                                    width: "auto",
+                                    margin: "0 -0.25em",
+                                    paddingTop: "10px",
+                                    transform: "translateY(2%)"
+                                }}
+                            />
+                            <span className="title-word">ut</span>
+                            <span className="title-word">Us</span>
+                        </h1>
+
+                        <p className="brand-subtitle animated-subtitle" style={{ opacity: opacity }}>
+                            <span className="subtitle-highlight">Scopri BugBoard26®</span>
+                        </p>
+                    </div>
+                    <div className="scroll-indicator"></div>
+                </div>
+
+                <div className="about-content-wrapper" style={{ opacity: containerOpacity }}>
+
                     <aside className="about-sidebar">
                         <div className="timeline-container">
                             <div className="timeline-line"></div>
@@ -143,31 +236,23 @@ export default function About() {
                     </aside>
 
                     <main className="about-main-text">
-                        <div className="title-box">
-                            <h1 className="main-title">
-                                Ab
-                            </h1>
-                            <img src="/Logo/LogoSpin.png" style={{width: "65px", height: "auto", marginTop: "25px"}}/>
-                            <h1 className="main-title">
-                                ut Us
-                            </h1>
-                        </div>
+
 
                         <section id="intro" className="content-section" ref={el => sectionRefs.current['intro'] = el}>
                             <h2>Cos'è BugBoard</h2>
                             <p>
                                 <span className="interactive-logo-container">
-
                                     <span className="testo-evidenza placeholder-text">BugBoard26®</span>
                                     <span className="testo-evidenza revealed-text">BugBoard26®</span>
-                                <img
-                                    src="/Logo/LogoSpin.png"
-                                    alt="walking bug"
-                                    className="hover-walking-logo"
-                                />
+                                    <img
+                                        src="/Logo/LogoSpin.png"
+                                        alt="walking bug"
+                                        className="hover-walking-logo"
+                                    />
                                 </span> è una piattaforma per la gestione collaborativa di issue in progetti software. Il sistema consente a team di sviluppo di segnalare problemi relativi a un progetto, monitorarne lo stato, assegnarli a membri del team e tenere traccia delle attività di risoluzione. Il sistema consiste in un’applicazione web-based, attraverso cui gli utenti possono fruire delle funzionalità in modo intuitivo e rapido.
                             </p>
                         </section>
+
                         <section id="mission" className="content-section" ref={el => sectionRefs.current['mission'] = el}>
                             <h2>La nostra Mission</h2>
                             <p>
@@ -176,6 +261,7 @@ export default function About() {
                                 issue in maniera rapida e agli amministratori di gestirle e assegnarle con pochi click.
                             </p>
                         </section>
+
                         <section id="features" className="content-section" ref={el => sectionRefs.current['features'] = el}>
                             <h2>Funzionalità Chiave</h2>
                             <p>
@@ -187,6 +273,7 @@ export default function About() {
                                 permettendoti di concentrarti sul codice, non sulla gestione dello strumento.
                             </p>
                         </section>
+
                         <section id="project" className="content-section" ref={el => sectionRefs.current['project'] = el}>
                             <h2>Il Progetto</h2>
                             <p>
@@ -208,21 +295,19 @@ export default function About() {
                                 />
                             </div>
                         </section>
-                        <section id="brand-identity" className="content-section" ref={el => sectionRefs.current['brand-identity'] = el}>
-                            <h2>
-                                Brand Identity
-                            </h2>
 
+                        <section id="brand-identity" className="content-section" ref={el => sectionRefs.current['brand-identity'] = el}>
+                            <h2>Brand Identity</h2>
                             <p>
                                 Al fine di garantire un immediato riconoscimento del marchio BugBoard26® da parte di tutti, si è deciso di adottare una vera e propria strategia di Visual Identity.
-
                                 Volevamo comunicare l’essenza del marchio tramite una combinazione di elementi grafici, in modo da creare un’immediata connessione tra il marchio e l’utente.
                             </p>
                             <p>
                                 Scopri di più sulla nostra brand identity alla <Link to="/brand-identity" className="link-pulito">pagina dedicata</Link>.
                             </p>
-                            <img src="/Logo/LogoBugBoard26.svg" style={{width: "50%"}}/>
+                            <img src="/Logo/LogoBugBoard26.svg" style={{width: "50%"}} alt="Logo"/>
                         </section>
+
                         <section id="team" className="content-section" ref={el => sectionRefs.current['team'] = el}>
                             <h2>Il Team</h2>
                             <p>
@@ -233,14 +318,14 @@ export default function About() {
                                 Vincenzo ha apportato un impatto significativo nella realizzazione del cuore dell'applicazione, il back-end.
                                 Grazie al suo ampio background di conoscenze in ambito Java Spring Boot, ha saputo abilmente gestire questa parte.
                                 <br/><span className="testo-evidenza">Walter Filosa</span><br/>
-                                Walter, invece, si è concentrato sulla realizzazione del front-end  di BugBoard. Dopo un attenta analisi del marchio,
+                                Walter, invece, si è concentrato sulla realizzazione del front-end di BugBoard. Dopo un attenta analisi del marchio,
                                 e dopo aver realizzato una Brand Identity capace di dare
                             </p>
                             <p>
                                 Un ringraziamento particolare va ai nostri docenti, il <Link to="https://www.docenti.unina.it/sergio.dimartino" className={"link-pulito"}>Prof. Sergio Di Martino</Link> e il <Link to="https://www.docenti.unina.it/luigiliberolucio.starace" className={"link-pulito"}>Prof. Luigi Libero Lucio Starace</Link>.
-
                             </p>
                         </section>
+
                         <section id="contatti" className="content-section" ref={el => sectionRefs.current['contatti'] = el}>
                             <h2>Contatti</h2>
                             <div className={"testo-evidenza"} style={{fontSize: "16pt", marginBottom: "8px"}}>
@@ -279,13 +364,11 @@ export default function About() {
                                 </table>
                             </div>
                         </section>
+
                         <section>
                             <hr/>
-                            <p>
-                                Gli Autori
-                            </p>
+                            <p>Gli Autori</p>
                         </section>
-
 
                     </main>
                 </div>

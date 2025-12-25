@@ -535,3 +535,77 @@
     color: #999 !important;
     margin-bottom: 30px !important;
 }
+
+.error-panel-wrapper {
+    position: relative;
+    margin: 80px auto;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    /* Opzionale: Se il tuo componente ErrorMessage NON ha uno sfondo,
+       puoi spostare qui lo stile di sfondo che avevi prima:
+       background-color: #ffebee;
+       border: 1px solid #ffcdd2;
+       border-radius: 8px;
+       padding: 15px;
+    */
+}
+
+/* Il contenitore del tuo componente prende tutto lo spazio disponibile */
+.error-component-container {
+    flex-grow: 1;
+}
+
+/* Sfondo scuro che copre tutta la pagina */
+.error-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Sfondo semi-trasparente scuro */
+    backdrop-filter: blur(5px); /* Sfocatura dello sfondo (effetto moderno) */
+    z-index: 2000; /* Molto alto per stare sopra Header e tutto il resto */
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
+    align-items: center;     /* Centra verticalmente */
+    animation: fadeInError 0.2s ease-out;
+}
+
+/* Il pannello bianco centrale */
+.error-panel {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative; /* Necessario per posizionare la X */
+    width: 90%;
+    max-width: 500px; /* Larghezza massima del pannello */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    animation: slideUpError 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Contenitore per il tuo componente ErrorMessage */
+.error-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animazioni di entrata */
+@keyframes fadeInError {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUpError {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

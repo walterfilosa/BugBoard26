@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Copy, Check, LogIn } from 'lucide-react';
+import { Copy, Check, LogIn, X } from 'lucide-react';
 import Footer from './Footer';
 import './BrandIdentity.css';
 
@@ -50,11 +50,25 @@ export default function BrandIdentity() {
     const [scrollProgress, setScrollProgress] = useState(0);
     const [containerOpacity, setContainerOpacity] = useState(0);
 
+    const [isSpinning, setIsSpinning] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+
     const handleCopyColor = (color, colorName) => {
         navigator.clipboard.writeText(color);
         setCopied(colorName);
         setTimeout(() => setCopied(null), 2000);
     };
+    const closeLightbox = () => setSelectedImage(null);
+
+    useEffect(() => {
+        const autoSpinTimer = setInterval(() => {
+            setIsSpinning(prevIsSpinning => {
+                if (prevIsSpinning) return true;
+                return true;
+            });
+        }, 8000);
+        return () => clearInterval(autoSpinTimer);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -141,7 +155,7 @@ export default function BrandIdentity() {
                     </h1>
 
                     <p className="brand-subtitle animated-subtitle" style={{ opacity: opacity }}>
-                        L'essenza visiva di BugBoard26®
+                        <span className="subtitle-highlight">L'essenza visiva di BugBoard26®</span>
                     </p>
                 </div>
                 <div className="scroll-indicator"></div>
@@ -178,9 +192,16 @@ export default function BrandIdentity() {
                         </div>
                         <div className="visual-content centered">
                             <div className="image-showcase floating">
-                                <img src="/Logo/LogoSpin.png" alt="Vista di Napoli con Vesuvio" className="brand-image" />
+                                <img
+                                    src="/Logo/LogoSpin.png"
+                                    alt="Coccinella BugBoard"
+                                    className={`brand-image ${isSpinning ? 'spinning-logo' : ''}`}
+                                    onClick={() => setIsSpinning(true)}
+                                    onAnimationEnd={() => setIsSpinning(false)}
+                                    style={{ cursor: 'pointer' }}
+                                />
                             </div>
-                            <span className="caption">La coccinella di BugBoard</span>
+                            <span className="caption">La coccinella di BugBoard®</span>
                         </div>
                     </section>
                 </RevealOnScroll>
@@ -207,25 +228,25 @@ export default function BrandIdentity() {
                             <h2>Le diverse versioni del Logo</h2>
                         </div>
                         <div className="logo-grid-container">
-                            <div className="logo-grid-item">
+                            <div className="logo-grid-item" onClick={() => setSelectedImage("/Logo/LogoBugBoard26.svg")}>
                                 <div className="logo-wrapper">
                                     <img src="/Logo/LogoBugBoard26.svg" alt="Logo Versione Principale" className="logo-grid-img" />
                                 </div>
                             </div>
 
-                            <div className="logo-grid-item">
+                            <div className="logo-grid-item" onClick={() => setSelectedImage("/Logo/LogoBugBoard26-Orizzontale.png")}>
                                 <div className="logo-wrapper">
                                     <img src="/Logo/LogoBugBoard26-Orizzontale.png" alt="Logo Versione Negativa" className="logo-grid-img"/>
                                 </div>
                             </div>
 
-                            <div className="logo-grid-item">
+                            <div className="logo-grid-item" onClick={() => setSelectedImage("/Logo/LogoBugBoard26.png")}>
                                 <div className="logo-wrapper">
                                     <img src="/Logo/LogoBugBoard26.png" alt="logo" className="logo-grid-img"/>
                                 </div>
                             </div>
 
-                            <div className="logo-grid-item dark-bg">
+                            <div className="logo-grid-item dark-bg" onClick={() => setSelectedImage("/Logo/LogoBugBoard26-Bianco.png")}>
                                 <div className="logo-wrapper">
                                     <img src="/Logo/LogoBugBoard26-Bianco.png" alt="logo" className="logo-grid-img" />
                                 </div>
@@ -239,11 +260,11 @@ export default function BrandIdentity() {
                         <div className="text-content">
                             <h2>I Colori: La Palette BugBoard</h2>
                             <p>
-                                La palette cromatica è stata scelta per comunicare professionalità e modernità.
-                                Il colore primario è il <strong style={{color: "#002060"}}>Blu BugBoard</strong>, una tonalità profonda che evoca fiducia e tecnologia.
+                                La palette cromatica è stata scelta per comunicare professionalità e modernità. <br/>
+                                Il colore primario è il <span style={{color: "#002060", fontFamily: "NeueHaasGroteskDisp Pro BLk"}}>Blu BugBoard</span>, una tonalità profonda che evoca fiducia e professionalità.
                             </p>
                             <p>
-                                Ad esso si affianca il <strong style={{color: "#B0B0B0"}}>Grigio BugBoard</strong>, un colore neutro e sofisticato utilizzato per testi secondari e sfondi, che garantisce equilibrio e leggibilità.
+                                Ad esso si affianca il <span style={{color: "#B0B0B0", fontFamily: "NeueHaasGroteskDisp Pro BLk"}}>Grigio BugBoard</span>, un colore neutro e sofisticato utilizzato per testi secondari e sfondi, che garantisce equilibrio e leggibilità.
                             </p>
                         </div>
                         <div className="visual-content centered color-visual-content">
@@ -277,8 +298,8 @@ export default function BrandIdentity() {
                     <section className="brand-section">
                         <h2>Tipografia</h2>
                         <p>
-                            Il font utilizzato nel logo è lo stesso dell'intera interfaccia utente: <strong>Neue Haas Grotesk Display Pro</strong>.
-                            Questo font garantisce un'alta leggibilità e conferisce al marchio un'idea di modernità e professionalità "Swiss Style".
+                            Il font utilizzato nel logo è lo stesso dell'intera interfaccia utente: <span style={{ fontFamily: "NeueHaasGroteskDisp Pro BLk"}}>Neue Haas Grotesk Display Pro</span>.
+                            Questo font garantisce un'alta leggibilità e conferisce al marchio un'idea di modernità e professionalità <span style={{fontStyle: "italic"}}>Swiss Style</span>.
                         </p>
 
                         <div className="typography-showcase">
@@ -297,6 +318,25 @@ export default function BrandIdentity() {
                 </RevealOnScroll>
             </div>
             <Footer />
+            {selectedImage && (
+                <div
+                    className="lightbox-overlay"
+                    onClick={closeLightbox}
+                    style={{
+                        backgroundColor: selectedImage.includes("Bianco")
+                            ? "rgba(0,32,96,0.85)"
+                            : "rgba(255, 255, 255, 0.85)"
+                    }}
+                >
+                    <button className="lightbox-close-btn" onClick={closeLightbox}>
+                        <X size={32} color={selectedImage.includes("Bianco") ? "#FFFFFF" : "#ff4d4d"} />
+                    </button>
+
+                    <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+                        <img src={selectedImage} alt="Logo Ingrandito" className="lightbox-image" />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -355,3 +355,21 @@ export const setIssueAsSolved = async (issueId) => {
     });
     return handleResponse(response);
 };
+
+export const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch(`${BASE_URL}/upload`, {
+        method: 'POST',
+        body: formData,
+        headers: getHeaders()
+    });
+
+    if (!response.ok) {
+        throw new Error("Errore durante il caricamento dell'immagine");
+    }
+
+    const text = await response.text();
+    return text;
+}
