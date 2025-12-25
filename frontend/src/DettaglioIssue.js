@@ -1,13 +1,21 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useParams, useNavigate, useLocation} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import './DettaglioIssue.css';
-import {ArrowLeft, Edit2, Trash2, Save, X, Image as ImageIcon, Upload, UploadCloud, AlertCircle, AlertTriangle} from 'lucide-react';
-import {getTypeIcon, getStatusIcon, getStatusColor, mockIssues, mockTeamUsers} from './utils';
+import {ArrowLeft, Edit2, Trash2, Save, X, Image as ImageIcon, Upload, UploadCloud, AlertCircle, AlertTriangle, CircleCheck} from 'lucide-react';
+import { getTypeIcon } from './utils';
 import StatusTracker from "./Statustracker";
 import AssegnaIssue from "./AssegnaIssue";
 import { useAuth } from './context/AuthContext';
 import LoadingSpinner from './LoadingSpinner';
-import {getIssueById, updateIssue, deleteIssue, getUserById, assignIssueToUser, setIssueAsSolved} from './services/api';
+import {
+    getIssueById,
+    updateIssue,
+    deleteIssue,
+    getUserById,
+    assignIssueToUser,
+    setIssueAsSolved,
+    uploadFile
+} from './services/api';
 import ErrorMessage from "./ErrorMessage";
 
 export function DettaglioIssue() {
@@ -24,11 +32,23 @@ export function DettaglioIssue() {
     const [editedData, setEditedData] = useState(null);
     const [showAssignPanel, setShowAssignPanel] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [newImageFile, setNewImageFile] = useState(null);
 
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
 
+    const [showSuccess, setShowSuccess] = useState(false);
+
     const fileInputRef = useRef(null);
+
+    useEffect(() => {
+        if (showSuccess) {
+            const timer = setTimeout(() => {
+                setShowSuccess(false);
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [showSuccess]);
 
     useEffect(() => {
         const fetchIssueDetail = async () => {
@@ -141,6 +161,8 @@ export function DettaglioIssue() {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setNewImageFile(file);
+
             const reader = new FileReader();
             reader.onload = () => {
                 setEditedData(prev => ({
@@ -162,12 +184,38 @@ export function DettaglioIssue() {
     const handleSave = async () => {
         try {
             setIsSaving(true);
-            await updateIssue(editedData);
 
-            setIssue(editedData);
+            let finalImageUrl = editedData.image;
+
+            if (newImageFile) {
+                try {
+                    finalImageUrl = await uploadFile(newImageFile);
+                } catch (uploadErr) {
+                    console.error("Errore upload:", uploadErr);
+                    alert("Impossibile caricare la nuova immagine. Riprova.");
+                    setIsSaving(false);
+                    return;
+                }
+            }
+
+            const payload = {
+                ...editedData,
+                image: finalImageUrl
+            };
+
+            await updateIssue(payload);
+
+            setIssue(payload);
+            setEditedData(payload);
+
+            setNewImageFile(null);
             setIsEditing(false);
+
+            setShowSuccess(true);
+
         } catch (err) {
-            alert("Errore durante il salvataggio");
+            console.error(err);
+            alert("Errore durante il salvataggio della issue");
         } finally {
             setIsSaving(false);
         }
@@ -175,6 +223,7 @@ export function DettaglioIssue() {
 
     const handleCancel = () => {
         setEditedData(issue);
+        setNewImageFile(null);
         setIsEditing(false);
     };
 
@@ -197,6 +246,22 @@ export function DettaglioIssue() {
 
     return (
         <div className="page-init">
+
+            {showSuccess && (
+                <div className="success-overlay">
+                    <div className="success-card">
+                        <CircleCheck size={48} color="#4dd32f" className="success-icon"/>
+                        <h2>Modifiche Salvate!</h2>
+                        <p>Le informazioni della issue sono state aggiornate con successo.</p>
+                        <button
+                            className="btn-close-success"
+                            onClick={() => setShowSuccess(false)}
+                        >
+                            Chiudi
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {showDeleteConfirm && (
                 <div className="overlay-delete">
@@ -406,12 +471,12 @@ export function DettaglioIssue() {
 
                         {currentData.image && !currentData.image.startsWith('data:') ? (
                             <div style={{ wordBreak: 'break-all', fontSize: '14px', lineHeight: '1.4' }}>
-                                <span style={{ fontWeight: 'bold', marginRight: '5px' }}>Link file:</span>
+                                <span style={{ fontFamily: 'NeueHaasGroteskDisp Pro Blk', marginRight: '5px' }}>Link:</span>
                                 <a
                                     href={currentData.image}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    style={{ color: '#002060', textDecoration: 'underline', fontWeight: '500' }}
+                                    style={{ color: '#B0B0B0', textDecoration: 'underline' }}
                                 >
                                     {currentData.image}
                                 </a>
