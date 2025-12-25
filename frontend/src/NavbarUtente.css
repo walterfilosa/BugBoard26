@@ -157,7 +157,7 @@
 }
 
 .dropdown-menu a.link-logout {
-    color: rgb(255, 0, 0);
+    color: var(--danger-color);
     font-weight: 500;
     border-top: 1px solid #eee;
 }

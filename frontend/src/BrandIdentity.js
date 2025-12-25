@@ -130,7 +130,7 @@ export default function BrandIdentity() {
                 <div className="header-content">
                     <img src="/Logo/LogoBugBoard26.svg" alt="BugBoard Logo" className="brand-logo-small" />
                     <button className="btn-login-header" onClick={() => navigate('/')}>
-                        <LogIn size={20}/> Login
+                        <LogIn size={20}/> Accedi
                     </button>
                 </div>
                 <div className="scroll-progress-container">
