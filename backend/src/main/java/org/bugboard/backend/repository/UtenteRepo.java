@@ -11,7 +11,5 @@ import java.util.List;
 public interface UtenteRepo extends JpaRepository<@NonNull Utente,@NonNull Integer> {
     Utente findByEmail(String username);
     List<Utente> findByProgettiAssegnati_idProgetto(int projectId);
-    List<Utente> findByProgettiAssegnati_idProgettoIsNot(int projectId);
-
     boolean existsUtenteByProgettiAssegnati_idProgettoAndIdUtente(int progettiAssegnatiIdProgetto, int idUtente);
 }

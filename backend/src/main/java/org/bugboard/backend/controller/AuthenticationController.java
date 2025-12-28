@@ -1,7 +1,7 @@
 package org.bugboard.backend.controller;
 
 import lombok.NonNull;
-import org.bugboard.backend.model.UserLogin;
+import org.bugboard.backend.security.UserLogin;
 import org.bugboard.backend.model.Utente;
 import org.bugboard.backend.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;

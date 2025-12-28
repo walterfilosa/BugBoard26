@@ -1,7 +1,7 @@
 package org.bugboard.backend.service;
 
 import org.bugboard.backend.model.Progetto;
-import org.bugboard.backend.model.UserLogin;
+import org.bugboard.backend.security.UserLogin;
 import org.bugboard.backend.model.Utente;
 import org.bugboard.backend.repository.UtenteRepo;
 import org.bugboard.backend.security.JWTService;

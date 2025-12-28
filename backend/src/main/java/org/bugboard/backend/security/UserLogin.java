@@ -1,4 +1,4 @@
-package org.bugboard.backend.model;
+package org.bugboard.backend.security;
 
 import lombok.*;
 import org.springframework.stereotype.Component;
