@@ -361,7 +361,6 @@ export default function About() {
                             <div className={"testo-evidenza"} style={{fontSize: "16pt", marginBottom: "8px"}}>
                                 Autori:
                             </div>
-
                             <div className="table-container">
                                 <table className="custom-table">
                                     <tbody>
