@@ -130,6 +130,7 @@ export default function About() {
         { id: 'intro', title: 'Cos\'è BugBoard' },
         { id: 'mission', title: 'La nostra Mission' },
         { id: 'features', title: 'Funzionalità Chiave' },
+        { id: 'sonarqube', title: 'Qualità per qualità' },
         { id: 'project', title: 'Il Progetto' },
         { id: 'brand-identity', title: 'Brand Identity' },
         { id: 'team', title: 'Il Team' },
@@ -274,10 +275,43 @@ export default function About() {
                             </p>
                         </section>
 
+                        <section id="sonarqube" className="content-section" ref={el => sectionRefs.current['sonarqube'] = el}>
+                            <h2>Qualità per qualità</h2>
+                            <p>
+                                Noi cerchiamo di supportare al massimo i nostri utenti nello sviluppo software, affinché siano in grado di produrre codice di qualità.
+                            </p>
+                            <p>
+                                A tal fine, siamo noi i primi  dover dare l'esempio. Nello sviluppo di BugBoard26® ci siamo avvalsi dell'utilizzo di SonarQube,
+                                un software open source sviluppato da Sonar, che ci ha permesso di monitorare in tempo reale la qualità del codice.
+                            </p>
+                            <p>
+                                Il risultato? Il back-end di BugBoard è risultato nello stato <span style={{fontFamily: "NeueHaasGroteskDisp Pro Blk"}}>Passed</span>, privo di errori e vulnerabilità.
+
+                            </p>
+
+                            <div className="sonarqube-images-container">
+                                <img
+                                    src="https://sonarcloud.io/images/project_badges/sonarcloud-light.svg"
+                                    alt="Descrizione immagine 1"
+                                    className="project-image"
+                                />
+                                <img
+                                    src="https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg"
+                                    alt="Descrizione immagine 2"
+                                    className="project-image"
+                                />
+                                <img
+                                    src="https://sonarcloud.io/images/project_badges/sonarcloud-highlight.svg"
+                                    alt="Descrizione immagine 1"
+                                    className="project-image"
+                                />
+                            </div>
+                        </section>
+
                         <section id="project" className="content-section" ref={el => sectionRefs.current['project'] = el}>
                             <h2>Il Progetto</h2>
                             <p>
-                                BugBoard26 è un progetto universitario, propedeutico all'insegnamento di Ingegneria del Software.
+                                BugBoard26® è un progetto universitario, propedeutico all'insegnamento di Ingegneria del Software.
                                 La sua realizzazione è stata possibile pertanto grazie all'<Link to={"https://www.unina.it"} className={"link-pulito"}>Università degli Studi di Napoli Federico II</Link>,
                                 in particolare al <Link to={"https://www.dieti.unina.it"} className={"link-pulito"}>DIETI</Link> (Dipartimento di Ingegneria Elettrica e Tecnologie dell'Informazione) e al
                                 <Link to={"https://www.informatica.dieti.unina.it"} className={"link-pulito"}> Corso di Studi in Informatica</Link>, coordinato dal <Link to={"https://www.docenti.unina.it/sergio.dimartino"} className={"link-pulito"}>Prof. Sergio Di Martino</Link>.
@@ -315,11 +349,7 @@ export default function About() {
                             </p>
                             <p style={{paddingLeft: "40px"}}>
                                 <span className="testo-evidenza">Vincenzo Donadio</span><br/>
-                                Vincenzo ha apportato un impatto significativo nella realizzazione del cuore dell'applicazione, il back-end.
-                                Grazie al suo ampio background di conoscenze in ambito Java Spring Boot, ha saputo abilmente gestire questa parte.
-                                <br/><span className="testo-evidenza">Walter Filosa</span><br/>
-                                Walter, invece, si è concentrato sulla realizzazione del front-end di BugBoard. Dopo un attenta analisi del marchio,
-                                e dopo aver realizzato una Brand Identity capace di dare
+                                <span className="testo-evidenza">Walter Filosa</span>
                             </p>
                             <p>
                                 Un ringraziamento particolare va ai nostri docenti, il <Link to="https://www.docenti.unina.it/sergio.dimartino" className={"link-pulito"}>Prof. Sergio Di Martino</Link> e il <Link to="https://www.docenti.unina.it/luigiliberolucio.starace" className={"link-pulito"}>Prof. Luigi Libero Lucio Starace</Link>.

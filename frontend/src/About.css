@@ -167,6 +167,14 @@
     flex-wrap: wrap;
 }
 
+.sonarqube-images-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 .project-image {
     flex: 1;
     max-width: 100%;
@@ -243,7 +251,7 @@
 
 .timeline-list li {
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     min-height: 30px;
     display: flex;
     align-items: center;
