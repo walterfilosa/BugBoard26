@@ -48,30 +48,26 @@ body {
     padding: 20px;
 }
 
-/* App.css */
-
-/* Wrapper principale che avvolge Navbar, Pagina e Footer */
 .app-layout-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Altezza minima: 100% della finestra visibile */
+    min-height: 100vh;
 }
 
-/* Il contenitore dove viene renderizzata la pagina (Outlet) */
 .main-content-wrapper {
-    flex: 1; /* Occupa tutto lo spazio disponibile */
-    display: flex; /* Opzionale: utile se vuoi centrare contenuti di loading */
+    flex: 1;
+    display: flex;
     flex-direction: column;
 }
 
-/* Opzionale: Per centrare verticalmente il loading nella pagina */
 .homepage-loading {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 50vh; /* Sicurezza extra */
+    width: 100%;
+    height: 100%;
 }
 
 .campo {
@@ -390,4 +386,19 @@ body {
     color: white;
 }
 
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.main-content-wrapper > * {
+    animation: pageFadeIn 0.4s ease-out forwards;
+    width: 100%;
+}
 

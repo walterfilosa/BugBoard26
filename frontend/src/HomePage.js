@@ -161,7 +161,9 @@ export default function HomePage() {
     )};
 
     if (loading) {
-        return <LoadingSpinner message="Caricamento issues..." />;
+        <div className="homepage-loading">
+            return <LoadingSpinner message="Caricamento issues..." />;
+        </div>
     }
     if (error) {
         return (

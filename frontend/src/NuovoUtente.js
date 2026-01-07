@@ -135,7 +135,7 @@ export default function NuovoUtente() {
     }, [showSuccess, navigate]);
 
     return (
-        <div className="homepage-container">
+        <div className="homepage-container fix-width">
 
             {showSuccess && (
                 <div className="success-overlay">

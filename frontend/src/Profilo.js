@@ -303,7 +303,7 @@ export function Profilo({ isStandalone = false }) {
     if (error) return <div style={{padding:40, textAlign:'center', color:'red'}}>{error}</div>;
 
     const ProfileContent = () => (
-        <div className="homepage-container">
+        <div className="homepage-container fix-width">
 
             {showConfirmModal && (
                 <div className="overlay-password-confirm" style={{

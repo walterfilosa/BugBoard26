@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import { createPortal } from 'react-dom';
 import './GestisciUtenti.css';
 import { X, Search, ShieldCheck, User2, Plus } from 'lucide-react';
 import NoResultMessage from "./NoResultMessage";
@@ -13,7 +14,14 @@ export default function AggiungiUtenteEsistente({ users, onSelect, onClose }) {
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    return (
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
+    const modalContent = (
         <div className="panel-overlay">
             <div className="panel-card wide-panel">
 
@@ -83,4 +91,6 @@ export default function AggiungiUtenteEsistente({ users, onSelect, onClose }) {
             </div>
         </div>
     );
+
+    return createPortal(modalContent, document.body);
 }

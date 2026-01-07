@@ -18,6 +18,7 @@ import {useEffect, useState} from "react";
 import { AuthProvider } from './context/AuthContext';
 import About from "./About";
 import BrandIdentity from "./BrandIdentity";
+import ScrollToTop from './ScrollToTop';
 
 const LayoutUtente = () => {
     return (
@@ -72,6 +73,7 @@ const LayoutAdmin = () => {
             <AuthProvider>
             <div className="App">
                 <Router>
+                    <ScrollToTop />
 
                     <Routes>
                         <Route path="/" element={<Login/>}/>

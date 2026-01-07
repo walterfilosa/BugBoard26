@@ -242,3 +242,10 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .btn-indietro-nuovo-utente:hover {
     color: #002060;
 }
+
+.fix-width {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}

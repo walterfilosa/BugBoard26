@@ -138,7 +138,11 @@ export default function GestisciUtenti() {
         navigate('/admin/nuovo-utente');
     };
 
-    if (loading) return <LoadingSpinner message="Caricamento utenti..." />;
+    if (loading) {
+        <div className="homepage-loading">
+            return <LoadingSpinner message="Caricamento utenti..."/>;
+        </div>
+    }
 
     if (error) return (
         <ErrorMessage message={error} marginTop={"65px"}/>

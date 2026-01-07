@@ -109,10 +109,10 @@ export function Progetti() {
                     </div>
                 </div>
 
-                <h1>Benvenuto, {user.nome || user.email?.split('@')[0] || "Utente"}</h1>
-                <p className="subtitle">Seleziona un progetto per entrare</p>
+                <h1 style={{ animationDelay: '100ms' }}>Benvenuto, {user.nome || user.email?.split('@')[0] || "Utente"}</h1>
+                <p className="subtitle" style={{ animationDelay: '200ms' }}>Seleziona un progetto per entrare</p>
 
-                <div className="projects-actions-bar">
+                <div className="projects-actions-bar" style={{ animationDelay: '300ms' }}>
                     <div className="search-box project-search">
                         <Search className="search-icon" size={20}/>
                         <input
@@ -126,13 +126,15 @@ export function Progetti() {
 
                 <div className="projects-grid">
                     {filteredProjects.length > 0 ? (
-                        filteredProjects.map((project) => {
+                        filteredProjects.map((project, index) => {
                             const statusConfig = getStatusConfig(project.status);
+                            const cardDelay = `${400 + (index * 100)}ms`;
                             return (
                                 <div
                                     key={project.id}
                                     className="project-card"
                                     onClick={() => handleProjectClick(project.id)}
+                                    style={{ animationDelay: cardDelay }}
                                 >
                                     <div className="card-top">
                                         <div className={`project-status-badge ${statusConfig.className}`}>
@@ -150,7 +152,7 @@ export function Progetti() {
                             );
                         })
                     ) : (
-                        <div className="no-results-box">
+                        <div className="no-results-box" style={{ animationDelay: '400ms', opacity: 0, animation: 'fadeInUp 0.6s forwards' }}>
                             <Folder size={48} color="#B0B0B0" strokeWidth={1}/>
                             <p>{searchTerm
                                 ? "Nessun progetto corrisponde alla ricerca."
