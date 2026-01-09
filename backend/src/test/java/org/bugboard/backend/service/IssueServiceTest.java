@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Date;
@@ -32,28 +33,29 @@ class IssueServiceTest {
 
     @Test
     void testAddIssueSuccess() {
-        Issue issue = new Issue();
-        issue.setTipo("Feature");
-        issue.setTitolo("Test");
-        issue.setDescrizione("Test");
-        issue.setPriorita(5);
-        issue.setLinkImmagine("Link immagine");
-        issue.setUtenteAssegnato(null);
+        Issue issue = Issue.builder()
+                .tipo("Feature")
+                .titolo("Test")
+                .descrizione("Test")
+                .priorita(5)
+                .linkImmagine("Link immagine")
+                .build();
 
-        Progetto progetto = new Progetto();
-        progetto.setIdProgetto(1);
-        progetto.setTitolo("Testing");
-        progetto.setDescrizione("Testing");
+        Progetto progetto = Progetto.builder()
+                .idProgetto(1)
+                .titolo("Testing")
+                .descrizione("Testing").build();
 
-        Utente utente = new Utente();
-        utente.setIdUtente(1);
-        utente.setNome("Test");
-        utente.setCognome("Ing");
-        utente.setDataNascita(Date.valueOf("2000-01-01"));
-        utente.setNumeroTelefono("999999999");
-        utente.setEmail("Test@test.com");
-        utente.setPassword("Test");
-        utente.setIsAdmin(true);
+        Utente utente = Utente.builder()
+                .idUtente(1)
+                .nome("Test")
+                .cognome("Ing")
+                .dataNascita(Date.valueOf("2000-01-01"))
+                .email("Test@test.com")
+                .numeroTelefono("999999999")
+                .password("Test")
+                .isAdmin(true)
+                .build();
 
         HashSet<Utente> utenti = new HashSet<>();
         utenti.add(utente);
@@ -80,6 +82,81 @@ class IssueServiceTest {
         verify(optionalService,times(1)).checkProgetto(progetto.getIdProgetto());
         verify(optionalService,times(1)).checkUtente(utente.getIdUtente());
 
+    }
+
+    @Test
+    void testAddIssueProgettoNotFound(){
+        Issue issue = Issue.builder()
+                .tipo("Feature")
+                .titolo("Test")
+                .descrizione("Test")
+                .priorita(5)
+                .linkImmagine("Link immagine")
+                .build();
+
+        given(optionalService.checkProgetto(Mockito.any(Integer.class))).willReturn(null);
+
+        Issue returnedIssue = issueService.addIssue(1,1,issue);
+
+        assertThat(returnedIssue).isNull();
+        verify(optionalService,times(1)).checkProgetto(Mockito.any(Integer.class));
+    }
+
+    @Test
+    void testAddIssueUtenteNotFound(){
+        Issue issue = Issue.builder()
+                .tipo("Feature")
+                .titolo("Test")
+                .descrizione("Test")
+                .priorita(5)
+                .linkImmagine("Link immagine")
+                .build();
+
+        given(optionalService.checkUtente(Mockito.any(Integer.class))).willReturn(null);
+
+        Issue returnedIssue = issueService.addIssue(1,1,issue);
+
+        assertThat(returnedIssue).isNull();
+        verify(optionalService,times(1)).checkUtente(Mockito.any(Integer.class));
+    }
+
+    @Test
+    void testAddIssueProjectNotCointainsUserFailure(){
+        Issue issue = Issue.builder()
+                .tipo("Feature")
+                .titolo("Test")
+                .descrizione("Test")
+                .priorita(5)
+                .linkImmagine("Link immagine")
+                .build();
+
+        Progetto progetto = Progetto.builder()
+                .idProgetto(1)
+                .titolo("Testing")
+                .descrizione("Testing")
+                .setUtenti(new HashSet<>())
+                .build();
+
+        Utente utente = Utente.builder()
+                .idUtente(1)
+                .nome("Test")
+                .cognome("Ing")
+                .dataNascita(Date.valueOf("2000-01-01"))
+                .email("Test@test.com")
+                .numeroTelefono("999999999")
+                .password("Test")
+                .isAdmin(true)
+                .build();
+
+        given(optionalService.checkProgetto(progetto.getIdProgetto())).willReturn(progetto);
+        given(optionalService.checkUtente(utente.getIdUtente())).willReturn(utente);
+
+        Issue returnedIssue = issueService.addIssue(progetto.getIdProgetto(),utente.getIdUtente(),issue);
+
+        assertThat(returnedIssue).isNull();
+
+        verify(optionalService,times(1)).checkProgetto(progetto.getIdProgetto());
+        verify(optionalService,times(1)).checkUtente(utente.getIdUtente());
     }
 
 }
