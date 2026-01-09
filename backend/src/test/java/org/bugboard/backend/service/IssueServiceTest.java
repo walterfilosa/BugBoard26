@@ -159,4 +159,123 @@ class IssueServiceTest {
         verify(optionalService,times(1)).checkUtente(utente.getIdUtente());
     }
 
+    @Test
+    void testAssignIssueSuccess(){
+        Issue issue = Issue.builder()
+                .idIssue(1)
+                .tipo("Feature")
+                .titolo("Test")
+                .descrizione("Test")
+                .priorita(5)
+                .linkImmagine("Link immagine")
+                .build();
+
+        Progetto progetto = Progetto.builder()
+                .idProgetto(1)
+                .titolo("Testing")
+                .descrizione("Testing")
+                .setUtenti(new HashSet<>())
+                .build();
+        issue.setProgetto(progetto);
+
+        Utente utente = Utente.builder()
+                .idUtente(1)
+                .nome("Test")
+                .cognome("Ing")
+                .dataNascita(Date.valueOf("2000-01-01"))
+                .email("Test@test.com")
+                .numeroTelefono("999999999")
+                .password("Test")
+                .isAdmin(true)
+                .build();
+
+        HashSet<Utente> utenti = new HashSet<>();
+        utenti.add(utente);
+        progetto.setSetUtenti(utenti);
+
+        given(optionalService.checkIssue(issue.getIdIssue())).willReturn(issue);
+        given(optionalService.checkUtente(utente.getIdUtente())).willReturn(utente);
+        given(issueRepo.save(issue)).willReturn(issue);
+
+        Issue returnedIssue = issueService.assignIssue(issue.getIdIssue(), utente.getIdUtente());
+
+        assertThat(returnedIssue.getIdIssue()).isEqualTo(issue.getIdIssue());
+        assertThat(returnedIssue.getTipo()).isEqualTo("Feature");
+        assertThat(returnedIssue.getTitolo()).isEqualTo("Test");
+        assertThat(returnedIssue.getDescrizione()).isEqualTo("Test");
+        assertThat(returnedIssue.getPriorita()).isEqualTo(5);
+        assertThat(returnedIssue.getLinkImmagine()).isEqualTo("Link immagine");
+        assertThat(returnedIssue.getUtenteAssegnato()).isEqualTo(utente);
+        assertThat(returnedIssue.getUtenteCreatore()).isEqualTo(issue.getUtenteCreatore());
+        assertThat(returnedIssue.getProgetto()).isEqualTo(issue.getProgetto());
+        assertThat(returnedIssue.getStato()).isEqualTo("Assegnata");
+
+        verify(issueRepo,times(1)).save(issue);
+        verify(optionalService,times(1)).checkIssue(issue.getIdIssue());
+        verify(optionalService,times(1)).checkUtente(utente.getIdUtente());
+    }
+
+    @Test
+    void testAssignIssueIssueNotFound(){
+
+        given(optionalService.checkIssue(Mockito.any(Integer.class))).willReturn(null);
+
+        Issue returnedIssue = issueService.assignIssue(1,1);
+
+        assertThat(returnedIssue).isNull();
+        verify(optionalService,times(1)).checkIssue(Mockito.any(Integer.class));
+    }
+
+    @Test
+    void testAssignIssueUtenteNotFound(){
+
+        given(optionalService.checkUtente(Mockito.any(Integer.class))).willReturn(null);
+
+        Issue returnedIssue = issueService.assignIssue(1,1);
+
+        assertThat(returnedIssue).isNull();
+        verify(optionalService,times(1)).checkUtente(Mockito.any(Integer.class));
+    }
+
+    @Test
+    void testAssignIssueProjectNotCointainsUserFailure(){
+        Issue issue = Issue.builder()
+                .tipo("Feature")
+                .titolo("Test")
+                .descrizione("Test")
+                .priorita(5)
+                .linkImmagine("Link immagine")
+                .build();
+
+        Progetto progetto = Progetto.builder()
+                .idProgetto(1)
+                .titolo("Testing")
+                .descrizione("Testing")
+                .setUtenti(new HashSet<>())
+                .build();
+
+        issue.setProgetto(progetto);
+
+        Utente utente = Utente.builder()
+                .idUtente(1)
+                .nome("Test")
+                .cognome("Ing")
+                .dataNascita(Date.valueOf("2000-01-01"))
+                .email("Test@test.com")
+                .numeroTelefono("999999999")
+                .password("Test")
+                .isAdmin(true)
+                .build();
+
+        given(optionalService.checkIssue(issue.getIdIssue())).willReturn(issue);
+        given(optionalService.checkUtente(utente.getIdUtente())).willReturn(utente);
+
+        Issue returnedIssue = issueService.assignIssue(issue.getIdIssue(),utente.getIdUtente());
+
+        assertThat(returnedIssue).isNull();
+
+        verify(optionalService,times(1)).checkIssue(issue.getIdIssue());
+        verify(optionalService,times(1)).checkUtente(utente.getIdUtente());
+    }
+
 }

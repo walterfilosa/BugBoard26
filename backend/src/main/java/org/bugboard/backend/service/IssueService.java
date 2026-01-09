@@ -84,12 +84,15 @@ public class IssueService {
         return null;
     }
 
-
+    @Transactional
     public Issue assignIssue(int issueId, int userId) {
         Issue issue = optionalService.checkIssue(issueId);
         Utente user = optionalService.checkUtente(userId);
 
         if(issue!=null && user!=null) {
+            if(!issue.getProgetto().getSetUtenti().contains(user)){
+                return null;
+            }
             issue.setUtenteAssegnato(user);
             issue.setStato(ISSUE_ASSEGNATA);
             return issueRepo.save(issue);
