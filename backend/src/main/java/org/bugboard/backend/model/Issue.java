@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Component
 public class Issue {
     @Id

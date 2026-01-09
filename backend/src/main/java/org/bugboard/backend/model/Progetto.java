@@ -12,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Component
 public class Progetto {
     @Id

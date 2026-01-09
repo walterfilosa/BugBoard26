@@ -14,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Component
 public class Utente {
     @Id
