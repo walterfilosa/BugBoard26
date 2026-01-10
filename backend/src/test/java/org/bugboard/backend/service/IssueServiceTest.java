@@ -39,6 +39,7 @@ class IssueServiceTest {
     @BeforeEach
     void setUp() {
         issue = Issue.builder()
+                .idIssue(1)
                 .tipo("Feature")
                 .titolo("Test")
                 .descrizione("Test")
@@ -75,7 +76,7 @@ class IssueServiceTest {
 
         Issue returnedIssue = issueService.addIssue(progetto.getIdProgetto(),utente.getIdUtente(),issue);
 
-        assertThat(returnedIssue.getIdIssue()).isZero();
+        assertThat(returnedIssue.getIdIssue()).isEqualTo(1);
         assertThat(returnedIssue.getTipo()).isEqualTo("Feature");
         assertThat(returnedIssue.getTitolo()).isEqualTo("Test");
         assertThat(returnedIssue.getDescrizione()).isEqualTo("Test");
@@ -147,7 +148,7 @@ class IssueServiceTest {
 
         Issue returnedIssue = issueService.assignIssue(issue.getIdIssue(), utente.getIdUtente());
 
-        assertThat(returnedIssue.getIdIssue()).isEqualTo(issue.getIdIssue());
+        assertThat(returnedIssue.getIdIssue()).isEqualTo(1);
         assertThat(returnedIssue.getTipo()).isEqualTo("Feature");
         assertThat(returnedIssue.getTitolo()).isEqualTo("Test");
         assertThat(returnedIssue.getDescrizione()).isEqualTo("Test");
